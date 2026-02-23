@@ -66,26 +66,72 @@ export default function App() {
           </div>
 
           <h3 style={{ marginTop: '4rem', fontSize: '2rem', color: '#064e3b' }}>Desglose por Dimensión</h3>
+          
+          {/* INICIO DE LAS TARJETAS CON BARRAS DE PROGRESO */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+            
             <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <strong style={{ fontSize: '1.2rem', color: '#334155' }}>Business (Q1, Q2):</strong> <span style={{ float: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}>{results.dimensionsScore.Business} / 10 pts</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Business</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Business} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Business / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
             </div>
+
             <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <strong style={{ fontSize: '1.2rem', color: '#334155' }}>People (Q3):</strong> <span style={{ float: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}>{results.dimensionsScore.People} / 5 pts</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>People</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.People} / 5</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.People / 5) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
             </div>
+
             <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <strong style={{ fontSize: '1.2rem', color: '#334155' }}>Governance (Q4, Q5):</strong> <span style={{ float: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}>{results.dimensionsScore.Governance} / 10 pts</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Governance</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Governance} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Governance / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
             </div>
+
             <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <strong style={{ fontSize: '1.2rem', color: '#334155' }}>Platform (Q6, Q7):</strong> <span style={{ float: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}>{results.dimensionsScore.Platform} / 10 pts</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Platform</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Platform} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Platform / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
             </div>
+
             <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <strong style={{ fontSize: '1.2rem', color: '#334155' }}>Security (Q8, Q9):</strong> <span style={{ float: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}>{results.dimensionsScore.Security} / 10 pts</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Security</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Security} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Security / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
             </div>
+
             <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <strong style={{ fontSize: '1.2rem', color: '#334155' }}>Operations (Q10):</strong> <span style={{ float: 'right', fontSize: '1.2rem', fontWeight: 'bold' }}>{results.dimensionsScore.Operations} / 5 pts</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Operations</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Operations} / 5</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Operations / 5) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
             </div>
+
           </div>
+          {/* FIN DE LAS TARJETAS */}
 
           <button 
             onClick={() => {setAnswers({}); setIsFinished(false); window.scrollTo(0,0);}}
@@ -136,7 +182,8 @@ export default function App() {
                     style={{ marginTop: '6px', transform: 'scale(1.5)', accentColor: '#10b981' }}
                   />
                   <div>
-                    <strong style={{ display: 'block', color: '#0f172a', marginBottom: '6px', fontSize: '1.1rem' }}>{opt.label} ({opt.points} pts)</strong>
+                    {/* AQUÍ ESTÁ EL CAMBIO: Ya no dice ({opt.points} pts) */}
+                    <strong style={{ display: 'block', color: '#0f172a', marginBottom: '6px', fontSize: '1.1rem' }}>{opt.label}</strong>
                     <p style={{ margin: 0, fontSize: '1rem', color: '#475569', lineHeight: '1.5' }}>{opt.desc}</p>
                   </div>
                 </label>
