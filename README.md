@@ -1,16 +1,14 @@
-# React + Vite
+# 🚀 Evaluación de Madurez en Generative AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma interactiva para evaluar el nivel de madurez tecnológica en Inteligencia Artificial Generativa (GenAI) de los clientes de OneData. 
 
-Currently, two official plugins are available:
+## 📋 Descripción del Proyecto
+Esta herramienta permite a las organizaciones completar un diagnóstico de 10 preguntas divididas en 6 dimensiones estratégicas: Business, People, Governance, Platform, Security y Operations. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Al finalizar, el sistema calcula un puntaje automático, genera un dashboard visual con barras de progreso por dimensión y clasifica a la organización para determinar el tipo de partner tecnológico que necesita (Educación, Implementación, Optimización o Innovación).
 
-## React Compiler
+## 🛠️ Stack Tecnológico Actual
+* **Frontend:** React + Vite
+* **Estilos:** CSS puro enfocado en UI/UX (sin sesgos de puntuación a la vista del usuario)
+* **Backend / Base de Datos:** *[En progreso - Pendiente de definir]*
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
