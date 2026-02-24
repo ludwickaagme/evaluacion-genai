@@ -1,24 +1,11 @@
-import { useState } from 'react';
-import { questions } from './data/preguntas';
+import { useState, useEffect } from 'react';
+import './App.css';
+import { questions as questionsEs } from './data/preguntas';
+import { questions as questionsEn } from './data/questions';
 
 export default function App() {
-  const [hasStarted, setHasStarted] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    nombre: '',
-    organizacion: '',
-    correo: '',
-    fecha: new Date().toISOString().split('T')[0]
-  });
-
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [isFinished, setIsFinished] = useState(false);
-
-  // Color principal de OneData
-  const oneDataBlue = '#2CB9F9';
-  const oneDataHover = '#1a9edc'; // Un tono un poco más oscuro para el hover
-  const oneDataGradient = `linear-gradient(135deg, ${oneDataBlue} 0%, #007bff 100%)`;
-  const oneDataLight = '#e6f7ff'; // Fondo claro para selecciones
 
   const handleSelect = (questionId, points) => {
     setAnswers({ ...answers, [questionId]: points });
@@ -52,7 +39,7 @@ export default function App() {
 
   const calculateResults = () => {
     const totalPoints = Object.values(answers).reduce((acc, curr) => acc + curr, 0);
-    const average = totalPoints / 10; 
+    const average = totalPoints / 10;
 
     const dimensionsScore = {
       Business: (answers.Q1 || 0) + (answers.Q2 || 0),
@@ -67,20 +54,38 @@ export default function App() {
     let action = "";
 
     if (average >= 1.0 && average <= 2.0) {
-      classification = "🔍 EXPLORANDO";
-      action = "Requiere partner con capacidad de EDUCACIÓN Y ENABLEMENT";
+      classification = lang === 'es' ? "🔍 EXPLORANDO" : "🔍 EXPLORING";
+      action = lang === 'es' ? "Requiere partner con capacidad de EDUCACIÓN Y ENABLEMENT" : "Requires partner for EDUCATION and ENABLEMENT";
     } else if (average > 2.0 && average <= 3.0) {
-      classification = "🚀 ADOPTANDO";
-      action = "Requiere partner con experiencia en IMPLEMENTACIÓN GUIADA";
+      classification = lang === 'es' ? "🚀 ADOPTANDO" : "🚀 ADOPTING";
+      action = lang === 'es' ? "Requiere partner con experiencia en IMPLEMENTACIÓN GUIADA" : "Requires partner experienced in GUIDED IMPLEMENTATION";
     } else if (average > 3.0 && average <= 4.0) {
-      classification = "⚙️ IMPLEMENTANDO";
-      action = "Requiere partner especializado en OPTIMIZACIÓN";
+      classification = lang === 'es' ? "⚙️ IMPLEMENTANDO" : "⚙️ IMPLEMENTING";
+      action = lang === 'es' ? "Requiere partner especializado en OPTIMIZACIÓN" : "Requires partner specialized in OPTIMIZATION";
     } else {
-      classification = "🌟 TRANSFORMANDO";
-      action = "Requiere partner estratégico de INNOVACIÓN";
+      classification = lang === 'es' ? "🌟 TRANSFORMANDO" : "🌟 TRANSFORMING";
+      action = lang === 'es' ? "Requiere partner estratégico de INNOVACIÓN" : "Requires strategic INNOVATION partner";
     }
 
     return { totalPoints, average, dimensionsScore, classification, action };
+  };
+
+  const goNext = () => {
+    if (!answers[current.id]) return;
+    if (index < questions.length - 1) setIndex(index + 1);
+    else setIsFinished(true);
+    window.scrollTo(0, 0);
+  };
+
+  const goBack = () => {
+    if (index > 0) setIndex(index - 1);
+    window.scrollTo(0, 0);
+  };
+
+  const toggleLang = () => {
+    const newLang = lang === 'es' ? 'en' : 'es';
+    setLang(newLang);
+    // Keep answers keys (ids) same; questions structure uses same ids
   };
 
   // ==========================================
@@ -152,64 +157,101 @@ export default function App() {
   if (isFinished) {
     const results = calculateResults();
     return (
-      <div style={{ padding: '3rem 5%', minHeight: '100vh', backgroundColor: '#f8f9fa', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2.5rem', color: '#1a202c', fontWeight: '800' }}>Resultados del Diagnóstico</h2>
+      <div style={{ padding: '3rem 5%', minHeight: '100vh', backgroundColor: '#f0fdf4', fontFamily: 'system-ui, sans-serif' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2 style={{ textAlign: 'center', fontSize: '2.5rem', color: '#064e3b' }}>Resultados de Evaluación GenAI</h2>
           
-          <div style={{ background: '#ffffff', padding: '3rem', borderRadius: '24px', marginTop: '2rem', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
-            
-            <div style={{ backgroundColor: '#f7fafc', padding: '1.5rem', borderRadius: '12px', marginBottom: '2rem', border: '1px solid #e2e8f0' }}>
-              <p style={{ margin: '0 0 0.5rem 0', color: '#4a5568' }}><strong>Organización evaluada:</strong> {userInfo.organizacion}</p>
-              <p style={{ margin: '0 0 0.5rem 0', color: '#4a5568' }}><strong>Evaluador:</strong> {userInfo.nombre}</p>
-              <p style={{ margin: 0, color: '#4a5568' }}><strong>Fecha:</strong> {userInfo.fecha}</p>
-            </div>
-
+          <div style={{ background: '#ffffff', padding: '3rem', borderRadius: '16px', marginTop: '2rem', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, fontSize: '1.5rem', color: '#2d3748' }}>Puntuación Total:</h3>
-              <span style={{ fontSize: '3rem', fontWeight: '900', color: oneDataBlue }}>{results.totalPoints} / 50</span>
+              <h3 style={{ margin: 0, fontSize: '1.8rem', color: '#334155' }}>Puntuación Total:</h3>
+              <span style={{ fontSize: '2rem', fontWeight: 'bold', color: '#0f766e' }}>{results.totalPoints} / 50</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h3 style={{ margin: 0, fontSize: '1.8rem', color: '#334155' }}>Promedio General:</h3>
+              <span style={{ fontSize: '2rem', fontWeight: 'bold', color: '#0f766e' }}>{results.average.toFixed(1)} / 5.0</span>
             </div>
             
             <hr style={{ margin: '2.5rem 0', borderColor: '#e2e8f0' }} />
             
-            <h2 style={{ color: oneDataBlue, textAlign: 'center', fontSize: '2.2rem', textTransform: 'uppercase', fontWeight: '800' }}>{results.classification}</h2>
-            <p style={{ textAlign: 'center', fontSize: '1.2rem', marginTop: '1rem', color: '#4a5568' }}><strong>Recomendación:</strong> {results.action}</p>
+            <h2 style={{ color: '#059669', textAlign: 'center', fontSize: '2.2rem' }}>{results.classification}</h2>
+            <p style={{ textAlign: 'center', fontSize: '1.4rem', marginTop: '1rem', color: '#475569' }}><strong>Recomendación:</strong> {results.action}</p>
           </div>
 
-          <h3 style={{ marginTop: '4rem', fontSize: '1.8rem', color: '#2d3748', marginBottom: '1.5rem' }}>Desglose por Dimensión</h3>
+          <h3 style={{ marginTop: '4rem', fontSize: '2rem', color: '#064e3b' }}>Desglose por Dimensión</h3>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-            {Object.entries(results.dimensionsScore).map(([dimension, score]) => {
-              const maxScore = (dimension === 'People' || dimension === 'Operations') ? 5 : 10;
-              const percentage = (score / maxScore) * 100;
-              
-              return (
-                <div key={dimension} style={{ padding: '1.5rem', background: '#fff', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                    <strong style={{ fontSize: '1.1rem', color: '#2d3748' }}>{dimension}</strong> 
-                    <span style={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#4a5568' }}>{score} / {maxScore}</span>
-                  </div>
-                  <div style={{ width: '100%', backgroundColor: '#edf2f7', borderRadius: '999px', height: '10px', overflow: 'hidden' }}>
-                    <div style={{ width: `${percentage}%`, backgroundColor: oneDataBlue, height: '100%', borderRadius: '999px', transition: 'width 0.5s ease' }}></div>
-                  </div>
-                </div>
-              );
-            })}
+          {/* INICIO DE LAS TARJETAS CON BARRAS DE PROGRESO */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
+            
+            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Business</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Business} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Business / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
+            </div>
+
+            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>People</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.People} / 5</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.People / 5) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
+            </div>
+
+            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Governance</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Governance} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Governance / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
+            </div>
+
+            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Platform</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Platform} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Platform / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
+            </div>
+
+            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Security</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Security} / 10</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Security / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
+            </div>
+
+            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Operations</strong> 
+                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Operations} / 5</span>
+              </div>
+              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
+                <div style={{ width: `${(results.dimensionsScore.Operations / 5) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
+              </div>
+            </div>
+
           </div>
+          {/* FIN DE LAS TARJETAS */}
 
           <button 
-            onClick={() => {
-              setAnswers({}); 
-              setUserInfo({ ...userInfo, fecha: new Date().toISOString().split('T')[0] });
-              setIsFinished(false); 
-              setHasStarted(false);
-              setCurrentQuestionIndex(0);
-              window.scrollTo(0,0);
-            }}
-            style={{ marginTop: '4rem', width: '100%', padding: '16px', backgroundColor: '#2d3748', color: '#ffffff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '1.1rem', fontWeight: 'bold', transition: 'background-color 0.2s' }}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#1a202c'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#2d3748'}
+            onClick={() => {setAnswers({}); setIsFinished(false); window.scrollTo(0,0);}}
+            style={{ marginTop: '4rem', width: '100%', padding: '20px', backgroundColor: '#0f766e', color: 'white', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '1.3rem', fontWeight: 'bold', transition: 'background-color 0.2s' }}
+            onMouseOver={(e) => e.target.style.backgroundColor = '#115e59'}
+            onMouseOut={(e) => e.target.style.backgroundColor = '#0f766e'}
           >
-            Realizar otro diagnóstico
+            Volver a evaluar
           </button>
         </div>
       </div>
@@ -225,94 +267,66 @@ export default function App() {
   const isCurrentQuestionAnswered = answers[currentQuestion.id] !== undefined;
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '400px', background: oneDataGradient, zIndex: 0 }}></div>
-      
-      <div style={{ position: 'relative', zIndex: 1, maxWidth: '1300px', width: '100%', background: '#ffffff', padding: '4rem', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}>
-        
-        <div style={{ marginBottom: '3rem', maxWidth: '800px', margin: '0 auto 3rem auto' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: '#718096', fontSize: '0.9rem', fontWeight: '600' }}>
-                <span>Dimensión: {currentQuestion.dimension}</span>
-                <span>Pregunta {currentQuestionIndex + 1} de {questions.length}</span>
-            </div>
-            <div style={{ width: '100%', height: '8px', backgroundColor: '#edf2f7', borderRadius: '4px', overflow: 'hidden' }}>
-                <div style={{ width: `${progressPercentage}%`, height: '100%', backgroundColor: oneDataBlue, borderRadius: '4px', transition: 'width 0.3s ease' }}></div>
-            </div>
+    <div style={{ padding: '3rem 5%', minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: 'system-ui, sans-serif' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+          <h1 style={{ color: '#0f172a', fontSize: '3rem', marginBottom: '1rem' }}>Cuestionario de Evaluación de Madurez en Generative AI</h1>
+          <p style={{ color: '#475569', fontSize: '1.3rem', margin: '0.5rem 0' }}><strong>Objetivo:</strong> Determinar la madurez tecnológica para asignar el partner ideal.</p>
+          <p style={{ color: '#475569', fontSize: '1.3rem', margin: '0.5rem 0' }}><strong>Duración estimada:</strong> 5 a 7 minutos.</p>
         </div>
-
-        <h2 style={{ color: '#1a202c', fontSize: '2rem', marginBottom: '1rem', textAlign: 'center', fontWeight: '800', lineHeight: '1.3' }}>
-          {translateText(currentQuestion.text)}
-        </h2>
-        <p style={{ textAlign: 'center', color: '#718096', marginBottom: '3rem', fontSize: '1.1rem' }}>
-          Seleccione la opción que mejor describa su situación actual:
-        </p>
         
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '1.5rem', justifyContent: 'center', alignItems: 'stretch', flexWrap: 'wrap' }}>
-          {currentQuestion.options.map((opt) => {
-            const rawLabel = opt.label.split('-').pop().trim();
-            const cleanLabel = rawLabel.charAt(0).toUpperCase() + rawLabel.slice(1).toLowerCase();
-            const isSelected = answers[currentQuestion.id] === opt.points;
-
-            return (
-              <button 
-                key={opt.level}
-                onClick={() => handleSelect(currentQuestion.id, opt.points)}
-                style={{ 
-                  flex: '1 1 0',
-                  minWidth: '220px',
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center',
-                  padding: '2rem',
-                  background: isSelected ? oneDataLight : '#ffffff',
-                  border: isSelected ? `2px solid ${oneDataBlue}` : '2px solid transparent',
-                  borderRadius: '20px',
-                  cursor: 'pointer', transition: 'all 0.3s ease',
-                  boxShadow: isSelected ? `0 10px 25px ${oneDataBlue}40` : '0 10px 30px rgba(0,0,0,0.06)',
-                  outline: 'none',
-                  transform: isSelected ? 'translateY(-4px)' : 'none'
-                }}
-              >
-                {/* Solo mostramos el título en grande, sin la descripción */}
-                <strong style={{ display: 'block', color: isSelected ? oneDataBlue : '#1a202c', fontSize: '1.6rem', fontWeight: '800' }}>
-                  {cleanLabel}
-                </strong>
-              </button>
-            );
-          })}
-        </div>
-
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginTop: '4rem' }}>
-            <button 
-                onClick={goToPreviousQuestion}
-                disabled={currentQuestionIndex === 0}
-                style={{ 
-                    padding: '14px 32px', 
-                    backgroundColor: '#edf2f7', 
-                    color: currentQuestionIndex === 0 ? '#cbd5e0' : '#4a5568', 
-                    border: 'none', 
-                    borderRadius: '8px', 
-                    cursor: currentQuestionIndex === 0 ? 'not-allowed' : 'pointer',
-                    fontSize: '1.1rem', fontWeight: 'bold', transition: 'all 0.2s ease'
-                }}
-            >
-                ← Atrás
-            </button>
+        {questions.map((q) => (
+          <div key={q.id} style={{ marginBottom: '3rem', padding: '2.5rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.05)' }}>
+            <div style={{ marginBottom: '2rem' }}>
+              <span style={{ backgroundColor: '#ccfbf1', color: '#0f766e', padding: '6px 12px', borderRadius: '6px', fontSize: '1rem', fontWeight: 'bold', textTransform: 'uppercase' }}>{q.dimension}</span>
+              <h3 style={{ marginTop: '1.5rem', color: '#1e293b', fontSize: '1.5rem' }}>{q.id}. {q.text}</h3>
+            </div>
             
-            <button 
-                onClick={goToNextQuestion}
-                disabled={!isCurrentQuestionAnswered}
-                style={{ 
-                    padding: '14px 32px', 
-                    backgroundColor: !isCurrentQuestionAnswered ? '#cbd5e0' : oneDataBlue, 
-                    color: '#ffffff', border: 'none', borderRadius: '8px', 
-                    cursor: !isCurrentQuestionAnswered ? 'not-allowed' : 'pointer',
-                    fontSize: '1.1rem', fontWeight: 'bold', transition: 'all 0.2s ease',
-                    boxShadow: !isCurrentQuestionAnswered ? 'none' : `0 4px 12px ${oneDataBlue}66`
-                }}
-            >
-                {currentQuestionIndex === questions.length - 1 ? 'Ver Resultados' : 'Siguiente →'}
-            </button>
-        </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {q.options.map((opt) => (
+                <label 
+                  key={opt.level} 
+                  style={{ 
+                    display: 'flex', alignItems: 'flex-start', gap: '20px', 
+                    padding: '20px', background: answers[q.id] === opt.points ? '#f0fdf4' : '#f8fafc',
+                    border: answers[q.id] === opt.points ? '2px solid #10b981' : '2px solid #e2e8f0',
+                    borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s ease'
+                  }}
+                >
+                  <input 
+                    type="radio" 
+                    name={q.id} 
+                    value={opt.points}
+                    checked={answers[q.id] === opt.points}
+                    onChange={() => handleSelect(q.id, opt.points)}
+                    style={{ marginTop: '6px', transform: 'scale(1.5)', accentColor: '#10b981' }}
+                  />
+                  <div>
+                    {/* AQUÍ ESTÁ EL CAMBIO: Ya no dice ({opt.points} pts) */}
+                    <strong style={{ display: 'block', color: '#0f172a', marginBottom: '6px', fontSize: '1.1rem' }}>{opt.label}</strong>
+                    <p style={{ margin: 0, fontSize: '1rem', color: '#475569', lineHeight: '1.5' }}>{opt.desc}</p>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+        ))}
 
+        <button 
+          onClick={() => { setIsFinished(true); window.scrollTo(0,0); }}
+          disabled={Object.keys(answers).length < questions.length}
+          style={{ 
+            width: '100%', padding: '20px', 
+            backgroundColor: Object.keys(answers).length < questions.length ? '#cbd5e1' : '#0f766e', 
+            color: 'white', border: 'none', borderRadius: '12px', 
+            cursor: Object.keys(answers).length < questions.length ? 'not-allowed' : 'pointer',
+            fontSize: '1.3rem', fontWeight: 'bold', transition: 'background-color 0.3s'
+          }}
+          onMouseOver={(e) => { if(Object.keys(answers).length === questions.length) e.target.style.backgroundColor = '#115e59' }}
+          onMouseOut={(e) => { if(Object.keys(answers).length === questions.length) e.target.style.backgroundColor = '#0f766e' }}
+        >
+          {Object.keys(answers).length < questions.length ? `Faltan preguntas por responder (${Object.keys(answers).length}/${questions.length})` : 'Ver Resultados Completos'}
+        </button>
       </div>
     </div>
   );
