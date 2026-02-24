@@ -1,9 +1,23 @@
-import { useState } from 'react';
-import { questions } from './data/preguntas';
+import { useState, useEffect } from 'react';
+import './App.css';
+import { questions as questionsEs } from './data/preguntas';
+import { questions as questionsEn } from './data/questions';
 
 export default function App() {
+  const [lang, setLang] = useState('es');
+  const questions = lang === 'es' ? questionsEs : questionsEn;
+
   const [answers, setAnswers] = useState({});
   const [isFinished, setIsFinished] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  const current = questions[index];
+  
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, []);
 
   const handleSelect = (questionId, points) => {
     setAnswers({ ...answers, [questionId]: points });
@@ -11,7 +25,7 @@ export default function App() {
 
   const calculateResults = () => {
     const totalPoints = Object.values(answers).reduce((acc, curr) => acc + curr, 0);
-    const average = totalPoints / 10; 
+    const average = totalPoints / 10;
 
     const dimensionsScore = {
       Business: (answers.Q1 || 0) + (answers.Q2 || 0),
@@ -26,187 +40,127 @@ export default function App() {
     let action = "";
 
     if (average >= 1.0 && average <= 2.0) {
-      classification = "🔍 EXPLORANDO";
-      action = "Requiere partner con capacidad de EDUCACIÓN Y ENABLEMENT";
+      classification = lang === 'es' ? "🔍 EXPLORANDO" : "🔍 EXPLORING";
+      action = lang === 'es' ? "Requiere partner con capacidad de EDUCACIÓN Y ENABLEMENT" : "Requires partner for EDUCATION and ENABLEMENT";
     } else if (average > 2.0 && average <= 3.0) {
-      classification = "🚀 ADOPTANDO";
-      action = "Requiere partner con experiencia en IMPLEMENTACIÓN GUIADA";
+      classification = lang === 'es' ? "🚀 ADOPTANDO" : "🚀 ADOPTING";
+      action = lang === 'es' ? "Requiere partner con experiencia en IMPLEMENTACIÓN GUIADA" : "Requires partner experienced in GUIDED IMPLEMENTATION";
     } else if (average > 3.0 && average <= 4.0) {
-      classification = "⚙️ IMPLEMENTANDO";
-      action = "Requiere partner especializado en OPTIMIZACIÓN";
+      classification = lang === 'es' ? "⚙️ IMPLEMENTANDO" : "⚙️ IMPLEMENTING";
+      action = lang === 'es' ? "Requiere partner especializado en OPTIMIZACIÓN" : "Requires partner specialized in OPTIMIZATION";
     } else {
-      classification = "🌟 TRANSFORMANDO";
-      action = "Requiere partner estratégico de INNOVACIÓN";
+      classification = lang === 'es' ? "🌟 TRANSFORMANDO" : "🌟 TRANSFORMING";
+      action = lang === 'es' ? "Requiere partner estratégico de INNOVACIÓN" : "Requires strategic INNOVATION partner";
     }
 
     return { totalPoints, average, dimensionsScore, classification, action };
   };
 
+  const goNext = () => {
+    if (!answers[current.id]) return;
+    if (index < questions.length - 1) setIndex(index + 1);
+    else setIsFinished(true);
+    window.scrollTo(0, 0);
+  };
+
+  const goBack = () => {
+    if (index > 0) setIndex(index - 1);
+    window.scrollTo(0, 0);
+  };
+
+  const toggleLang = () => {
+    const newLang = lang === 'es' ? 'en' : 'es';
+    setLang(newLang);
+    // Keep answers keys (ids) same; questions structure uses same ids
+  };
+
   if (isFinished) {
     const results = calculateResults();
     return (
-      <div style={{ padding: '3rem 5%', minHeight: '100vh', backgroundColor: '#f0fdf4', fontFamily: 'system-ui, sans-serif' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2 style={{ textAlign: 'center', fontSize: '2.5rem', color: '#064e3b' }}>Resultados de Evaluación GenAI</h2>
-          
-          <div style={{ background: '#ffffff', padding: '3rem', borderRadius: '16px', marginTop: '2rem', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <h3 style={{ margin: 0, fontSize: '1.8rem', color: '#334155' }}>Puntuación Total:</h3>
-              <span style={{ fontSize: '2rem', fontWeight: 'bold', color: '#0f766e' }}>{results.totalPoints} / 50</span>
+      <div className="app-root">
+        <div className="rotating-bg" aria-hidden="true" />
+        <div className="inner-card">
+          <div className="content-inner">
+            <h2 style={{ textAlign: 'center', fontSize: '2.2rem', color: '#064e3b', margin: '0' }}>{lang === 'es' ? 'Resultados de Evaluación GenAI' : 'GenAI Assessment Results'}</h2>
+
+            <div style={{ background: '#ffffff', padding: '24px', borderRadius: '12px', marginTop: '12px', boxShadow: '0 8px 12px rgba(2,6,23,0.06)', width: '50%' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', color: '#334155' }}>{lang === 'es' ? 'Puntuación Total:' : 'Total Score:'}</h3>
+                <span style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#0f766e' }}>{results.totalPoints} / 50</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                <h3 style={{ margin: 0, fontSize: '1.2rem', color: '#334155' }}>{lang === 'es' ? 'Promedio General:' : 'Overall Average:'}</h3>
+                <span style={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#0f766e' }}>{results.average.toFixed(1)} / 5.0</span>
+              </div>
+              <hr style={{ margin: '1rem 0', borderColor: '#e2e8f0' }} />
+              <h2 style={{ color: '#059669', textAlign: 'center', fontSize: '1.4rem', margin: '0.5rem 0' }}>{results.classification}</h2>
+              <p style={{ textAlign: 'center', fontSize: '1rem', marginTop: '0.5rem', color: '#475569' }}><strong>{lang === 'es' ? 'Recomendación:' : 'Recommendation:'}</strong> {results.action}</p>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, fontSize: '1.8rem', color: '#334155' }}>Promedio General:</h3>
-              <span style={{ fontSize: '2rem', fontWeight: 'bold', color: '#0f766e' }}>{results.average.toFixed(1)} / 5.0</span>
-            </div>
-            
-            <hr style={{ margin: '2.5rem 0', borderColor: '#e2e8f0' }} />
-            
-            <h2 style={{ color: '#059669', textAlign: 'center', fontSize: '2.2rem' }}>{results.classification}</h2>
-            <p style={{ textAlign: 'center', fontSize: '1.4rem', marginTop: '1rem', color: '#475569' }}><strong>Recomendación:</strong> {results.action}</p>
+
+            <button 
+              onClick={() => {setAnswers({}); setIsFinished(false); setIndex(0); window.scrollTo(0,0);}}
+              className="nav-button next"
+              style={{ marginTop: '18px', width: '260px', padding: '14px 28px', borderRadius: '999px', background: '#0f766e', color: 'white', fontWeight: 700 }}
+            >
+              {lang === 'es' ? 'Volver a evaluar' : 'Retake Assessment'}
+            </button>
           </div>
-
-          <h3 style={{ marginTop: '4rem', fontSize: '2rem', color: '#064e3b' }}>Desglose por Dimensión</h3>
-          
-          {/* INICIO DE LAS TARJETAS CON BARRAS DE PROGRESO */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem', marginTop: '1.5rem' }}>
-            
-            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Business</strong> 
-                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Business} / 10</span>
-              </div>
-              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
-                <div style={{ width: `${(results.dimensionsScore.Business / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
-              </div>
-            </div>
-
-            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>People</strong> 
-                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.People} / 5</span>
-              </div>
-              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
-                <div style={{ width: `${(results.dimensionsScore.People / 5) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
-              </div>
-            </div>
-
-            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Governance</strong> 
-                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Governance} / 10</span>
-              </div>
-              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
-                <div style={{ width: `${(results.dimensionsScore.Governance / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
-              </div>
-            </div>
-
-            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Platform</strong> 
-                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Platform} / 10</span>
-              </div>
-              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
-                <div style={{ width: `${(results.dimensionsScore.Platform / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
-              </div>
-            </div>
-
-            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Security</strong> 
-                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Security} / 10</span>
-              </div>
-              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
-                <div style={{ width: `${(results.dimensionsScore.Security / 10) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
-              </div>
-            </div>
-
-            <div style={{ padding: '1.5rem', background: '#fff', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.05)', borderLeft: '6px solid #10b981' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <strong style={{ fontSize: '1.1rem', color: '#334155' }}>Operations</strong> 
-                <span style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>{results.dimensionsScore.Operations} / 5</span>
-              </div>
-              <div style={{ width: '100%', backgroundColor: '#e2e8f0', borderRadius: '999px', height: '8px' }}>
-                <div style={{ width: `${(results.dimensionsScore.Operations / 5) * 100}%`, backgroundColor: '#10b981', height: '100%', borderRadius: '999px' }}></div>
-              </div>
-            </div>
-
-          </div>
-          {/* FIN DE LAS TARJETAS */}
-
-          <button 
-            onClick={() => {setAnswers({}); setIsFinished(false); window.scrollTo(0,0);}}
-            style={{ marginTop: '4rem', width: '100%', padding: '20px', backgroundColor: '#0f766e', color: 'white', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '1.3rem', fontWeight: 'bold', transition: 'background-color 0.2s' }}
-            onMouseOver={(e) => e.target.style.backgroundColor = '#115e59'}
-            onMouseOut={(e) => e.target.style.backgroundColor = '#0f766e'}
-          >
-            Volver a evaluar
-          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: '3rem 5%', minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: 'system-ui, sans-serif' }}>
-      <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <h1 style={{ color: '#0f172a', fontSize: '3rem', marginBottom: '1rem' }}>Cuestionario de Evaluación de Madurez en Generative AI</h1>
-          <p style={{ color: '#475569', fontSize: '1.3rem', margin: '0.5rem 0' }}><strong>Objetivo:</strong> Determinar la madurez tecnológica para asignar el partner ideal.</p>
-          <p style={{ color: '#475569', fontSize: '1.3rem', margin: '0.5rem 0' }}><strong>Duración estimada:</strong> 5 a 7 minutos.</p>
-        </div>
-        
-        {questions.map((q) => (
-          <div key={q.id} style={{ marginBottom: '3rem', padding: '2.5rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.05)' }}>
-            <div style={{ marginBottom: '2rem' }}>
-              <span style={{ backgroundColor: '#ccfbf1', color: '#0f766e', padding: '6px 12px', borderRadius: '6px', fontSize: '1rem', fontWeight: 'bold', textTransform: 'uppercase' }}>{q.dimension}</span>
-              <h3 style={{ marginTop: '1.5rem', color: '#1e293b', fontSize: '1.5rem' }}>{q.id}. {q.text}</h3>
+    <div className="app-root">
+      <div className="rotating-bg" aria-hidden="true" />
+      <div className="inner-card">
+        <button onClick={toggleLang} className="lang-toggle">{lang === 'es' ? 'ES' : 'EN'}</button>
+
+        <div className="content-inner">
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', marginBottom: '4px' }}>
+            {questions.map((_, i) => (
+              <div key={i} style={{ width: '10px', height: '10px', borderRadius: '999px', background: i <= index ? '#0f172a' : '#f1f5f9' }} />
+            ))}
+          </div>
+
+          <div key={index} className="qa-stage">
+            <div style={{ textAlign: 'center', width: '100%' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '8px' }}>
+                <span className="dimension-badge">{current.dimension}</span>
+              </div>
+              <h1 className="question-title">{current.text}</h1>
+              <div className="scale-note">{lang === 'es' ? 'Califique en una escala de 1-5' : 'Rate on a scale of 1-5'}</div>
             </div>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {q.options.map((opt) => (
-                <label 
-                  key={opt.level} 
-                  style={{ 
-                    display: 'flex', alignItems: 'flex-start', gap: '20px', 
-                    padding: '20px', background: answers[q.id] === opt.points ? '#f0fdf4' : '#f8fafc',
-                    border: answers[q.id] === opt.points ? '2px solid #10b981' : '2px solid #e2e8f0',
-                    borderRadius: '12px', cursor: 'pointer', transition: 'all 0.2s ease'
-                  }}
+
+            <div className="options-row">
+              {current.options.map((opt, i) => (
+                <button
+                  key={opt.level}
+                  onClick={() => handleSelect(current.id, opt.points)}
+                  className={"option-tile" + (answers[current.id] === opt.points ? ' selected' : '')}
+                  style={{ ['--i']: i }}
                 >
-                  <input 
-                    type="radio" 
-                    name={q.id} 
-                    value={opt.points}
-                    checked={answers[q.id] === opt.points}
-                    onChange={() => handleSelect(q.id, opt.points)}
-                    style={{ marginTop: '6px', transform: 'scale(1.5)', accentColor: '#10b981' }}
-                  />
-                  <div>
-                    {/* AQUÍ ESTÁ EL CAMBIO: Ya no dice ({opt.points} pts) */}
-                    <strong style={{ display: 'block', color: '#0f172a', marginBottom: '6px', fontSize: '1.1rem' }}>{opt.label}</strong>
-                    <p style={{ margin: 0, fontSize: '1rem', color: '#475569', lineHeight: '1.5' }}>{opt.desc}</p>
-                  </div>
-                </label>
+                  {opt.points}
+                </button>
               ))}
             </div>
-          </div>
-        ))}
 
-        <button 
-          onClick={() => { setIsFinished(true); window.scrollTo(0,0); }}
-          disabled={Object.keys(answers).length < questions.length}
-          style={{ 
-            width: '100%', padding: '20px', 
-            backgroundColor: Object.keys(answers).length < questions.length ? '#cbd5e1' : '#0f766e', 
-            color: 'white', border: 'none', borderRadius: '12px', 
-            cursor: Object.keys(answers).length < questions.length ? 'not-allowed' : 'pointer',
-            fontSize: '1.3rem', fontWeight: 'bold', transition: 'background-color 0.3s'
-          }}
-          onMouseOver={(e) => { if(Object.keys(answers).length === questions.length) e.target.style.backgroundColor = '#115e59' }}
-          onMouseOut={(e) => { if(Object.keys(answers).length === questions.length) e.target.style.backgroundColor = '#0f766e' }}
-        >
-          {Object.keys(answers).length < questions.length ? `Faltan preguntas por responder (${Object.keys(answers).length}/${questions.length})` : 'Ver Resultados Completos'}
-        </button>
+            <div className="options-wrapper">
+              <div className="gradient-bar" style={{ width: `${current.options.length * 220 + (current.options.length - 1) * 16}px`, maxWidth: '100%' }} />
+              <div className="gradient-labels" style={{ width: `${current.options.length * 220 + (current.options.length - 1) * 16}px`, maxWidth: '100%' }}>
+                {current.options.map((opt, i) => (
+                  <div key={i} className={answers[current.id] === opt.points ? 'label-selected' : ''}>{opt.label}</div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="nav-container">
+            <button onClick={goBack} disabled={index === 0} className={"nav-button back"} style={{ opacity: index === 0 ? 0.6 : 1, cursor: index === 0 ? 'not-allowed' : 'pointer' }}>{lang === 'es' ? '← Back' : '← Back'}</button>
+            <button onClick={goNext} disabled={!answers[current.id]} className={"nav-button next"} style={{ opacity: !answers[current.id] ? 0.7 : 1, cursor: !answers[current.id] ? 'not-allowed' : 'pointer' }}>{index === questions.length - 1 ? (lang === 'es' ? 'Finish' : 'Finish') : (lang === 'es' ? 'Next →' : 'Next →')}</button>
+          </div>
+
+        </div>
       </div>
     </div>
   );
