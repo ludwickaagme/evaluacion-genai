@@ -139,15 +139,16 @@ export default function App() {
                   onClick={() => handleSelect(current.id, opt.points)}
                   className={"option-tile" + (answers[current.id] === opt.points ? ' selected' : '')}
                   style={{ ['--i']: i }}
+                  aria-label={opt.desc}
                 >
-                  {opt.points}
+                  <div className="tile-desc">{opt.desc}</div>
                 </button>
               ))}
             </div>
 
             <div className="options-wrapper">
-              <div className="gradient-bar" style={{ width: `${current.options.length * 220 + (current.options.length - 1) * 16}px`, maxWidth: '100%' }} />
-              <div className="gradient-labels" style={{ width: `${current.options.length * 220 + (current.options.length - 1) * 16}px`, maxWidth: '100%' }}>
+              <div className="gradient-bar" style={{ width: `${current.options.length * 280 + (current.options.length - 1) * 16}px`, maxWidth: '100%' }} />
+              <div className="gradient-labels" style={{ width: `${current.options.length * 280 + (current.options.length - 1) * 16}px`, maxWidth: '100%' }}>
                 {current.options.map((opt, i) => (
                   <div key={i} className={answers[current.id] === opt.points ? 'label-selected' : ''}>{opt.label}</div>
                 ))}
@@ -156,8 +157,8 @@ export default function App() {
           </div>
 
           <div className="nav-container">
-            <button onClick={goBack} disabled={index === 0} className={"nav-button back"} style={{ opacity: index === 0 ? 0.6 : 1, cursor: index === 0 ? 'not-allowed' : 'pointer' }}>{lang === 'es' ? '← Back' : '← Back'}</button>
-            <button onClick={goNext} disabled={!answers[current.id]} className={"nav-button next"} style={{ opacity: !answers[current.id] ? 0.7 : 1, cursor: !answers[current.id] ? 'not-allowed' : 'pointer' }}>{index === questions.length - 1 ? (lang === 'es' ? 'Finish' : 'Finish') : (lang === 'es' ? 'Next →' : 'Next →')}</button>
+            <button onClick={goBack} disabled={index === 0} className={"nav-button back"} style={{ opacity: index === 0 ? 0.6 : 1, cursor: index === 0 ? 'default' : 'pointer' }}>{lang === 'es' ? '← Back' : '← Back'}</button>
+            <button onClick={goNext} disabled={!answers[current.id]} className={"nav-button next"} style={{ opacity: !answers[current.id] ? 0.7 : 1, cursor: !answers[current.id] ? 'default' : 'pointer' }}>{index === questions.length - 1 ? (lang === 'es' ? 'Finish' : 'Finish') : (lang === 'es' ? 'Next →' : 'Next →')}</button>
           </div>
 
         </div>

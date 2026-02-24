@@ -120,7 +120,7 @@
 
 .content-inner {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1500px;
   min-width: 360px;
   margin: 0 auto;
   padding: 0 12px;
@@ -186,14 +186,15 @@
 }
 
 .option-tile {
-  width: 220px;
-  height: 220px;
-  border-radius: 14px;
+  width: 280px;
+  height: 200px;
+  border-radius: 12px;
   background: #fbfdff;
   border: 1px solid rgba(2,6,23,0.06);
   box-shadow: 0 30px 60px rgba(2,6,23,0.06);
   font-size: 2rem;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -239,6 +240,17 @@
   to { opacity: 1; transform: translateX(0) translateY(0) scale(1); }
 }
 
+/* Tile content: small justified description (no number) */
+.tile-desc {
+  padding: 12px 14px;
+  font-size: 1.02rem;
+  color: #0f172a;
+  text-align: center;
+  width: 100%;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
 /* Gradient bar fade/slide */
 .qa-stage .gradient-bar {
   opacity: 0;
@@ -271,7 +283,7 @@
 
 /* Each label aligns to an option tile; sizes match `.option-tile` */
 .gradient-labels > div {
-  width: 220px;
+  width: 280px;
   text-align: center;
   color: #475569;
   font-size: 0.95rem;
@@ -306,14 +318,16 @@
 
 @media (max-width: 720px) {
   .content-inner { width: 92%; }
-  .option-tile { width: 96px; height: 96px; font-size: 1.4rem; }
+  .option-tile { width: 140px; height: 80px; font-size: 1.05rem; }
   .question-title { font-size: 1.25rem; }
-  .gradient-labels > div { width: 96px; font-size: 0.8rem; }
+  .gradient-labels > div { width: 140px; font-size: 0.8rem; }
+  .tile-desc { font-size: 0.72rem; padding: 6px 6px; }
 }
 
 /* Slightly reduce gap when viewport is narrow but still desktop */
 @media (max-width: 1100px) {
-  .option-tile { width: 160px; height: 160px; }
+  .option-tile { width: 220px; height: 120px; }
   .options-row { gap: 12px; }
-  .gradient-labels > div { width: 160px; }
+  .gradient-labels > div { width: 220px; }
+  .tile-desc { font-size: 0.9rem; }
 }
