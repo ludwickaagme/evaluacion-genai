@@ -15,32 +15,29 @@ body, html {
 }
 
 /* =========================================
-   ESTILOS GENERALES Y UTILIDADES
+   ESTILOS GENERALES
    ========================================= */
 .text-onedata { color: #000; }
 .text-aws { color: #ff9900; }
-.bg-onedata { background-color: #3533cd; }
-.bg-aws { background-color: #ff9900; }
 
-/* =========================================
-   LOGOS FLOTANTES (TAMAÑO CORREGIDO)
-   ========================================= */
 .logo-top-left {
   position: absolute;
   top: 4vh;
-  left: 2vw;
-  max-width: clamp(80px, 10vw, 120px);
-  height: auto;
+  left: 4vw;
+  max-width: 16vw;
+  max-height: 5vh; 
+  object-fit: contain;
   z-index: 10;
   pointer-events: none;
 }
 
 .logo-bottom-right {
   position: absolute;
-  bottom: 3vh;
-  right: 2vw;
-  max-width: clamp(80px, 10vw, 120px);
-  height: auto;
+  bottom: 4vh;
+  right: 4vw;
+  max-width: 12vw;
+  max-height: 5vh; 
+  object-fit: contain;
   z-index: 10;
   pointer-events: none;
   opacity: 0.95;
@@ -125,7 +122,7 @@ body, html {
 .option-card.selected .option-label { color: #3533cd; }
 
 /* =========================================
-   DASHBOARD DE RESULTADOS
+   DASHBOARD DE RESULTADOS (CORRECCIONES)
    ========================================= */
 .results-container {
   display: flex;
@@ -138,107 +135,49 @@ body, html {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Distribuye el espacio mejor */
+  justify-content: space-between; 
   padding-right: 2vw;
   border-right: 1px solid #f0f0f0;
   gap: 2vh; 
+  overflow-y: auto; 
+  padding-bottom: 10px;
 }
 
-.user-info-card {
-    background: #f8f9fa;
-    padding: 1.5rem;
-    border-radius: 16px;
-    text-align: left;
-    border-left: 4px solid #3533cd;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    flex-shrink: 0; /* Evita que se aplaste */
-}
-
-/* Gráfica Circular */
-.score-gauge-container {
-    position: relative;
-    width: 160px; /* Un poco más pequeña para dar espacio */
-    height: 160px;
-    margin: 0 auto;
-    flex-shrink: 0;
-}
-.circular-chart {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  max-height: 100%;
-}
-.circle-bg {
-  fill: none;
-  stroke: #edf2f7;
-  stroke-width: 2.5;
-}
+/* === ANIMACIÓN DE GRÁFICA CIRCULAR === */
 .circle {
-  fill: none;
-  stroke-width: 2.5;
   stroke-linecap: round;
-  animation: progress 1.5s ease-out forwards;
+  stroke-dashoffset: 113; /* Empuja el trazo fuera de la vista */
+  animation: drawCircle 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
 }
-@keyframes progress { 0% { stroke-dasharray: 0 100; } }
-.score-text-center {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
+@keyframes drawCircle {
+  to { stroke-dashoffset: 0; } /* Lo trae a la vista gradualmente */
 }
 
-.classification-card {
-    background: linear-gradient(135deg, #fff 0%, #fefefe 100%);
-    border-radius: 20px;
-    padding: 1.5rem; /* Menos padding para que no choque el texto */
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    text-align: center;
-    border: 1px solid #f0f4f8;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0; /* MAGIA: Esto evita que el texto de adentro se aplaste */
-    margin-bottom: 1vh;
-}
-.classification-card::after {
-    content: '';
-    position: absolute;
-    top: -50%; right: -50%;
-    width: 100%; height: 100%;
-    background: radial-gradient(circle, rgba(53, 51, 205, 0.08) 0%, rgba(255,255,255,0) 70%);
-    transform: rotate(45deg);
-    pointer-events: none;
-}
-
-.results-main {
-  flex: 1.6;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
+/* === ACOMODO COMPACTO DE TARJETAS DERECHAS === */
 .dimensions-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2vh 2vw; 
+  gap: 16px 24px; /* Espaciado fijo en píxeles para que no se separen de más */
+  align-content: start; /* MAGIA: Empaqueta las tarjetas hacia arriba para que no floten */
 }
 
 .dimension-card {
     background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
     transition: all 0.3s ease;
-    border: 1px solid #f4f6f9;
+    border: 1px solid #f0f4f8;
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 .dimension-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.06);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
 }
 
 .dimension-header {
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.2rem;
     background: #fafbfc;
     border-bottom: 1px solid #f0f4f8;
     display: flex;
@@ -248,30 +187,18 @@ body, html {
     color: #2d3748;
 }
 
-.dimension-body { padding: 1.2rem 1.5rem; }
+.dimension-body { padding: 1rem 1.2rem; }
 
-.progress-container-modern {
-    height: 10px;
-    background-color: #edf2f7;
-    border-radius: 6px;
-    overflow: hidden;
-}
+/* === ANIMACIÓN DE BARRAS HORIZONTALES === */
 .progress-bar-modern {
     height: 100%;
-    border-radius: 6px;
+    border-radius: 4px;
     background: linear-gradient(90deg, #ff9900, #ffb347);
-    transition: width 1.2s cubic-bezier(0.22, 0.9, 0.32, 1);
+    max-width: 0; /* Inicia en 0 para la animación */
+    animation: fillBar 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
 }
-
-@media (max-width: 1100px) {
-  .results-container { flex-direction: column; overflow-y: auto; gap: 3vh; }
-  .results-sidebar { border-right: none; border-bottom: 1px solid #f0f0f0; padding-right: 0; padding-bottom: 3vh; margin-bottom: 3vh; flex: none; gap: 3vh; }
-  .results-main { flex: none; }
-}
-@media (max-width: 768px) {
-  .options-container { flex-direction: column; height: auto; }
-  .option-card { min-height: 120px; flex: none; }
-  .dimensions-grid { grid-template-columns: 1fr; }
+@keyframes fillBar {
+    to { max-width: 100%; } /* Crece hasta el width establecido en React */
 }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
