@@ -2,7 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   background-color: #f8f9fa;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   width: 100%;
   height: 100%;
 }
@@ -15,7 +15,44 @@ body, html {
 }
 
 /* =========================================
-   CUADRÍCULA ESTILO "GLOW"
+   ESTILOS GENERALES Y UTILIDADES
+   ========================================= */
+.text-onedata { color: #000; }
+.text-aws { color: #ff9900; }
+.bg-onedata { background-color: #3533cd; }
+.bg-aws { background-color: #ff9900; }
+
+/* =========================================
+   LOGOS FLOTANTES (TAMAÑO CORREGIDO)
+   ========================================= */
+.logo-top-left {
+  position: absolute;
+  top: 4vh;
+  left: 3vw;
+  /* Reducido para que no se vea gigante */
+  max-width: clamp(100px, 12vw, 150px);
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.logo-bottom-right {
+  position: absolute;
+  bottom: 3vh;
+  right: 3vw;
+  max-width: clamp(80px, 10vw, 120px);
+  height: auto;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+@media (max-width: 992px) {
+  .logo-top-left, .logo-bottom-right { display: none; }
+}
+
+/* =========================================
+   CUESTIONARIO - TARJETAS DE OPCIÓN
    ========================================= */
 .options-container {
   display: flex;
@@ -32,164 +69,211 @@ body, html {
 .option-card {
   background-color: #ffffff;
   border: 1px solid #f0f0f0;
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 1rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
   flex: 1;
   display: flex;
   align-items: stretch;
   justify-content: center;
   outline: none;
+  position: relative;
+  overflow: hidden;
 }
 
 .option-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  border-color: #e2e8f0;
 }
 
 .option-card.selected {
-  border-color: rgba(44, 185, 249, 0.3);
+  border-color: rgba(44, 185, 249, 0.5);
   background-color: #ffffff;
   transform: translateY(-4px);
-  box-shadow: 0 0 30px rgba(44, 185, 249, 0.4);
-  border-width: 2px; /* slightly thicker visual border */
+  box-shadow: 0 0 35px rgba(44, 185, 249, 0.25);
+  border-width: 2px; 
 }
 
-.option-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+.option-card.selected::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #3533cd, #2CB9F9);
 }
 
 .option-desc {
   color: #5e6b81;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1;
-  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.5;
   text-align: center;
 }
 
 .option-label {
-  color: #1a202c; /* match main question text color */
-  font-size: 1.5rem;
+  color: #808080;
+  font-size: 0.9rem;
   font-weight: 700;
-  text-transform: none;
-  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: auto;
+  padding-top: 1rem;
 }
-
-.option-card.selected .option-desc {
-  color: #141f72;
-  border-color: rgba(44, 185, 249, 0.3);
-  border-width: 5px;
-}
+.option-card.selected .option-label { color: #3533cd; }
 
 /* =========================================
-   DASHBOARD DE RESULTADOS (SIN SCROLL)
+   DASHBOARD DE RESULTADOS
    ========================================= */
 .results-container {
   display: flex;
-  flex-direction: row;
-  gap: 3vw;
+  gap: 4vw; 
   height: 100%;
+  align-items: stretch;
 }
 
-.results-left {
+.results-sidebar {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-right: 2px solid #f0f4f8;
-  padding-right: 3vw;
+  justify-content: space-between; /* Distribuye el espacio mejor */
+  padding-right: 2vw;
+  border-right: 1px solid #f0f0f0;
+  gap: 2vh; 
 }
 
-.results-right {
-  flex: 1.2;
+.user-info-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: left;
+    border-left: 4px solid #3533cd;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    flex-shrink: 0; /* Evita que se aplaste */
+}
+
+/* Gráfica Circular */
+.score-gauge-container {
+    position: relative;
+    width: 160px; /* Un poco más pequeña para dar espacio */
+    height: 160px;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+.circular-chart {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.circle-bg {
+  fill: none;
+  stroke: #edf2f7;
+  stroke-width: 2.5;
+}
+.circle {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  animation: progress 1.5s ease-out forwards;
+}
+@keyframes progress { 0% { stroke-dasharray: 0 100; } }
+.score-text-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.classification-card {
+    background: linear-gradient(135deg, #fff 0%, #fefefe 100%);
+    border-radius: 20px;
+    padding: 1.5rem; /* Menos padding para que no choque el texto */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    text-align: center;
+    border: 1px solid #f0f4f8;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0; /* MAGIA: Esto evita que el texto de adentro se aplaste */
+    margin-bottom: 1vh;
+}
+.classification-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -50%;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(53, 51, 205, 0.08) 0%, rgba(255,255,255,0) 70%);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.results-main {
+  flex: 1.6;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-.results-grid {
+.dimensions-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 1.5vh 1.5vw; 
-  align-content: start;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2vh 2vw; 
 }
 
-/* Ajustes para celulares */
+.dimension-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+    transition: all 0.3s ease;
+    border: 1px solid #f4f6f9;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.dimension-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.06);
+}
+
+.dimension-header {
+    padding: 1rem 1.5rem;
+    background: #fafbfc;
+    border-bottom: 1px solid #f0f4f8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    color: #2d3748;
+}
+
+.dimension-body { padding: 1.2rem 1.5rem; }
+
+.progress-container-modern {
+    height: 10px;
+    background-color: #edf2f7;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.progress-bar-modern {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #ff9900, #ffb347);
+    transition: width 1.2s cubic-bezier(0.22, 0.9, 0.32, 1);
+}
+
+@media (max-width: 1100px) {
+  .results-container { flex-direction: column; overflow-y: auto; gap: 3vh; }
+  .results-sidebar { border-right: none; border-bottom: 1px solid #f0f0f0; padding-right: 0; padding-bottom: 3vh; margin-bottom: 3vh; flex: none; gap: 3vh; }
+  .results-main { flex: none; }
+}
 @media (max-width: 768px) {
-  .options-container {
-    flex-direction: column;
-    overflow-y: auto; 
-  }
-  .option-card {
-    min-height: 80px;
-    flex: none;
-  }
-  .results-container {
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  .results-left {
-    border-right: none;
-    border-bottom: 2px solid #f0f4f8;
-    padding-right: 0;
-    padding-bottom: 3vh;
-    margin-bottom: 2vh;
-  }
-  .results-grid {
-    grid-template-columns: 1fr;
-  }
+  .options-container { flex-direction: column; height: auto; }
+  .option-card { min-height: 120px; flex: none; }
+  .dimensions-grid { grid-template-columns: 1fr; }
 }
 
-.corner-logo {
-  position: absolute;
-  bottom: 18px;
-  width: 120px;
-  height: auto;
-  opacity: 0.98;
-  pointer-events: none;
-  z-index: 5;
-}
-.corner-logo.left { left: 18px; }
-.corner-logo.right { right: 18px; }
-
-@media (max-width: 992px) {
-  .corner-logo { display: none; }
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.question-title {
-  opacity: 0;
-  animation: fadeUp 420ms cubic-bezier(0.22, 0.9, 0.32, 1) 0.04s both;
-}
-
-.question-text {
-  opacity: 0;
-  animation: fadeUp 440ms cubic-bezier(0.22, 0.9, 0.32, 1) 0.08s both;
-}
-
-.options-container .option-card {
-  opacity: 0;
-  transform: translateY(8px);
-  animation-name: fadeUp;
-  animation-duration: 420ms;
-  animation-timing-function: cubic-bezier(0.22, 0.9, 0.32, 1);
-  animation-fill-mode: both;
-}
-.options-container .option-card:nth-child(1) { animation-delay: 0.12s; }
-.options-container .option-card:nth-child(2) { animation-delay: 0.18s; }
-.options-container .option-card:nth-child(3) { animation-delay: 0.24s; }
-.options-container .option-card:nth-child(4) { animation-delay: 0.30s; }
-.options-container .option-card:nth-child(5) { animation-delay: 0.36s; }
-.options-container .option-card:nth-child(6) { animation-delay: 0.42s; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.animate-fadeUp { animation: fadeUp 0.5s ease forwards; }
