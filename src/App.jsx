@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { questions } from './data/preguntas';
 import logo from './assets/logo.png';
+import onedataWhite from './assets/onedata-white.png';
+import awsWhite from './assets/AWS-white.png';
 import './App.css'; 
 
 export default function App() {
@@ -17,8 +19,10 @@ export default function App() {
   const [isFinished, setIsFinished] = useState(false);
 
   // --- PALETA DE COLORES ---
-  const oneDataDarkBlue = '#141f72'; 
-  const oneDataBrightBlue = '#2CB9F9'; 
+  const oneDataDarkBlue = '#000'; 
+  const oneDataBrightBlue = '#3533cd'; 
+ /*  const oneDataDarkBlue = '#141f72'; 
+  const oneDataBrightBlue = '#2CB9F9';  */
   const awsOrange = '#ff9900';
   const awsGray = '#808080';
 
@@ -50,7 +54,7 @@ export default function App() {
     if (!text) return "";
     return text
       .replace(/Generative AI/g, 'IA Generativa')
-      .replace(/Agentic AI/g, 'IA Agéntica')
+      .replace(/Agentic AI/g, 'Agentes de IA')
       .replace(/GenAI/g, 'IA Generativa');
   };
 
@@ -94,10 +98,11 @@ export default function App() {
     const isFormValid = userInfo.nombre.trim() !== '' && userInfo.organizacion.trim() !== '' && userInfo.correo.trim() !== '';
 
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
+        <img src={onedataWhite} alt="" aria-hidden="true" style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }} />
+        <img src={awsWhite} alt="" aria-hidden="true" style={{ position: 'absolute', width: 1, height: 1, opacity: 0, pointerEvents: 'none' }} />
         <div style={{ flex: '1 1 500px', background: oneDataDeepGradient, padding: '5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', color: 'white' }}>
           <img src={logo} alt="OneData Logo" style={{ width: '380px', marginBottom: '4rem', maxWidth: '100%' }} />
-          {/* TAMAÑOS AJUSTADOS AQUÍ */}
           <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1.5rem', lineHeight: '1.2', textAlign: 'left' }}>
             ¿Listo para potenciar su competitividad con IA?
           </h1>
@@ -161,6 +166,9 @@ export default function App() {
       }}>
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: oneDataDeepGradient, zIndex: 0 }}></div>
 
+        <img src={onedataWhite} alt="OneData" className="corner-logo left" />
+        <img src={awsWhite} alt="AWS" className="corner-logo right" />
+
         <div style={{ 
           position: 'relative', zIndex: 1, maxWidth: '1200px', width: '100%', height: '90vh', 
           background: '#ffffff', padding: '4vh 3vw', borderRadius: '24px', 
@@ -171,25 +179,25 @@ export default function App() {
             
             <div className="results-left">
               <div>
-                {/* TÍTULO RESULTADOS NORMALIZADO */}
                 <h2 style={{ fontSize: '2.2rem', color: oneDataDarkBlue, fontWeight: '900', margin: '0 0 2vh 0', lineHeight: '1.1', textAlign: 'left' }}>
                   Resultados del Diagnóstico
                 </h2>
                 
                 <div style={{ backgroundColor: '#f4f6f9', padding: '1.5vh 1.5vw', borderRadius: '12px', marginBottom: '3vh', textAlign: 'left' }}>
-                  <p style={{ margin: '0 0 0.5vh 0', color: oneDataDarkBlue, fontSize: '0.95rem' }}><strong>Organización:</strong> {userInfo.organizacion}</p>
-                  <p style={{ margin: '0 0 0.5vh 0', color: awsGray, fontSize: '0.95rem' }}><strong>Evaluador:</strong> {userInfo.nombre}</p>
+                  <p style={{ margin: '0 0 0.5vh 0', fontSize: '0.95rem' }}>
+                    <span style={{ color: oneDataDarkBlue, fontWeight: 800 }}>{userInfo.nombre}</span>
+                    <span style={{ color: '#cbd5e1', margin: '0 0.6rem' }}>|</span>
+                    <span style={{ color: awsGray }}>{userInfo.organizacion}</span>
+                  </p>
                   <p style={{ margin: 0, color: awsGray, fontSize: '0.85rem' }}>Fecha: {userInfo.fecha}</p>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2vh' }}>
                   <h3 style={{ margin: 0, fontSize: '1.4rem', color: oneDataDarkBlue, fontWeight: '700' }}>Puntuación:</h3>
-                  {/* NÚMERO DE PUNTUACIÓN REDUCIDO PARA NO GRITAR */}
                   <span style={{ fontSize: '2.8rem', fontWeight: '900', color: awsOrange, lineHeight: '1' }}>{results.totalPoints} <span style={{fontSize: '1.4rem', color: awsGray}}>/ 50</span></span>
                 </div>
                 
                 <div style={{ textAlign: 'center', marginTop: '3vh', padding: '2vh', border: '1px dashed #cbd5e1', borderRadius: '16px' }}>
-                    {/* RESULTADO (EJ. IMPLEMENTANDO) NORMALIZADO */}
                     <h2 style={{ color: awsOrange, fontSize: '1.8rem', textTransform: 'uppercase', fontWeight: '900', letterSpacing: '-0.5px', margin: '0 0 1vh 0' }}>{results.classification}</h2>
                     <p style={{ fontSize: '1rem', color: oneDataDarkBlue, lineHeight: '1.4', margin: 0 }}><strong>Recomendación:</strong> {results.action}</p>
                 </div>
@@ -210,7 +218,6 @@ export default function App() {
             </div>
 
             <div className="results-right">
-              {/* TÍTULO DIMENSIONES NORMALIZADO */}
               <h3 style={{ fontSize: '1.4rem', color: oneDataDarkBlue, fontWeight: '800', margin: '0 0 2vh 0', textAlign: 'left' }}>Desglose por Dimensión</h3>
               
               <div className="results-grid">
@@ -248,40 +255,43 @@ export default function App() {
 
   return (
     <div style={{ 
-      height: '100vh', width: '100vw', overflow: 'hidden', 
+      position: 'relative', height: '100vh', width: '100vw', overflow: 'hidden', 
       backgroundColor: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', 
       padding: '2vh 2vw', boxSizing: 'border-box'
     }}>
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: oneDataDeepGradient, zIndex: 0 }}></div>
-      
+
+      <img src={onedataWhite} alt="OneData" className="corner-logo left" />
+      <img src={awsWhite} alt="AWS" className="corner-logo right" />
+
       <div style={{ 
-        position: 'relative', zIndex: 1, maxWidth: '1300px', width: '100%', height: '90vh', 
+        position: 'relative', zIndex: 1, maxWidth: '1500px', width: '100%', height: '90vh', 
         background: '#ffffff', padding: '3vh 3vw', borderRadius: '24px', 
         boxShadow: '0 30px 60px rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box'
       }}>
         
-        <div style={{ marginBottom: '2vh', flexShrink: 0, width: '100%', maxWidth: '900px', alignSelf: 'center' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.8rem', color: awsGray, fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                <span>Dimensión: <span style={{color: oneDataDarkBlue}}>{currentQuestion.dimension}</span></span>
-                <span>Pregunta {currentQuestionIndex + 1} / {questions.length}</span>
-            </div>
-            <div style={{ width: '100%', height: '8px', backgroundColor: '#edf2f7', borderRadius: '999px', overflow: 'hidden' }}>
-                <div style={{ width: `${progressPercentage}%`, height: '100%', backgroundColor: awsOrange, borderRadius: '999px', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}></div>
-            </div>
+        <div key={currentQuestionIndex} style={{ marginBottom: '2vh', flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: awsGray, fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
+            <span>Dimensión de negocio: <span style={{color: oneDataDarkBlue}}>{translateText(currentQuestion.title || '')}</span></span>
+            <span>Pregunta {currentQuestionIndex + 1} / {questions.length}</span>
+          </div>
+
+          <div style={{ width: '100%', height: '8px', backgroundColor: '#edf2f7', borderRadius: '999px', overflow: 'hidden' }}>
+            <div style={{ width: `${progressPercentage}%`, height: '100%', backgroundColor: awsOrange, borderRadius: '999px', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}></div>
+          </div>
         </div>
 
-        <div style={{ flexShrink: 0, textAlign: 'center', marginBottom: '2vh' }}>
-            {/* TÍTULO DE PREGUNTA REDUCIDO */}
-            <h2 style={{ color: '#1a202c', fontSize: '1.8rem', marginBottom: '1vh', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto' }}>
+        <div style={{ flexShrink: 0, textAlign: 'center' }}>
+            <h2 key={`text-${currentQuestionIndex}`} className="question-text" style={{ color: '#1a202c', fontSize: '1.8rem', marginBottom: '1vh', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto', paddingTop: '3vh' }}>
               {translateText(currentQuestion.text)}
             </h2>
-            <p style={{ color: '#718096', margin: '1vh 0', fontSize: '1rem' }}>
+            <p style={{ color: '#718096', marginTop: '1vh', fontSize: '1rem' }}>
               Por favor, seleccione una de las respuestas a continuación:
             </p>
         </div>
         
         <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', overflow: 'hidden' }}>
-            <div className="options-container">
+          <div className="options-container" key={`opts-${currentQuestionIndex}`}>
               {currentQuestion.options.map((opt) => {
                 const rawLabel = opt.label.split('-').pop().trim();
                 const cleanLabel = rawLabel.charAt(0).toUpperCase() + rawLabel.slice(1).toLowerCase();
@@ -293,7 +303,13 @@ export default function App() {
                     onClick={() => handleSelect(currentQuestion.id, opt.points)}
                     className={`option-card ${isSelected ? 'selected' : ''}`}
                   >
-                    <span className="option-text">{cleanLabel}</span>
+                    <div className="option-body" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontWeight: 800, marginBottom: '1.2rem', color: oneDataDarkBlue, fontSize: '1.25rem' }}>{translateText(opt.title)}</div>
+                        <div className="option-desc" style={{ color: '#222', fontSize: '1rem' }}>{translateText(opt.desc)}</div>
+                      </div>
+                      <span className="option-label">{cleanLabel}</span>
+                    </div>
                   </button>
                 );
               })}
@@ -309,7 +325,7 @@ export default function App() {
                     backgroundColor: currentQuestionIndex === 0 ? '#e2e8f0' : '#ffffff', 
                     color: currentQuestionIndex === 0 ? '#a0aec0' : awsGray, 
                     border: '1px solid #cbd5e1', borderRadius: '999px', 
-                    cursor: currentQuestionIndex === 0 ? 'not-allowed' : 'pointer',
+                    cursor: currentQuestionIndex === 0 ? 'default' : 'pointer',
                     fontSize: '1rem', fontWeight: '600', transition: 'all 0.2s ease',
                     boxShadow: 'none'
                 }}
@@ -325,7 +341,7 @@ export default function App() {
                     backgroundColor: !isCurrentQuestionAnswered ? '#e2e8f0' : awsOrange, 
                     color: !isCurrentQuestionAnswered ? '#a0aec0' : '#ffffff', 
                     border: 'none', borderRadius: '999px', 
-                    cursor: !isCurrentQuestionAnswered ? 'not-allowed' : 'pointer',
+                    cursor: !isCurrentQuestionAnswered ? 'default' : 'pointer',
                     fontSize: '1rem', fontWeight: '600', transition: 'all 0.2s ease',
                     boxShadow: !isCurrentQuestionAnswered ? 'none' : '0 4px 10px rgba(255,153,0,0.3)'
                 }}

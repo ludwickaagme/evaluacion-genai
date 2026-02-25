@@ -23,22 +23,24 @@ body, html {
   justify-content: center;
   gap: 1.5vw; 
   width: 100%;
-  height: 100%;
+  height: 80%;
   min-height: 0; 
+  margin-top: 3vh;
+  margin-bottom: 3vh;
 }
 
 .option-card {
   background-color: #ffffff;
-  border: 1px solid #f0f0f0; 
-  border-radius: 16px; 
+  border: 1px solid #f0f0f0;
+  border-radius: 16px;
   padding: 1rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-  flex: 1; 
+  flex: 1;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   outline: none;
 }
@@ -49,22 +51,43 @@ body, html {
 }
 
 .option-card.selected {
-  border-color: rgba(44, 185, 249, 0.3); 
-  background-color: #ffffff; 
+  border-color: rgba(44, 185, 249, 0.3);
+  background-color: #ffffff;
   transform: translateY(-4px);
-  box-shadow: 0 0 30px rgba(44, 185, 249, 0.4); 
+  box-shadow: 0 0 30px rgba(44, 185, 249, 0.4);
+  border-width: 2px; /* slightly thicker visual border */
 }
 
-.option-text {
-  display: block;
-  color: #2d3748;
-  font-size: 1.3rem; /* TAMAÑO FIJO: Ya no se hace gigante */
+.option-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.option-desc {
+  color: #5e6b81;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.option-label {
+  color: #1a202c; /* match main question text color */
+  font-size: 1.5rem;
   font-weight: 700;
-  transition: color 0.3s ease;
+  text-transform: none;
+  margin-top: 0.25rem;
 }
 
-.option-card.selected .option-text {
-  color: #141f72; 
+.option-card.selected .option-desc {
+  color: #141f72;
+  border-color: rgba(44, 185, 249, 0.3);
+  border-width: 5px;
 }
 
 /* =========================================
@@ -124,3 +147,49 @@ body, html {
     grid-template-columns: 1fr;
   }
 }
+
+.corner-logo {
+  position: absolute;
+  bottom: 18px;
+  width: 120px;
+  height: auto;
+  opacity: 0.98;
+  pointer-events: none;
+  z-index: 5;
+}
+.corner-logo.left { left: 18px; }
+.corner-logo.right { right: 18px; }
+
+@media (max-width: 992px) {
+  .corner-logo { display: none; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.question-title {
+  opacity: 0;
+  animation: fadeUp 420ms cubic-bezier(0.22, 0.9, 0.32, 1) 0.04s both;
+}
+
+.question-text {
+  opacity: 0;
+  animation: fadeUp 440ms cubic-bezier(0.22, 0.9, 0.32, 1) 0.08s both;
+}
+
+.options-container .option-card {
+  opacity: 0;
+  transform: translateY(8px);
+  animation-name: fadeUp;
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.22, 0.9, 0.32, 1);
+  animation-fill-mode: both;
+}
+.options-container .option-card:nth-child(1) { animation-delay: 0.12s; }
+.options-container .option-card:nth-child(2) { animation-delay: 0.18s; }
+.options-container .option-card:nth-child(3) { animation-delay: 0.24s; }
+.options-container .option-card:nth-child(4) { animation-delay: 0.30s; }
+.options-container .option-card:nth-child(5) { animation-delay: 0.36s; }
+.options-container .option-card:nth-child(6) { animation-delay: 0.42s; }
