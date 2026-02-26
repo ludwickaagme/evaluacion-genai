@@ -160,8 +160,8 @@ export default function App() {
       <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
         
         <div style={{ flex: '1 1 500px', ...darkFuturisticBackgroundStyle, padding: 'clamp(3rem, 6vh, 6rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
-          <img src={logo} alt="OneData" style={logoTopLeftStyle} />
-          <img src={awsWhite} alt="AWS" style={logoTopRightStyle} />
+          <img src={logo} alt="OneData" style={logoTopLeftStyle} loading="eager" decoding="sync" fetchpriority="high" />
+          <img src={awsWhite} alt="AWS" style={logoTopRightStyle} loading="eager" decoding="sync" fetchpriority="high" />
 
           <div style={{ marginTop: 'clamp(3rem, 6vh, 5rem)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
             <div style={{ maxWidth: '550px' }}>
@@ -268,8 +268,8 @@ export default function App() {
         display: 'flex', alignItems: 'center', justifyContent: 'center', 
         padding: '5vh 3vw', boxSizing: 'border-box', position: 'relative'
       }}>
-        <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} className="no-print" />
-        <img src={awsWhite} alt="AWS" style={logoTopRightStyle} className="no-print" />
+        <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} loading="eager" decoding="sync" fetchpriority="high" className="no-print" />
+        <img src={awsWhite} alt="AWS" style={logoTopRightStyle} loading="eager" decoding="sync" fetchpriority="high" className="no-print" />
 
         <div style={{ 
           position: 'relative', zIndex: 1, maxWidth: '1400px', width: '100%', 
@@ -437,8 +437,8 @@ export default function App() {
       padding: '5vh 2vw', boxSizing: 'border-box', position: 'relative'
     }}>
 
-      <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} />
-      <img src={awsWhite} alt="AWS" style={logoTopRightStyle} />
+      <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} loading="eager" decoding="sync" fetchpriority="high" />
+      <img src={awsWhite} alt="AWS" style={logoTopRightStyle} loading="eager" decoding="sync" fetchpriority="high" />
 
       <div style={{ 
         position: 'relative', zIndex: 1, maxWidth: '1500px', width: '100%', 
@@ -448,29 +448,29 @@ export default function App() {
         gap: '2rem' 
       }}>
         
-        <div key={currentQuestionIndex} style={{ flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: awsGray, fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
+        <div key={`header-${currentQuestionIndex}`} className="animate-fadeUp" style={{ flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
+          <div className="animate-fadeUp" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: awsGray, fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
             <span>Dimensión de negocio: <span style={{color: oneDataBrightBlue}}>{translateText(currentQuestion.title || '')}</span></span>
             <span>Pregunta {currentQuestionIndex + 1} / {questions.length}</span>
           </div>
 
-          <div style={{ width: '100%', height: '8px', backgroundColor: '#edf2f7', borderRadius: '999px', overflow: 'hidden' }}>
+          <div className="animate-fadeUp" style={{ width: '100%', height: '8px', backgroundColor: '#edf2f7', borderRadius: '999px', overflow: 'hidden' }}>
             <div style={{ width: `${progressPercentage}%`, height: '100%', backgroundColor: awsOrange, borderRadius: '999px', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}></div>
           </div>
         </div>
 
         <div style={{ flexShrink: 0, textAlign: 'center' }}>
-            <h2 key={`text-${currentQuestionIndex}`} className="question-text" style={{ color: oneDataDarkBlue, fontSize: '1.8rem', marginBottom: '1rem', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto' }}>
+            <h2 key={`text-${currentQuestionIndex}`} className="question-text animate-fadeUp" style={{ color: oneDataDarkBlue, fontSize: '1.8rem', marginBottom: '1rem', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto' }}>
               {translateText(currentQuestion.text)}
             </h2>
-            <p style={{ color: '#718096', margin: 0, fontSize: '1rem' }}>
+            <p className="animate-fadeUp" style={{ color: '#718096', margin: 0, fontSize: '1rem' }}>
               Por favor, seleccione una de las respuestas a continuación:
             </p>
         </div>
         
         <div style={{ flexGrow: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', width: '100%' }}>
-          <div className="options-container" key={`opts-${currentQuestionIndex}`}>
-              {currentQuestion.options.map((opt) => {
+            <div className="options-container" key={`opts-${currentQuestionIndex}`}>
+              {currentQuestion.options.map((opt, optIndex) => {
                 const rawLabel = opt.label.split('-').pop().trim();
                 const cleanLabel = rawLabel.charAt(0).toUpperCase() + rawLabel.slice(1).toLowerCase();
                 const isSelected = answers[currentQuestion.id] === opt.points;
@@ -491,7 +491,8 @@ export default function App() {
                   <button 
                     key={opt.level}
                     onClick={() => handleSelect(currentQuestion.id, opt.points)}
-                    className={`option-card ${isSelected ? 'selected' : ''}`}
+                    className={`option-card animate-fadeUp ${isSelected ? 'selected' : ''}`}
+                    style={{ animationDelay: `${optIndex * 80}ms` }}
                     style={getCardStyleVariables(opt.level, isSelected)}
                   >
                     <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
