@@ -15,11 +15,8 @@ body, html {
 }
 
 /* =========================================
-   ESTILOS GENERALES
+   LOGOS FLOTANTES
    ========================================= */
-.text-onedata { color: #000; }
-.text-aws { color: #ff9900; }
-
 .logo-top-left {
   position: absolute;
   top: 4vh;
@@ -48,33 +45,32 @@ body, html {
 }
 
 /* =========================================
-   CUESTIONARIO - TARJETAS DE OPCIÓN
+   CUESTIONARIO - TARJETAS DE OPCIÓN (CORREGIDO)
    ========================================= */
 .options-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: stretch; /* MAGIA: Fuerza a que todas las tarjetas sean del mismo alto */
   gap: 1.5vw; 
   width: 100%;
-  height: 80%;
-  min-height: 0; 
-  margin-top: 3vh;
-  margin-bottom: 3vh;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .option-card {
   background-color: #ffffff;
   border: 1px solid #f0f0f0;
   border-radius: 20px;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-  flex: 1;
+  flex: 1; /* Se reparten el espacio disponible por igual */
   display: flex;
-  align-items: stretch;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between; /* Empuja la etiqueta hasta abajo */
   outline: none;
   position: relative;
   overflow: hidden;
@@ -116,13 +112,14 @@ body, html {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: auto;
+  margin-top: 1.5rem;
   padding-top: 1rem;
+  border-top: 1px solid #f4f6f9; /* Agrega una línea sutil para separar la etiqueta */
 }
 .option-card.selected .option-label { color: #3533cd; }
 
 /* =========================================
-   DASHBOARD DE RESULTADOS (CORRECCIONES)
+   DASHBOARD DE RESULTADOS
    ========================================= */
 .results-container {
   display: flex;
@@ -139,26 +136,88 @@ body, html {
   padding-right: 2vw;
   border-right: 1px solid #f0f0f0;
   gap: 2vh; 
-  overflow-y: auto; 
   padding-bottom: 10px;
 }
 
-/* === ANIMACIÓN DE GRÁFICA CIRCULAR === */
-.circle {
-  stroke-linecap: round;
-  stroke-dashoffset: 113; /* Empuja el trazo fuera de la vista */
-  animation: drawCircle 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
-}
-@keyframes drawCircle {
-  to { stroke-dashoffset: 0; } /* Lo trae a la vista gradualmente */
+.user-info-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: left;
+    border-left: 4px solid #3533cd;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    flex-shrink: 0; 
 }
 
-/* === ACOMODO COMPACTO DE TARJETAS DERECHAS === */
+.score-gauge-container {
+    position: relative;
+    width: 160px; 
+    height: 160px;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+.circular-chart {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.circle-bg {
+  fill: none;
+  stroke: #edf2f7;
+  stroke-width: 2.5;
+}
+.circle {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dashoffset: 113; 
+  animation: drawCircle 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+@keyframes drawCircle { to { stroke-dashoffset: 0; } }
+
+.score-text-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.classification-card {
+    background: linear-gradient(135deg, #fff 0%, #fefefe 100%);
+    border-radius: 20px;
+    padding: 1.5rem; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    text-align: center;
+    border: 1px solid #f0f4f8;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0; 
+    min-height: min-content;
+    margin-bottom: 1vh;
+}
+.classification-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -50%;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(53, 51, 205, 0.08) 0%, rgba(255,255,255,0) 70%);
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.results-main {
+  flex: 1.6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .dimensions-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px 24px; /* Espaciado fijo en píxeles para que no se separen de más */
-  align-content: start; /* MAGIA: Empaqueta las tarjetas hacia arriba para que no floten */
+  gap: 16px 24px; 
+  align-content: start; 
 }
 
 .dimension-card {
@@ -189,16 +248,30 @@ body, html {
 
 .dimension-body { padding: 1rem 1.2rem; }
 
-/* === ANIMACIÓN DE BARRAS HORIZONTALES === */
+.progress-container-modern {
+    height: 10px;
+    background-color: #edf2f7;
+    border-radius: 6px;
+    overflow: hidden;
+}
 .progress-bar-modern {
     height: 100%;
     border-radius: 4px;
     background: linear-gradient(90deg, #ff9900, #ffb347);
-    max-width: 0; /* Inicia en 0 para la animación */
+    max-width: 0; 
     animation: fillBar 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
 }
-@keyframes fillBar {
-    to { max-width: 100%; } /* Crece hasta el width establecido en React */
+@keyframes fillBar { to { max-width: 100%; } }
+
+@media (max-width: 1100px) {
+  .results-container { flex-direction: column; gap: 3vh; }
+  .results-sidebar { border-right: none; border-bottom: 1px solid #f0f0f0; padding-right: 0; padding-bottom: 3vh; margin-bottom: 3vh; flex: none; gap: 3vh; }
+  .results-main { flex: none; }
+}
+@media (max-width: 768px) {
+  .options-container { flex-direction: column; height: auto; }
+  .option-card { min-height: 120px; flex: none; }
+  .dimensions-grid { grid-template-columns: 1fr; }
 }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

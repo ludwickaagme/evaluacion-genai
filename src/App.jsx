@@ -19,33 +19,30 @@ export default function App() {
   const [answers, setAnswers] = useState({});
   const [isFinished, setIsFinished] = useState(false);
 
-  // --- PALETA DE COLORES ---
   const oneDataDarkBlue = '#000'; 
   const oneDataBrightBlue = '#3533cd'; 
   const awsOrange = '#ff9900';
   const awsGray = '#808080';
 
-  // --- 1. FONDO OSCURECIDO (Solo para Portada) ---
+  // --- FONDOS CONFIGURADOS PARA SCROLL ---
   const darkFuturisticBackgroundStyle = {
-    // Un degradado suave (50% a 70% oscuro) para que resalte el texto sin perder el neón
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${fondo})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed', // Hace que la imagen no se corte si el usuario baja
     backgroundColor: oneDataDarkBlue, 
   };
 
-  // --- 2. FONDO BRILLANTE ORIGINAL (Para Cuestionario y Resultados) ---
   const lightFuturisticBackgroundStyle = {
-    // La imagen pura y dura, sin filtros
     backgroundImage: `url(${fondo})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
     backgroundRepeat: 'no-repeat',
+    backgroundAttachment: 'fixed', 
     backgroundColor: oneDataDarkBlue, 
   };
 
-  // --- ESTILOS EN LÍNEA BLINDADOS PARA LOS LOGOS ---
   const logoTopLeftStyle = {
     position: 'absolute',
     top: '4vh',
@@ -126,9 +123,7 @@ export default function App() {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
         
-        {/* PANEL IZQUIERDO: SE USA EL FONDO OSCURO (darkFuturisticBackgroundStyle) */}
         <div style={{ flex: '1 1 500px', ...darkFuturisticBackgroundStyle, padding: 'clamp(3rem, 6vh, 6rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
-          
           <img src={logo} alt="OneData" style={logoTopLeftStyle} />
           <img src={awsWhite} alt="AWS" style={logoBottomRightStyle} />
 
@@ -137,21 +132,16 @@ export default function App() {
               <h1 style={{ color: '#ffffff', fontSize: 'clamp(2.5rem, 5vh, 3.5rem)', fontWeight: '900', marginBottom: '1.5rem', lineHeight: '1.2', textAlign: 'left', letterSpacing: '-0.02em' }}>
                 ¿Listo para potenciar su competitividad con IA?
               </h1>
-              
               <p style={{ color: '#ffffff', fontSize: 'clamp(1.1rem, 2.2vh, 1.25rem)', lineHeight: '1.6', textAlign: 'left', marginBottom: '2.5rem', fontWeight: '400', opacity: '0.95' }}>
                 Realice este breve diagnóstico para generar su plan de acción personalizado y definir su siguiente paso estratégico en Inteligencia Artificial Generativa.
               </p>
-
               <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(255,255,255,0.2)', marginBottom: '2.5rem' }}></div>
-
               <p style={{ color: '#ffffff', fontSize: 'clamp(1.05rem, 2vh, 1.15rem)', marginBottom: '2rem', lineHeight: '1.6', textAlign: 'left', opacity: '0.95' }}>
                 Está innovando a gran velocidad para transformar su negocio, pero ¿cómo asegurar su competitividad? Descúbralo ahora.
               </p>
-              
               <p style={{ fontSize: '1.15rem', fontWeight: '800', marginBottom: '1.5rem', color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'left' }}>
                 Sus resultados incluirán:
               </p>
-              
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, textAlign: 'left', color: '#ffffff' }}>
                 <li style={{ marginBottom: '1.2rem', display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
                   <div style={{ width: '8px', height: '8px', backgroundColor: oneDataBrightBlue, marginTop: '0.5rem', flexShrink: 0, borderRadius: '50%' }}></div>
@@ -170,7 +160,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* PANEL DERECHO */}
         <div style={{ flex: '1 1 450px', backgroundColor: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
           <div style={{ maxWidth: '500px', width: '100%', background: '#ffffff', padding: 'clamp(3rem, 5vh, 4rem)', borderRadius: '24px', boxShadow: '0 25px 50px rgba(0,0,0,0.1)' }}>
             <h2 style={{ color: oneDataDarkBlue, fontSize: 'clamp(1.8rem, 3vh, 2.2rem)', marginBottom: '1rem', fontWeight: '900', lineHeight: '1.1' }}>Comience su diagnóstico</h2>
@@ -215,7 +204,7 @@ export default function App() {
   }
 
   // ==========================================
-  // 2. RESULTADOS
+  // 2. RESULTADOS (AHORA CON MINHEIGHT PERMITIENDO SCROLL)
   // ==========================================
   if (isFinished) {
     const results = calculateResults();
@@ -224,16 +213,17 @@ export default function App() {
 
     return (
       <div style={{ 
-        height: '100vh', width: '100vw', overflow: 'hidden', 
-        ...lightFuturisticBackgroundStyle, // <--- SE USA EL FONDO ORIGINAL AQUÍ
+        minHeight: '100vh', width: '100vw', // <-- minHeight soluciona el problema del recorte
+        ...lightFuturisticBackgroundStyle, 
         display: 'flex', alignItems: 'center', justifyContent: 'center', 
-        padding: '3vh 3vw', boxSizing: 'border-box', position: 'relative'
+        padding: '5vh 3vw', boxSizing: 'border-box', position: 'relative'
       }}>
         <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} />
         <img src={awsWhite} alt="AWS" style={logoBottomRightStyle} />
 
         <div style={{ 
-          position: 'relative', zIndex: 1, maxWidth: '1400px', width: '100%', height: '88vh', 
+          position: 'relative', zIndex: 1, maxWidth: '1400px', width: '100%', 
+          minHeight: '85vh', height: 'auto', // <-- Permite que la tarjeta crezca si lo necesita
           background: '#ffffff', borderRadius: '24px', 
           boxShadow: '0 30px 70px rgba(0,0,0,0.5)', 
           boxSizing: 'border-box', overflow: 'hidden',
@@ -244,10 +234,9 @@ export default function App() {
              <h2 style={{ fontSize: '1.8rem', color: oneDataDarkBlue, fontWeight: '900', margin: 0 }}>Dashboard de Madurez IA</h2>
           </div>
 
-          <div className="results-container" style={{ padding: '3vh 4vw', overflowY: 'auto', display: 'flex', gap: '4vw', height: '100%' }}>
+          <div className="results-container" style={{ padding: '3vh 4vw', display: 'flex', gap: '4vw' }}>
             
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2vh', paddingRight: '2vw', borderRight: '1px solid #eee' }}>
-              
               <div style={{ background: '#f8f9fa', padding: '1.2rem', borderRadius: '16px', borderLeft: `4px solid ${oneDataBrightBlue}`, flexShrink: 0 }}>
                 <h4 style={{ margin: '0 0 5px 0', color: oneDataDarkBlue, fontSize: '1rem' }}>Evaluación realizada para:</h4>
                 <p style={{ margin: '0 0 2px 0', fontSize: '1.1rem', fontWeight: 700, color: oneDataBrightBlue }}>{userInfo.nombre}</p>
@@ -328,7 +317,7 @@ export default function App() {
   }
 
   // ==========================================
-  // 3. CUESTIONARIO
+  // 3. CUESTIONARIO (CON MINHEIGHT PARA EVITAR CORTES)
   // ==========================================
   const currentQuestion = questions[currentQuestionIndex];
   const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
@@ -336,23 +325,24 @@ export default function App() {
 
   return (
     <div style={{ 
-      position: 'relative', height: '100vh', width: '100vw', overflow: 'hidden', 
-      backgroundColor: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', 
-      padding: '2vh 2vw', boxSizing: 'border-box'
+      minHeight: '100vh', width: '100vw', // <-- MINHEIGHT para que no restrinja la pantalla
+      ...lightFuturisticBackgroundStyle, 
+      display: 'flex', alignItems: 'center', justifyContent: 'center', 
+      padding: '5vh 2vw', boxSizing: 'border-box', position: 'relative'
     }}>
-      {/* SE USA EL FONDO ORIGINAL AQUÍ TAMBIÉN */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, ...lightFuturisticBackgroundStyle, zIndex: 0 }}></div>
 
       <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} />
       <img src={awsWhite} alt="AWS" style={logoBottomRightStyle} />
 
       <div style={{ 
-        position: 'relative', zIndex: 1, maxWidth: '1500px', width: '100%', height: '90vh', 
-        background: '#ffffff', padding: '3vh 3vw', borderRadius: '24px', 
-        boxShadow: '0 30px 70px rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box'
+        position: 'relative', zIndex: 1, maxWidth: '1500px', width: '100%', 
+        minHeight: '85vh', height: 'auto', // <-- Permite a la tarjeta blanca crecer orgánicamente
+        background: '#ffffff', padding: '3rem 3vw', borderRadius: '24px', 
+        boxShadow: '0 30px 70px rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', boxSizing: 'border-box',
+        gap: '2rem' // <-- Espaciado seguro entre elementos
       }}>
         
-        <div key={currentQuestionIndex} style={{ marginBottom: '2vh', flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
+        <div key={currentQuestionIndex} style={{ flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: awsGray, fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
             <span>Dimensión de negocio: <span style={{color: oneDataBrightBlue}}>{translateText(currentQuestion.title || '')}</span></span>
             <span>Pregunta {currentQuestionIndex + 1} / {questions.length}</span>
@@ -364,15 +354,15 @@ export default function App() {
         </div>
 
         <div style={{ flexShrink: 0, textAlign: 'center' }}>
-            <h2 key={`text-${currentQuestionIndex}`} className="question-text" style={{ color: oneDataDarkBlue, fontSize: '1.8rem', marginBottom: '1vh', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto', paddingTop: '3vh' }}>
+            <h2 key={`text-${currentQuestionIndex}`} className="question-text" style={{ color: oneDataDarkBlue, fontSize: '1.8rem', marginBottom: '1rem', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto' }}>
               {translateText(currentQuestion.text)}
             </h2>
-            <p style={{ color: '#718096', marginTop: '1vh', fontSize: '1rem' }}>
+            <p style={{ color: '#718096', margin: 0, fontSize: '1rem' }}>
               Por favor, seleccione una de las respuestas a continuación:
             </p>
         </div>
         
-        <div style={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', overflow: 'hidden' }}>
+        <div style={{ flexGrow: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', width: '100%' }}>
           <div className="options-container" key={`opts-${currentQuestionIndex}`}>
               {currentQuestion.options.map((opt) => {
                 const rawLabel = opt.label.split('-').pop().trim();
@@ -397,26 +387,25 @@ export default function App() {
                     onClick={() => handleSelect(currentQuestion.id, opt.points)}
                     className={`option-card ${isSelected ? 'selected' : ''}`}
                   >
-                    <div className="option-body" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                      <div style={{ textAlign: 'center', flexGrow: 1 }}>
-                        <div style={{ fontWeight: 800, marginBottom: '0.8rem', color: oneDataDarkBlue, fontSize: '1.15rem', lineHeight: '1.2' }}>
-                          {translatedTitle}
-                        </div>
-                        <div className="option-desc" style={{ color: '#2d3748', fontSize: '0.95rem', lineHeight: '1.4' }}>
-                          {translatedDesc}
-                        </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                      <div style={{ fontWeight: 800, marginBottom: '0.8rem', color: oneDataDarkBlue, fontSize: '1.15rem', lineHeight: '1.2' }}>
+                        {translatedTitle}
                       </div>
-                      <span className="option-label" style={{ marginTop: 'auto', paddingTop: '1rem' }}>
-                        {cleanLabel}
-                      </span>
+                      <div className="option-desc" style={{ color: '#2d3748', fontSize: '0.95rem', lineHeight: '1.4' }}>
+                        {translatedDesc}
+                      </div>
                     </div>
+                    {/* La etiqueta ahora siempre queda hasta abajo sola */}
+                    <span className="option-label">
+                      {cleanLabel}
+                    </span>
                   </button>
                 );
               })}
             </div>
         </div>
 
-        <div style={{ flexShrink: 0, display: 'flex', justifyContent: 'center', gap: '1.5rem', marginTop: '3vh' }}>
+        <div style={{ flexShrink: 0, display: 'flex', justifyContent: 'center', gap: '1.5rem' }}>
             <button 
                 onClick={goToPreviousQuestion}
                 disabled={currentQuestionIndex === 0}
