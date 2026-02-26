@@ -3,6 +3,7 @@ import { questions } from './data/preguntas';
 import logo from './assets/logo.png';
 import onedataWhite from './assets/onedata-white.png';
 import awsWhite from './assets/AWS-white.png';
+import fondo from './assets/fondo.jpg'; 
 import './App.css'; 
 
 export default function App() {
@@ -18,13 +19,33 @@ export default function App() {
   const [answers, setAnswers] = useState({});
   const [isFinished, setIsFinished] = useState(false);
 
+  // --- PALETA DE COLORES ---
   const oneDataDarkBlue = '#000'; 
   const oneDataBrightBlue = '#3533cd'; 
   const awsOrange = '#ff9900';
   const awsGray = '#808080';
 
-  const oneDataDeepGradient = `linear-gradient(135deg, ${oneDataDarkBlue} 0%, ${oneDataBrightBlue} 100%)`;
+  // --- 1. FONDO OSCURECIDO (Solo para Portada) ---
+  const darkFuturisticBackgroundStyle = {
+    // Un degradado suave (50% a 70% oscuro) para que resalte el texto sin perder el neón
+    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${fondo})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: oneDataDarkBlue, 
+  };
 
+  // --- 2. FONDO BRILLANTE ORIGINAL (Para Cuestionario y Resultados) ---
+  const lightFuturisticBackgroundStyle = {
+    // La imagen pura y dura, sin filtros
+    backgroundImage: `url(${fondo})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center center',
+    backgroundRepeat: 'no-repeat',
+    backgroundColor: oneDataDarkBlue, 
+  };
+
+  // --- ESTILOS EN LÍNEA BLINDADOS PARA LOS LOGOS ---
   const logoTopLeftStyle = {
     position: 'absolute',
     top: '4vh',
@@ -105,8 +126,8 @@ export default function App() {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
         
-        {/* PANEL IZQUIERDO (AZUL) */}
-        <div style={{ flex: '1 1 500px', background: oneDataDeepGradient, padding: 'clamp(3rem, 6vh, 6rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
+        {/* PANEL IZQUIERDO: SE USA EL FONDO OSCURO (darkFuturisticBackgroundStyle) */}
+        <div style={{ flex: '1 1 500px', ...darkFuturisticBackgroundStyle, padding: 'clamp(3rem, 6vh, 6rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
           
           <img src={logo} alt="OneData" style={logoTopLeftStyle} />
           <img src={awsWhite} alt="AWS" style={logoBottomRightStyle} />
@@ -194,7 +215,7 @@ export default function App() {
   }
 
   // ==========================================
-  // 2. RESULTADOS (ANIMADO Y COMPACTO)
+  // 2. RESULTADOS
   // ==========================================
   if (isFinished) {
     const results = calculateResults();
@@ -204,7 +225,7 @@ export default function App() {
     return (
       <div style={{ 
         height: '100vh', width: '100vw', overflow: 'hidden', 
-        background: oneDataDeepGradient, 
+        ...lightFuturisticBackgroundStyle, // <--- SE USA EL FONDO ORIGINAL AQUÍ
         display: 'flex', alignItems: 'center', justifyContent: 'center', 
         padding: '3vh 3vw', boxSizing: 'border-box', position: 'relative'
       }}>
@@ -214,7 +235,7 @@ export default function App() {
         <div style={{ 
           position: 'relative', zIndex: 1, maxWidth: '1400px', width: '100%', height: '88vh', 
           background: '#ffffff', borderRadius: '24px', 
-          boxShadow: '0 30px 70px rgba(0,0,0,0.3)', 
+          boxShadow: '0 30px 70px rgba(0,0,0,0.5)', 
           boxSizing: 'border-box', overflow: 'hidden',
           display: 'flex', flexDirection: 'column'
         }}>
@@ -238,7 +259,6 @@ export default function App() {
                 <div style={{ position: 'relative', width: '130px', height: '130px', margin: '0 auto' }}> 
                   <svg viewBox="0 0 36 36" style={{ display: 'block', maxWidth: '100%', maxHeight: '100%' }}>
                     <path fill="none" stroke="#edf2f7" strokeWidth="2.5" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    {/* SVG PATH CON LA CLASE .circle QUE CONTIENE LA ANIMACIÓN */}
                     <path className="circle" fill="none" strokeWidth="2.5" strokeDasharray={circleDashArray} stroke={scoreColor} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
                   </svg>
                   <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
@@ -272,7 +292,6 @@ export default function App() {
             <div style={{ flex: 1.6, display: 'flex', flexDirection: 'column' }}>
               <h3 style={{ fontSize: '1.2rem', color: oneDataDarkBlue, fontWeight: '800', margin: '0 0 2vh 0', textAlign: 'left' }}>Desglose por Dimensión Estratégica</h3>
               
-              {/* LA CUADRÍCULA AHORA USA LA CLASE CSS PARA EMPAQUETARSE ARRIBA */}
               <div className="dimensions-grid">
                 {Object.entries(results.dimensionsScore).map(([dimension, score]) => {
                   const maxScore = (dimension === 'People' || dimension === 'Operations') ? 5 : 10;
@@ -293,7 +312,6 @@ export default function App() {
                           <span>{percentage.toFixed(0)}%</span>
                         </div>
                         <div style={{ height: '8px', backgroundColor: '#edf2f7', borderRadius: '4px', overflow: 'hidden' }}>
-                          {/* ESTA ES LA BARRA CON LA ANIMACIÓN CSS CONECTADA */}
                           <div className="progress-bar-modern" style={{ width: `${percentage}%` }}></div>
                         </div>
                       </div>
@@ -322,7 +340,8 @@ export default function App() {
       backgroundColor: '#f8f9fa', display: 'flex', alignItems: 'center', justifyContent: 'center', 
       padding: '2vh 2vw', boxSizing: 'border-box'
     }}>
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: oneDataDeepGradient, zIndex: 0 }}></div>
+      {/* SE USA EL FONDO ORIGINAL AQUÍ TAMBIÉN */}
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, ...lightFuturisticBackgroundStyle, zIndex: 0 }}></div>
 
       <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} />
       <img src={awsWhite} alt="AWS" style={logoBottomRightStyle} />
@@ -330,7 +349,7 @@ export default function App() {
       <div style={{ 
         position: 'relative', zIndex: 1, maxWidth: '1500px', width: '100%', height: '90vh', 
         background: '#ffffff', padding: '3vh 3vw', borderRadius: '24px', 
-        boxShadow: '0 30px 60px rgba(0,0,0,0.15)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box'
+        boxShadow: '0 30px 70px rgba(0,0,0,0.5)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box'
       }}>
         
         <div key={currentQuestionIndex} style={{ marginBottom: '2vh', flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
