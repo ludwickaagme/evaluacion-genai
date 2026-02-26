@@ -121,7 +121,6 @@ export default function App() {
     let action = "";
     let description = "";
 
-    // TEXTOS EJECUTIVOS MEJORADOS
     if (totalPercentage <= 40) { 
       classification = "🔍 EXPLORANDO";
       action = "Educación y Enablement";
@@ -140,7 +139,6 @@ export default function App() {
       description = "Operan como líderes en innovación tecnológica con IA. El enfoque debe mantenerse en la optimización continua, la exploración de agentes autónomos complejos y la maximización del ROI a nivel empresarial.";
     }
 
-    // Limpiamos los emojis para usar el texto plano en el reporte
     const cleanClassification = classification.replace(/[^a-zA-Z\s]/g, '').trim();
 
     return { totalPoints, totalPercentage, dimensionsScore, classification, cleanClassification, action, description };
@@ -160,8 +158,8 @@ export default function App() {
       <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
         
         <div style={{ flex: '1 1 500px', ...darkFuturisticBackgroundStyle, padding: 'clamp(3rem, 6vh, 6rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
-          <img src={logo} alt="OneData" style={logoTopLeftStyle} loading="eager" decoding="sync" fetchpriority="high" />
-          <img src={awsWhite} alt="AWS" style={logoTopRightStyle} loading="eager" decoding="sync" fetchpriority="high" />
+          <img src={logo} alt="OneData" style={logoTopLeftStyle} />
+          <img src={awsWhite} alt="AWS" style={logoTopRightStyle} />
 
           <div style={{ marginTop: 'clamp(3rem, 6vh, 5rem)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
             <div style={{ maxWidth: '550px' }}>
@@ -268,8 +266,8 @@ export default function App() {
         display: 'flex', alignItems: 'center', justifyContent: 'center', 
         padding: '5vh 3vw', boxSizing: 'border-box', position: 'relative'
       }}>
-        <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} loading="eager" decoding="sync" fetchpriority="high" className="no-print" />
-        <img src={awsWhite} alt="AWS" style={logoTopRightStyle} loading="eager" decoding="sync" fetchpriority="high" className="no-print" />
+        <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} className="no-print" />
+        <img src={awsWhite} alt="AWS" style={logoTopRightStyle} className="no-print" />
 
         <div style={{ 
           position: 'relative', zIndex: 1, maxWidth: '1400px', width: '100%', 
@@ -373,9 +371,6 @@ export default function App() {
                 })}
               </div>
 
-              {/* ========================================================
-                  NUEVO DISEÑO: PLAN DE ACCIÓN EJECUTIVO 
-                  ======================================================== */}
               <div style={{ marginTop: '2.5rem', borderTop: '2px solid #f0f4f8', paddingTop: '2rem' }}>
                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
                     <span style={{ fontSize: '1.6rem' }}>📑</span>
@@ -384,13 +379,11 @@ export default function App() {
 
                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                    
-                   {/* Bloque 1: Diagnóstico Actual */}
                    <div style={{ background: 'linear-gradient(to right, rgba(53, 51, 205, 0.04), transparent)', borderLeft: `5px solid ${oneDataBrightBlue}`, padding: '1.2rem 1.5rem', borderRadius: '0 12px 12px 0' }}>
                       <h4 style={{ color: oneDataBrightBlue, marginTop: 0, marginBottom: '0.6rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '800' }}>Diagnóstico Actual</h4>
                       <p style={{ margin: 0, color: '#2d3748', fontSize: '1.05rem', lineHeight: '1.6' }}>{results.description}</p>
                    </div>
 
-                   {/* Bloque 2: Recomendaciones (Checklist visual) */}
                    <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.02)' }}>
                       <h4 style={{ color: oneDataDarkBlue, marginTop: 0, marginBottom: '1.2rem', fontSize: '1.1rem', fontWeight: '800' }}>
                          🚀 Recomendaciones OneData + AWS
@@ -413,7 +406,6 @@ export default function App() {
 
                  </div>
               </div>
-              {/* FIN NUEVO DISEÑO */}
 
             </div>
           </div>
@@ -437,8 +429,8 @@ export default function App() {
       padding: '5vh 2vw', boxSizing: 'border-box', position: 'relative'
     }}>
 
-      <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} loading="eager" decoding="sync" fetchpriority="high" />
-      <img src={awsWhite} alt="AWS" style={logoTopRightStyle} loading="eager" decoding="sync" fetchpriority="high" />
+      <img src={onedataWhite} alt="OneData" style={logoTopLeftStyle} />
+      <img src={awsWhite} alt="AWS" style={logoTopRightStyle} />
 
       <div style={{ 
         position: 'relative', zIndex: 1, maxWidth: '1500px', width: '100%', 
@@ -448,29 +440,29 @@ export default function App() {
         gap: '2rem' 
       }}>
         
-        <div key={`header-${currentQuestionIndex}`} className="animate-fadeUp" style={{ flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
-          <div className="animate-fadeUp" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: awsGray, fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
+        <div key={currentQuestionIndex} style={{ flexShrink: 0, width: '100%', maxWidth: '1100px', alignSelf: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', color: awsGray, fontSize: '0.9rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '1px' }}>
             <span>Dimensión de negocio: <span style={{color: oneDataBrightBlue}}>{translateText(currentQuestion.title || '')}</span></span>
             <span>Pregunta {currentQuestionIndex + 1} / {questions.length}</span>
           </div>
 
-          <div className="animate-fadeUp" style={{ width: '100%', height: '8px', backgroundColor: '#edf2f7', borderRadius: '999px', overflow: 'hidden' }}>
+          <div style={{ width: '100%', height: '8px', backgroundColor: '#edf2f7', borderRadius: '999px', overflow: 'hidden' }}>
             <div style={{ width: `${progressPercentage}%`, height: '100%', backgroundColor: awsOrange, borderRadius: '999px', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)' }}></div>
           </div>
         </div>
 
         <div style={{ flexShrink: 0, textAlign: 'center' }}>
-            <h2 key={`text-${currentQuestionIndex}`} className="question-text animate-fadeUp" style={{ color: oneDataDarkBlue, fontSize: '1.8rem', marginBottom: '1rem', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto' }}>
+            <h2 key={`text-${currentQuestionIndex}`} className="question-text" style={{ color: oneDataDarkBlue, fontSize: '1.8rem', marginBottom: '1rem', fontWeight: '700', lineHeight: '1.3', maxWidth: '1000px', margin: '0 auto' }}>
               {translateText(currentQuestion.text)}
             </h2>
-            <p className="animate-fadeUp" style={{ color: '#718096', margin: 0, fontSize: '1rem' }}>
+            <p style={{ color: '#718096', margin: 0, fontSize: '1rem' }}>
               Por favor, seleccione una de las respuestas a continuación:
             </p>
         </div>
         
         <div style={{ flexGrow: 1, display: 'flex', alignItems: 'stretch', justifyContent: 'center', width: '100%' }}>
-            <div className="options-container" key={`opts-${currentQuestionIndex}`}>
-              {currentQuestion.options.map((opt, optIndex) => {
+          <div className="options-container" key={`opts-${currentQuestionIndex}`}>
+              {currentQuestion.options.map((opt) => {
                 const rawLabel = opt.label.split('-').pop().trim();
                 const cleanLabel = rawLabel.charAt(0).toUpperCase() + rawLabel.slice(1).toLowerCase();
                 const isSelected = answers[currentQuestion.id] === opt.points;
@@ -491,8 +483,7 @@ export default function App() {
                   <button 
                     key={opt.level}
                     onClick={() => handleSelect(currentQuestion.id, opt.points)}
-                    className={`option-card animate-fadeUp ${isSelected ? 'selected' : ''}`}
-                    style={{ animationDelay: `${optIndex * 80}ms` }}
+                    className={`option-card ${isSelected ? 'selected' : ''}`}
                     style={getCardStyleVariables(opt.level, isSelected)}
                   >
                     <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
