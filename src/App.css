@@ -15,43 +15,19 @@ body, html {
 }
 
 /* =========================================
-   LOGOS FLOTANTES
+   ESTILOS GENERALES
    ========================================= */
-.logo-top-left {
-  position: absolute;
-  top: 4vh;
-  left: 4vw;
-  max-width: 16vw;
-  max-height: 5vh; 
-  object-fit: contain;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.logo-bottom-right {
-  position: absolute;
-  bottom: 4vh;
-  right: 4vw;
-  max-width: 12vw;
-  max-height: 5vh; 
-  object-fit: contain;
-  z-index: 10;
-  pointer-events: none;
-  opacity: 0.95;
-}
-
-@media (max-width: 992px) {
-  .logo-top-left, .logo-bottom-right { display: none; }
-}
+.text-onedata { color: #000; }
+.text-aws { color: #ff9900; }
 
 /* =========================================
-   CUESTIONARIO - TARJETAS DE OPCIÓN (CORREGIDO)
+   CUESTIONARIO - TARJETAS DE OPCIÓN (NUEVOS COLORES DINÁMICOS)
    ========================================= */
 .options-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: stretch; /* MAGIA: Fuerza a que todas las tarjetas sean del mismo alto */
+  align-items: stretch; 
   gap: 1.5vw; 
   width: 100%;
   margin-top: 2rem;
@@ -59,18 +35,19 @@ body, html {
 }
 
 .option-card {
-  background-color: #ffffff;
-  border: 1px solid #f0f0f0;
+  /* Usamos variables CSS que se inyectan desde React */
+  background-color: var(--card-bg);
+  border: 2px solid var(--card-border); 
   border-radius: 20px;
   padding: 1.5rem 1rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-  flex: 1; /* Se reparten el espacio disponible por igual */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+  flex: 1; 
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Empuja la etiqueta hasta abajo */
+  justify-content: space-between; 
   outline: none;
   position: relative;
   overflow: hidden;
@@ -78,16 +55,15 @@ body, html {
 
 .option-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-  border-color: #e2e8f0;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+  border-color: var(--card-highlight); /* Al pasar el mouse toma el color fuerte */
 }
 
 .option-card.selected {
-  border-color: rgba(44, 185, 249, 0.5);
-  background-color: #ffffff;
+  background-color: #ffffff !important;
+  border-color: var(--card-highlight);
   transform: translateY(-4px);
-  box-shadow: 0 0 35px rgba(44, 185, 249, 0.25);
-  border-width: 2px; 
+  box-shadow: 0 0 30px var(--card-glow); /* Resplandor del color de la tarjeta */
 }
 
 .option-card.selected::before {
@@ -95,7 +71,7 @@ body, html {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 6px;
-    background: linear-gradient(90deg, #3533cd, #2CB9F9);
+    background: var(--card-highlight); /* Línea superior del color de la tarjeta */
 }
 
 .option-desc {
@@ -114,9 +90,13 @@ body, html {
   letter-spacing: 1px;
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid #f4f6f9; /* Agrega una línea sutil para separar la etiqueta */
+  border-top: 1px solid rgba(0,0,0,0.05); 
 }
-.option-card.selected .option-label { color: #3533cd; }
+
+/* El texto de la etiqueta toma el color de la tarjeta cuando se selecciona */
+.option-card.selected .option-label { 
+  color: var(--card-highlight); 
+}
 
 /* =========================================
    DASHBOARD DE RESULTADOS
@@ -132,7 +112,7 @@ body, html {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; 
+  justify-content: flex-start; 
   padding-right: 2vw;
   border-right: 1px solid #f0f0f0;
   gap: 2vh; 
@@ -210,7 +190,7 @@ body, html {
   flex: 1.6;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .dimensions-grid {
@@ -229,10 +209,6 @@ body, html {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-}
-.dimension-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
 }
 
 .dimension-header {
@@ -276,3 +252,15 @@ body, html {
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 .animate-fadeUp { animation: fadeUp 0.5s ease forwards; }
+
+/* =========================================
+   ESTILOS PARA IMPRESIÓN (PDF)
+   ========================================= */
+@media print {
+  body { background: white; }
+  .no-print { display: none !important; }
+  .results-container { flex-direction: row; gap: 2rem; }
+  .results-sidebar { border-right: 1px solid #ddd; }
+  .dimension-card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+  * { text-shadow: none !important; box-shadow: none !important; }
+}
