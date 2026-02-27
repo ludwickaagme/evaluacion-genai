@@ -26,7 +26,6 @@ export default function App() {
   const awsOrange = '#ff9900';
   const awsGray = '#808080';
 
-  // --- FONDOS ---
   const darkFuturisticBackgroundStyle = {
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${fondo})`,
     backgroundSize: 'cover',
@@ -45,7 +44,6 @@ export default function App() {
     backgroundColor: oneDataDarkBlue, 
   };
 
-  // --- LOGOS ---
   const logoTopLeftStyle = {
     position: 'absolute',
     top: '4vh',
@@ -92,9 +90,7 @@ export default function App() {
       4: { base: '#3533cd', bg: 'rgba(53, 51, 205, 0.06)', glow: 'rgba(53, 51, 205, 0.3)' },  
       5: { base: '#ff9900', bg: 'rgba(255, 153, 0, 0.06)', glow: 'rgba(255, 153, 0, 0.3)' }   
     };
-    
     const palette = palettes[level] || palettes[1];
-    
     return {
       '--card-bg': palette.bg,
       '--card-border': isSelected ? palette.base : palette.bg, 
@@ -140,7 +136,6 @@ export default function App() {
     }
 
     const cleanClassification = classification.replace(/[^a-zA-Z\s]/g, '').trim();
-
     return { totalPoints, totalPercentage, dimensionsScore, classification, cleanClassification, action, description };
   };
 
@@ -156,7 +151,6 @@ export default function App() {
 
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
-        
         <div style={{ flex: '1 1 500px', ...darkFuturisticBackgroundStyle, padding: 'clamp(3rem, 6vh, 6rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
           <img src={logo} alt="OneData" style={logoTopLeftStyle} />
           <img src={awsWhite} alt="AWS" style={logoTopRightStyle} />
@@ -278,136 +272,145 @@ export default function App() {
           display: 'flex', flexDirection: 'column'
         }}>
           
-          <div style={{ padding: '2.5vh 4vw', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {/* TÍTULO CENTRADO Y SIN EL BOTÓN DE DESCARGA */}
+          <div style={{ padding: '2.5vh 4vw', borderBottom: '1px solid #eee', textAlign: 'center' }}>
              <h2 style={{ fontSize: '1.8rem', color: oneDataDarkBlue, fontWeight: '900', margin: 0 }}>Dashboard de Madurez IA</h2>
-             
-             <button 
-                onClick={() => window.print()}
-                className="no-print"
-                style={{ 
-                  padding: '10px 20px', backgroundColor: oneDataBrightBlue, color: 'white', border: 'none', 
-                  borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px',
-                  boxShadow: '0 4px 10px rgba(53, 51, 205, 0.3)'
-                }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Descargar Resultados
-              </button>
           </div>
 
-          <div className="results-container" style={{ padding: '3vh 4vw', display: 'flex', gap: '4vw' }}>
+          <div style={{ padding: '3vh 4vw', display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
             
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2vh', paddingRight: '2vw', borderRight: '1px solid #eee' }}>
-              <div style={{ background: '#f8f9fa', padding: '1.2rem', borderRadius: '16px', borderLeft: `4px solid ${oneDataBrightBlue}`, flexShrink: 0 }}>
-                <h4 style={{ margin: '0 0 5px 0', color: oneDataDarkBlue, fontSize: '1rem' }}>Evaluación de:</h4>
-                <p style={{ margin: '0 0 2px 0', fontSize: '1.1rem', fontWeight: 700, color: oneDataBrightBlue }}>{userInfo.nombre} <span style={{color: '#a0aec0', fontSize: '0.9rem', fontWeight: 'normal'}}>| {userInfo.rol}</span></p>
-                <p style={{ margin: 0, color: awsGray, fontSize: '0.9rem' }}>{userInfo.organizacion} | {userInfo.fecha}</p>
-              </div>
+            <div className="results-columns">
+              
+              <div className="results-sidebar">
+                <div style={{ background: '#f8f9fa', padding: '1.2rem', borderRadius: '16px', borderLeft: `4px solid ${oneDataBrightBlue}`, flexShrink: 0 }}>
+                  <h4 style={{ margin: '0 0 5px 0', color: oneDataDarkBlue, fontSize: '1rem' }}>Evaluación de:</h4>
+                  <p style={{ margin: '0 0 2px 0', fontSize: '1.1rem', fontWeight: 700, color: oneDataBrightBlue }}>{userInfo.nombre} <span style={{color: '#a0aec0', fontSize: '0.9rem', fontWeight: 'normal'}}>| {userInfo.rol}</span></p>
+                  <p style={{ margin: 0, color: awsGray, fontSize: '0.9rem' }}>{userInfo.organizacion} | {userInfo.fecha}</p>
+                </div>
 
-              <div style={{ textAlign: 'center', flexShrink: 0 }}>
-                <h3 style={{ color: awsGray, textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.85rem', margin: '1vh 0' }}>Puntuación Global</h3>
-                <div style={{ position: 'relative', width: '130px', height: '130px', margin: '0 auto' }}> 
-                  <svg viewBox="0 0 36 36" style={{ display: 'block', maxWidth: '100%', maxHeight: '100%' }}>
-                    <path fill="none" stroke="#edf2f7" strokeWidth="2.5" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path className="circle" fill="none" strokeWidth="2.5" strokeDasharray={circleDashArray} stroke={scoreColor} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                  </svg>
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
-                    <span style={{ display: 'block', fontSize: '2rem', fontWeight: 900, color: oneDataDarkBlue, lineHeight: 1 }}>{results.totalPoints}</span>
-                    <span style={{ color: awsGray, fontSize: '0.9rem' }}>de 50</span>
+                {/* GRÁFICA Y TEXTO CENTRADOS DENTRO DE SU COLUMNA */}
+                <div style={{ flexShrink: 0, textAlign: 'center' }}>
+                  <h3 style={{ color: awsGray, textTransform: 'uppercase', letterSpacing: '1px', fontSize: '0.85rem', margin: '0 0 1vh 0' }}>Puntuación Global</h3>
+                  <div className="score-gauge-container"> 
+                    <svg viewBox="0 0 36 36" className="circular-chart">
+                      <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path className="circle" strokeDasharray={circleDashArray} stroke={scoreColor} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div className="score-text-center">
+                      <span style={{ display: 'block', fontSize: '2.2rem', fontWeight: 900, color: oneDataDarkBlue, lineHeight: 1 }}>{results.totalPoints}</span>
+                      <span style={{ color: awsGray, fontSize: '0.9rem' }}>de 50</span>
+                    </div>
                   </div>
                 </div>
+
+                <div className="classification-card">
+                    <h2 style={{ color: awsOrange, fontSize: '1.3rem', fontWeight: '900', margin: '0 0 0.5rem 0', letterSpacing: '-0.5px' }}>{results.classification}</h2>
+                    <p style={{ fontSize: '0.95rem', color: '#2d3748', lineHeight: '1.4', margin: 0 }}>
+                      <strong>Foco estratégico:</strong><br/> {results.action}
+                    </p>
+                </div>
+
+                <button 
+                  className="no-print"
+                  onClick={() => {
+                    setAnswers({}); 
+                    setUserInfo({ nombre: '', organizacion: '', correo: '', telefono: '', rol: '', fecha: new Date().toISOString().split('T')[0] });
+                    setIsFinished(false); 
+                    setHasStarted(false);
+                    setCurrentQuestionIndex(0);
+                  }}
+                  style={{ width: '100%', padding: '14px', backgroundColor: oneDataDarkBlue, color: '#ffffff', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold', flexShrink: 0 }}
+                >
+                  Realizar nueva evaluación
+                </button>
               </div>
 
-               <div style={{ background: 'linear-gradient(135deg, #fff 0%, #fefefe 100%)', borderRadius: '16px', padding: '1.2rem', boxShadow: '0 8px 20px rgba(0,0,0,0.06)', border: '1px solid #f0f4f8', flexShrink: 0 }}>
-                  <h2 style={{ color: awsOrange, fontSize: '1.3rem', fontWeight: '900', margin: '0 0 0.8rem 0', letterSpacing: '-0.5px' }}>{results.classification}</h2>
-                  <p style={{ fontSize: '0.95rem', color: '#2d3748', lineHeight: '1.4', margin: 0 }}>
-                    <strong>Foco estratégico:</strong><br/> {results.action}
-                  </p>
+              {/* DERECHA: Desglose de dimensiones */}
+              <div className="results-main">
+                <h3 style={{ fontSize: '1.2rem', color: oneDataDarkBlue, fontWeight: '800', margin: '0 0 2vh 0', textAlign: 'left' }}>Desglose por Dimensión Estratégica</h3>
+                
+                <div className="dimensions-grid">
+                  {Object.entries(results.dimensionsScore).map(([dimension, score]) => {
+                    const maxScore = (dimension === 'People' || dimension === 'Operations') ? 5 : 10;
+                    const percentage = (score / maxScore) * 100;
+                    const icon = dimension === 'Business' ? '💼' : dimension === 'People' ? '👥' : dimension === 'Governance' ? '⚖️' : dimension === 'Platform' ? '🛠️' : dimension === 'Security' ? '🔒' : '⚙️';
+                    
+                    return (
+                      <div key={dimension} className="dimension-card">
+                        <div className="dimension-header">
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem' }}>
+                            <span style={{ fontSize: '1.2rem' }}>{icon}</span> {dimension}
+                          </span>
+                          <span style={{ color: oneDataBrightBlue, fontWeight: 900 }}>{score} <span style={{color: '#cbd5e1', fontWeight: 400}}>/ {maxScore}</span></span>
+                        </div>
+                        <div className="dimension-body">
+                          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', fontSize: '0.85rem', color: awsGray, fontWeight: 600 }}>
+                            <span>Progreso</span>
+                            <span>{percentage.toFixed(0)}%</span>
+                          </div>
+                          <div style={{ height: '8px', backgroundColor: '#edf2f7', borderRadius: '4px', overflow: 'hidden' }}>
+                            <div className="progress-bar-modern" style={{ width: `${percentage}%` }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                
+                {/* BOTÓN DE DESCARGA MOVIDO DEBAJO DE LAS GRÁFICAS */}
+                <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'flex-end' }} className="no-print">
+                   <button 
+                      onClick={() => window.print()}
+                      style={{ 
+                        padding: '10px 20px', backgroundColor: oneDataBrightBlue, color: 'white', border: 'none', 
+                        borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px',
+                        boxShadow: '0 4px 10px rgba(53, 51, 205, 0.3)'
+                      }}
+                    >
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                      Descargar Resultados
+                    </button>
+                </div>
+
+              </div>
+            </div>
+
+            <div className="action-plan-section" style={{ borderTop: '2px solid #f0f4f8', paddingTop: '2rem' }}>
+               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
+                  <span style={{ fontSize: '1.6rem' }}>📑</span>
+                  <h3 style={{ fontSize: '1.4rem', color: oneDataDarkBlue, fontWeight: '900', margin: 0 }}>Plan de Acción Ejecutivo</h3>
                </div>
 
-              <button 
-                className="no-print"
-                onClick={() => {
-                  setAnswers({}); 
-                  setUserInfo({ nombre: '', organizacion: '', correo: '', telefono: '', rol: '', fecha: new Date().toISOString().split('T')[0] });
-                  setIsFinished(false); 
-                  setHasStarted(false);
-                  setCurrentQuestionIndex(0);
-                }}
-                style={{ marginTop: 'auto', width: '100%', padding: '14px', backgroundColor: oneDataDarkBlue, color: '#ffffff', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold', flexShrink: 0 }}
-              >
-                Realizar nueva evaluación
-              </button>
-            </div>
-
-            <div style={{ flex: 1.6, display: 'flex', flexDirection: 'column' }}>
-              <h3 style={{ fontSize: '1.2rem', color: oneDataDarkBlue, fontWeight: '800', margin: '0 0 2vh 0', textAlign: 'left' }}>Desglose por Dimensión Estratégica</h3>
-              
-              <div className="dimensions-grid">
-                {Object.entries(results.dimensionsScore).map(([dimension, score]) => {
-                  const maxScore = (dimension === 'People' || dimension === 'Operations') ? 5 : 10;
-                  const percentage = (score / maxScore) * 100;
-                  const icon = dimension === 'Business' ? '💼' : dimension === 'People' ? '👥' : dimension === 'Governance' ? '⚖️' : dimension === 'Platform' ? '🛠️' : dimension === 'Security' ? '🔒' : '⚙️';
-                  
-                  return (
-                    <div key={dimension} className="dimension-card">
-                      <div className="dimension-header">
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1rem' }}>
-                          <span style={{ fontSize: '1.2rem' }}>{icon}</span> {dimension}
-                        </span>
-                        <span style={{ color: oneDataBrightBlue, fontWeight: 900 }}>{score} <span style={{color: '#cbd5e1', fontWeight: 400}}>/ {maxScore}</span></span>
-                      </div>
-                      <div className="dimension-body">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px', fontSize: '0.85rem', color: awsGray, fontWeight: 600 }}>
-                          <span>Progreso</span>
-                          <span>{percentage.toFixed(0)}%</span>
-                        </div>
-                        <div style={{ height: '8px', backgroundColor: '#edf2f7', borderRadius: '4px', overflow: 'hidden' }}>
-                          <div className="progress-bar-modern" style={{ width: `${percentage}%` }}></div>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div style={{ marginTop: '2.5rem', borderTop: '2px solid #f0f4f8', paddingTop: '2rem' }}>
-                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1.5rem' }}>
-                    <span style={{ fontSize: '1.6rem' }}>📑</span>
-                    <h3 style={{ fontSize: '1.4rem', color: oneDataDarkBlue, fontWeight: '900', margin: 0 }}>Plan de Acción Ejecutivo</h3>
+               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                 
+                 <div style={{ background: 'linear-gradient(to right, rgba(53, 51, 205, 0.04), transparent)', borderLeft: `5px solid ${oneDataBrightBlue}`, padding: '1.5rem', borderRadius: '0 12px 12px 0' }}>
+                    <h4 style={{ color: oneDataBrightBlue, marginTop: 0, marginBottom: '0.6rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '800' }}>Diagnóstico Actual</h4>
+                    <p style={{ margin: 0, color: '#2d3748', fontSize: '1.05rem', lineHeight: '1.6', textAlign: 'left' }}>{results.description}</p>
                  </div>
 
-                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                   
-                   <div style={{ background: 'linear-gradient(to right, rgba(53, 51, 205, 0.04), transparent)', borderLeft: `5px solid ${oneDataBrightBlue}`, padding: '1.2rem 1.5rem', borderRadius: '0 12px 12px 0' }}>
-                      <h4 style={{ color: oneDataBrightBlue, marginTop: 0, marginBottom: '0.6rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '800' }}>Diagnóstico Actual</h4>
-                      <p style={{ margin: 0, color: '#2d3748', fontSize: '1.05rem', lineHeight: '1.6' }}>{results.description}</p>
-                   </div>
-
-                   <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.02)' }}>
-                      <h4 style={{ color: oneDataDarkBlue, marginTop: 0, marginBottom: '1.2rem', fontSize: '1.1rem', fontWeight: '800' }}>
-                         🚀 Recomendaciones OneData + AWS
-                      </h4>
-                      <ul style={{ margin: 0, paddingLeft: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                           <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold', flexShrink: 0, marginTop: '2px' }}>✓</div>
-                           <div style={{ color: '#4a5568', fontSize: '1rem', lineHeight: '1.5' }}><strong>Sesión de Descubrimiento:</strong> Agendar un workshop técnico y de negocio para analizar las brechas en las dimensiones con menor puntaje.</div>
-                        </li>
-                        <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                           <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold', flexShrink: 0, marginTop: '2px' }}>✓</div>
-                           <div style={{ color: '#4a5568', fontSize: '1rem', lineHeight: '1.5' }}><strong>Roadmap Arquitectónico:</strong> Diseñar una estrategia Cloud en AWS adaptada específicamente a su nivel actual ({results.cleanClassification}).</div>
-                        </li>
-                        <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                           <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold', flexShrink: 0, marginTop: '2px' }}>✓</div>
-                           <div style={{ color: '#4a5568', fontSize: '1rem', lineHeight: '1.5' }}><strong>Ejecución de Quick Wins:</strong> Priorizar 1 o 2 casos de uso de IA Generativa para construir una Prueba de Concepto (PoC) que demuestre valor a corto plazo.</div>
-                        </li>
-                      </ul>
-                   </div>
-
+                 <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.02)' }}>
+                    <h4 style={{ color: oneDataDarkBlue, marginTop: 0, marginBottom: '1.2rem', fontSize: '1.1rem', fontWeight: '800', textAlign: 'left' }}>
+                       🚀 Recomendaciones OneData + AWS
+                    </h4>
+                    <ul style={{ margin: 0, paddingLeft: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left' }}>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                         <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold', flexShrink: 0, marginTop: '2px' }}>✓</div>
+                         <div style={{ color: '#4a5568', fontSize: '1rem', lineHeight: '1.5' }}><strong>Sesión de Descubrimiento:</strong> Agendar un workshop técnico y de negocio para analizar las brechas en las dimensiones con menor puntaje.</div>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                         <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold', flexShrink: 0, marginTop: '2px' }}>✓</div>
+                         <div style={{ color: '#4a5568', fontSize: '1rem', lineHeight: '1.5' }}><strong>Roadmap Arquitectónico:</strong> Diseñar una estrategia Cloud en AWS adaptada específicamente a su nivel actual ({results.cleanClassification}).</div>
+                      </li>
+                      <li style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                         <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold', flexShrink: 0, marginTop: '2px' }}>✓</div>
+                         <div style={{ color: '#4a5568', fontSize: '1rem', lineHeight: '1.5' }}><strong>Ejecución de Quick Wins:</strong> Priorizar 1 o 2 casos de uso de IA Generativa para construir una Prueba de Concepto (PoC) que demuestre valor a corto plazo.</div>
+                      </li>
+                    </ul>
                  </div>
-              </div>
 
+               </div>
             </div>
+            
           </div>
         </div>
       </div>

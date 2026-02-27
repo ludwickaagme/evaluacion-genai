@@ -20,9 +20,6 @@ body, html {
 .text-onedata { color: #000; }
 .text-aws { color: #ff9900; }
 
-/* =========================================
-   CUESTIONARIO - TARJETAS DE OPCIÓN (NUEVOS COLORES DINÁMICOS)
-   ========================================= */
 .options-container {
   display: flex;
   flex-direction: row;
@@ -35,7 +32,6 @@ body, html {
 }
 
 .option-card {
-  /* Usamos variables CSS que se inyectan desde React */
   background-color: var(--card-bg);
   border: 2px solid var(--card-border); 
   border-radius: 20px;
@@ -56,14 +52,14 @@ body, html {
 .option-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 30px rgba(0,0,0,0.06);
-  border-color: var(--card-highlight); /* Al pasar el mouse toma el color fuerte */
+  border-color: var(--card-highlight); 
 }
 
 .option-card.selected {
   background-color: #ffffff !important;
   border-color: var(--card-highlight);
   transform: translateY(-4px);
-  box-shadow: 0 0 30px var(--card-glow); /* Resplandor del color de la tarjeta */
+  box-shadow: 0 0 30px var(--card-glow); 
 }
 
 .option-card.selected::before {
@@ -71,7 +67,7 @@ body, html {
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 6px;
-    background: var(--card-highlight); /* Línea superior del color de la tarjeta */
+    background: var(--card-highlight); 
 }
 
 .option-desc {
@@ -93,7 +89,6 @@ body, html {
   border-top: 1px solid rgba(0,0,0,0.05); 
 }
 
-/* El texto de la etiqueta toma el color de la tarjeta cuando se selecciona */
 .option-card.selected .option-label { 
   color: var(--card-highlight); 
 }
@@ -101,10 +96,9 @@ body, html {
 /* =========================================
    DASHBOARD DE RESULTADOS
    ========================================= */
-.results-container {
+.results-columns {
   display: flex;
   gap: 4vw; 
-  height: 100%;
   align-items: stretch;
 }
 
@@ -115,8 +109,9 @@ body, html {
   justify-content: flex-start; 
   padding-right: 2vw;
   border-right: 1px solid #f0f0f0;
-  gap: 2vh; 
+  gap: 2.5vh; 
   padding-bottom: 10px;
+  text-align: left; 
 }
 
 .user-info-card {
@@ -131,29 +126,32 @@ body, html {
 
 .score-gauge-container {
     position: relative;
-    width: 160px; 
-    height: 160px;
-    margin: 0 auto;
+    width: 150px; 
+    height: 150px;
+    margin: 0 auto; /* <-- VOLVIÓ AL CENTRO DE SU BLOQUE */
     flex-shrink: 0;
 }
+
 .circular-chart {
   display: block;
-  margin: 0 auto;
   max-width: 100%;
   max-height: 100%;
 }
+
 .circle-bg {
   fill: none;
   stroke: #edf2f7;
-  stroke-width: 2.5;
+  stroke-width: 3.8; 
 }
+
 .circle {
   fill: none;
-  stroke-width: 2.5;
+  stroke-width: 3.8; 
   stroke-linecap: round;
   stroke-dashoffset: 113; 
   animation: drawCircle 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
 }
+
 @keyframes drawCircle { to { stroke-dashoffset: 0; } }
 
 .score-text-center {
@@ -168,14 +166,14 @@ body, html {
     border-radius: 20px;
     padding: 1.5rem; 
     box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    text-align: center;
+    text-align: left; 
     border: 1px solid #f0f4f8;
     position: relative;
     overflow: hidden;
     flex-shrink: 0; 
     min-height: min-content;
-    margin-bottom: 1vh;
 }
+
 .classification-card::after {
     content: '';
     position: absolute;
@@ -230,6 +228,7 @@ body, html {
     border-radius: 6px;
     overflow: hidden;
 }
+
 .progress-bar-modern {
     height: 100%;
     border-radius: 4px;
@@ -237,30 +236,81 @@ body, html {
     max-width: 0; 
     animation: fillBar 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
 }
+
 @keyframes fillBar { to { max-width: 100%; } }
 
 @media (max-width: 1100px) {
-  .results-container { flex-direction: column; gap: 3vh; }
-  .results-sidebar { border-right: none; border-bottom: 1px solid #f0f0f0; padding-right: 0; padding-bottom: 3vh; margin-bottom: 3vh; flex: none; gap: 3vh; }
+  .results-columns { flex-direction: column; gap: 3vh; }
+  .results-sidebar { border-right: none; border-bottom: 1px solid #f0f0f0; padding-right: 0; padding-bottom: 3vh; flex: none; gap: 3vh; }
   .results-main { flex: none; }
 }
+
 @media (max-width: 768px) {
   .options-container { flex-direction: column; height: auto; }
   .option-card { min-height: 120px; flex: none; }
   .dimensions-grid { grid-template-columns: 1fr; }
 }
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.animate-fadeUp { animation: fadeUp 0.5s ease forwards; }
-
 /* =========================================
    ESTILOS PARA IMPRESIÓN (PDF)
    ========================================= */
 @media print {
-  body { background: white; }
+  @page {
+    margin: 1.5cm; 
+  }
+
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: white !important;
+  }
+
   .no-print { display: none !important; }
-  .results-container { flex-direction: row; gap: 2rem; }
-  .results-sidebar { border-right: 1px solid #ddd; }
-  .dimension-card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
-  * { text-shadow: none !important; box-shadow: none !important; }
+
+  div[style*="minHeight: 100vh"], div[style*="min-height: 100vh"] {
+    background: white !important;
+    padding: 0 !important;
+  }
+  
+  div[style*="max-width: 1400px"] {
+    box-shadow: none !important;
+    min-height: auto !important;
+    padding: 0 !important;
+  }
+
+  .results-columns {
+    display: flex !important;
+    flex-direction: row !important;
+  }
+
+  .results-sidebar {
+    flex: 0.8 !important; 
+    border-right: 1px solid #e2e8f0 !important;
+    padding-right: 2vw !important;
+  }
+
+  .results-main { 
+    flex: 1.5 !important;
+    padding-left: 2vw !important; 
+  }
+
+  .dimensions-grid {
+    gap: 1rem !important;
+  }
+  
+  .dimension-card {
+    break-inside: avoid !important; 
+    page-break-inside: avoid !important;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+
+  .action-plan-section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-top: 1.5rem !important;
+    padding-top: 1.5rem !important;
+  }
+
+  * { text-shadow: none !important; }
 }
