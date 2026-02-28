@@ -1,0 +1,151 @@
+{
+  "title": "¿Listo para potenciar su competitividad con IA?",
+  "subtitle": "Realice este breve diagnóstico para generar su plan de acción personalizado y definir su siguiente paso estratégico en Generative AI.",
+  "desc": "Está innovando a gran velocidad para transformar su negocio, pero ¿cómo asegurar su competitividad? Descúbralo ahora.",
+  "resultsInclude": "SUS RESULTADOS INCLUIRÁN:",
+  "bullet1": "Puntuación detallada de madurez frente al mercado.",
+  "bullet2": "Plan de acción personalizado para su transformación.",
+  "bullet3": "Recomendaciones estratégicas de expertos.",
+  "formTitle": "Comience su diagnóstico",
+  "formSub": "Complete sus datos para iniciar. Toma solo 5 minutos.",
+  "fName": "Nombre completo *",
+  "fCompany": "Empresa *",
+  "fEmail": "Correo corporativo *",
+  "fPhone": "Teléfono *",
+  "fRole": "Rol / Cargo *",
+  "fCountry": "País *",
+  "btnStart": "EMPEZAR DIAGNÓSTICO",
+  "selectCountry": "Seleccione su país...",
+  "btnBack": "← Atrás",
+  "btnNext": "Siguiente →",
+  "btnResults": "Ver Resultados",
+  "dimLabel": "Dimensión:",
+  "questionOf": "Pregunta {{current}} / {{total}}",
+  "selectOption": "Por favor, seleccione una de las respuestas a continuación:",
+  "dashTitle": "Dashboard de Madurez IA",
+  "dashDownload": "Descargar Resultados",
+  "dashEvalOf": "Evaluación de:",
+  "dashGlobalScore": "Puntuación Global",
+  "dashOf": "de 50",
+  "dashFocus": "Foco estratégico:",
+  "btnNewEval": "Realizar nueva evaluación",
+  "dashBreakdown": "Desglose por Dimensión Estratégica",
+  "dashProgress": "Progreso",
+  "planTitle": "Plan de Acción Ejecutivo",
+  "planCurrent": "Diagnóstico Actual",
+  "planRec": "🚀 Recomendaciones OneData + AWS",
+  "rec1Title": "Sesión de Descubrimiento:",
+  "rec1Desc": "Agendar un workshop técnico y de negocio para analizar las brechas en las dimensiones con menor puntaje.",
+  "rec2Title": "Roadmap Arquitectónico:",
+  "rec2Desc": "Diseñar una estrategia Cloud en AWS adaptada específicamente a su nivel actual ({{level}}).",
+  "rec3Title": "Ejecución de Quick Wins:",
+  "rec3Desc": "Priorizar 1 o 2 casos de uso de Generative AI para construir una Prueba de Concepto (PoC) que demuestre valor a corto plazo.",
+  "res": {
+    "exploring": { "class": "🔍 EXPLORANDO", "action": "Educación y Enablement", "desc": "Su organización se encuentra en una etapa inicial de exploración. El enfoque inmediato debe centrarse en la alfabetización en IA, la alineación de líderes de negocio y la creación de un marco seguro para la experimentación tecnológica." },
+    "adopting": { "class": "🚀 ADOPTANDO", "action": "Implementación Guiada", "desc": "Han dado pasos sólidos hacia la adopción de IA. El objetivo ahora es estructurar estas iniciativas aisladas mediante una prueba de concepto (PoC) bien definida, estableciendo KPIs claros y bases sólidas de gobernanza de datos." },
+    "implementing": { "class": "⚙️ IMPLEMENTANDO", "action": "Optimización y Escalado", "desc": "Cuentan con un nivel de madurez destacado con soluciones en marcha. La prioridad estratégica es escalar estas herramientas, integrar prácticas de MLOps/LLMOps y expandir el enablement a múltiples áreas de la empresa." },
+    "transforming": { "class": "🌟 TRANSFORMANDO", "action": "Innovación Estratégica", "desc": "Operan como líderes en innovación tecnológica con IA. El enfoque debe mantenerse en la optimización continua, la exploración de Agentic AI complejo y la maximización del ROI a nivel empresarial." }
+  },
+  "questions": [
+    {
+      "id": "Q1", "dimension": "Business", "title": "Identificación de casos de uso de Generative AI", "text": "¿Su organización tiene directrices para identificar y priorizar casos de uso que podrían beneficiarse de capacidades de Generative AI o Agentic AI?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen directrices.", "desc": "La identificación de casos de uso de Generative AI ocurre de manera reactiva y no coordinada, impulsada por intereses individuales." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Existen directrices básicas", "desc": "para Generative AI pero se aplican de manera inconsistente entre los equipos, sin alineación a objetivos organizacionales." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Directrices definidas", "desc": "para identificar oportunidades de Generative AI y Agentic AI con roles claros, priorización basada en valor comercial y evaluaciones de riesgo." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Las directrices se gestionan proactivamente", "desc": "con métricas cuantitativas. El rendimiento de las implementaciones existentes informa nuevos casos de uso." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Las directrices se evalúan continuamente", "desc": "y se refinan con datos. La organización busca proactivamente nuevos casos de uso e integra capacidades emergentes." }
+      ]
+    },
+    {
+      "id": "Q2", "dimension": "Business", "title": "Integración de Generative AI en Procesos", "text": "¿Su organización tiene mecanismos para integrar soluciones de Generative AI y Agentic AI en procesos de negocio existentes?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen mecanismos.", "desc": "Las soluciones de Generative AI se implementan como experimentos aislados sin un enfoque en la integración más amplia." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Enfoques de integración básicos", "desc": "están definidos pero se aplican de forma inconsistente. No existe un enfoque organizacional estandarizado." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Directrices definidas", "desc": "para integrar soluciones de Generative AI y Agentic AI. Se desarrolla capacitación para abordar nuevos requisitos de datos, privacidad y riesgo." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Mecanismos gestionados proactivamente", "desc": "con coordinación sólida. Los KPIs claros rastrean las mejoras de los procesos y el rendimiento de los agentes." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Optimización activa", "desc": "de la integración de Generative AI en los procesos. El enfoque se refina a través de ciclos de retroalimentación con métricas de impacto." }
+      ]
+    },
+    {
+      "id": "Q3", "dimension": "People", "title": "Programa de Desarrollo de Habilidades IA", "text": "¿Existe un programa de desarrollo de habilidades enfocado en diferentes roles (líderes de negocio, desarrolladores, ingenieros de datos, usuarios finales) cubriendo ML, Generative AI y Agentic AI?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No existe un programa estructurado.", "desc": "El aprendizaje ocurre individualmente sin distinción entre roles organizacionales." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Materiales de capacitación básicos", "desc": "están disponibles pero aplicados de manera inconsistente. Talleres informales para roles técnicos sin un enfoque estructurado." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Rutas de aprendizaje definidas", "desc": "para diferentes roles con sesiones regulares. Se define un plan de estudios y métodos de evaluación." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Programa integral", "desc": "para el desarrollo de habilidades gestionado activamente con progreso rastreado y métricas de desempeño." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Programa adaptativo que evoluciona", "desc": "con la retroalimentación y tecnologías emergentes. Las brechas de habilidades se abordan de forma proactiva." }
+      ]
+    },
+    {
+      "id": "Q4", "dimension": "Governance", "title": "Políticas de Uso de Responsible AI", "text": "¿Están integradas las políticas y directrices de Responsible AI en los procesos de desarrollo, pautas operativas y marcos de gestión de riesgos?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No hay políticas formales de Responsible AI.", "desc": "La documentación de modelos es ad-hoc sin un enfoque estandarizado. Los equipos deciden sin orientación formal." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Políticas básicas de Responsible AI", "desc": "existen pero se aplican de forma inconsistente. Las plantillas varían entre equipos con cobertura limitada." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Directrices de Responsible AI aplicadas", "desc": "en toda la organización con requisitos de documentación sobre principios éticos, privacidad y sesgo." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Marco de Responsible AI implementado", "desc": "con directrices de ejecución, planes de mitigación y procesos sólidos de gestión de riesgos." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Desarrollo y refinamiento proactivo", "desc": "de las directrices de Responsible AI. La documentación captura todo el AI lifecycle integrado con los sistemas de gobernanza." }
+      ]
+    },
+    {
+      "id": "Q5", "dimension": "Governance", "title": "Evaluación de Riesgos de IA", "text": "¿Se han establecido mecanismos para evaluar el impacto comercial, legal y ético de soluciones de IA no deterministas (resultados inesperados, alucinaciones, comportamiento impredecible de Agentic AI) junto con prácticas de mitigación?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No hay procesos formales de evaluación de riesgos.", "desc": "Las respuestas al comportamiento inesperado son reactivas y ocurren solo después de incidentes." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Mecanismos básicos y Guardrails", "desc": "existen pero se aplican inconsistentemente. Consideración limitada a los riesgos de Agentic AI." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Risk Assessment Framework estandarizado", "desc": "en toda la organización. Directrices documentadas para identificar, evaluar y mitigar riesgos." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "El marco incluye análisis de escenarios", "desc": "para anticipar resultados y su impacto. Se implementan estrategias de mitigación como Guardrails." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Estrategia integral y proactiva", "desc": "para la evaluación de riesgos de IA que evoluciona con las capacidades emergentes. Las mejores prácticas son compartidas." }
+      ]
+    },
+    {
+      "id": "Q6", "dimension": "Platform", "title": "Prácticas de AI-First Design", "text": "¿Ha adoptado su organización prácticas de AI-First Design, asegurando que los desarrolladores entiendan las características únicas de trabajar con ML, Generative AI y Agentic AI?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "Las prácticas de AI-First Design no se han adoptado.", "desc": "Los desarrolladores carecen de comprensión sobre conceptos de IA como resultados probabilísticos o Agentic AI." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Conciencia básica", "desc": "de cómo la incertidumbre de la IA afecta la experiencia del usuario. Las interfaces consideran limitaciones ocasionalmente." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Las aplicaciones son diseñadas considerando", "desc": "cómo la incertidumbre afecta a los usuarios. Existen patrones estándar para gestionar la incertidumbre y Agentic AI." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Prácticas de AI-First Design implementadas", "desc": "con habilidades avanzadas para crear experiencias de usuario robustas. Las métricas rastrean la satisfacción." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Las aplicaciones integran componentes de IA", "desc": "con cuantificación de incertidumbre avanzada y adaptación dinámica demostrando excelencia constante." }
+      ]
+    },
+    {
+      "id": "Q7", "dimension": "Platform", "title": "Plataformas de AI Lifecycle", "text": "¿Su organización utiliza plataformas de IA que soporten todos los aspectos del AI lifecycle —desde la preparación de datos hasta el despliegue— para soluciones de ML, Generative AI y Agentic AI?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "Herramientas y plataformas desconectadas", "desc": "soportan aspectos aislados del AI lifecycle. Los equipos usan diferentes herramientas para cada etapa." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Las plataformas soportan algunos aspectos", "desc": "del AI lifecycle. Los flujos de trabajo no están integrados de extremo a extremo, con soporte limitado para MLOps." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Las plataformas soportan la mayoría de aspectos", "desc": "del AI lifecycle con capacidades integradas, enfoques consistentes y automatización básica." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Las plataformas incluyen capacidades avanzadas", "desc": "para preparación de datos, desarrollo, automatización de implementación y gestión eficiente." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Las plataformas optimizan los flujos de trabajo", "desc": "en todas las etapas del AI lifecycle con herramientas de monitoreo avanzadas y mejora continua." }
+      ]
+    },
+    {
+      "id": "Q8", "dimension": "Security", "title": "Prácticas de Seguridad del Entorno", "text": "¿Se han implementado las mejores prácticas para mantener entornos y datos seguros, prevenir la fuga de información y proteger los sistemas de IA contra vulnerabilidades y comportamientos no deseados?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen prácticas de seguridad definidas", "desc": "para entornos de IA. Los controles de seguridad para modelos son ad-hoc y reactivos." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Existen controles de seguridad básicos", "desc": "pero no son exhaustivos para las necesidades específicas de la IA. La conciencia sobre la fuga de datos es inconsistente." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Existen directrices para evaluar y prevenir", "desc": "riesgos de fuga de datos. Los protocolos guían la protección de modelos, datos y comportamiento de Agentic AI." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Los controles de seguridad integrales son monitoreados", "desc": "activamente con métricas cuantitativas y detección automática de posibles fugas." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "La organización adapta y mejora proactivamente", "desc": "las prácticas de seguridad. Las medidas se optimizan continuamente en función de amenazas emergentes." }
+      ]
+    },
+    {
+      "id": "Q9", "dimension": "Security", "title": "AI Security Policies", "text": "¿Su organización ha establecido AI Security Policies claras, estándares y directrices junto con roles y responsabilidades bien definidos?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen AI Security Policies o estándares.", "desc": "Los roles de seguridad y responsabilidades para los sistemas de IA no están definidos o son poco claros." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "AI Security Policies básicas documentadas", "desc": "pero aplicadas de forma inconsistente. Los roles iniciales están definidos pero carecen de cobertura total de IA." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Un Governance framework está establecido", "desc": "con políticas y estándares claros. Los roles están bien definidos en todos los aspectos." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "El Governance framework integral es gestionado", "desc": "activamente con métricas cuantitativas. Auditorías regulares evalúan la efectividad de las políticas." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "La gobernanza de seguridad de IA se adapta", "desc": "de forma proactiva a los desafíos emergentes. Las AI Security Policies se actualizan continuamente." }
+      ]
+    },
+    {
+      "id": "Q10", "dimension": "Operations", "title": "Mecanismos de Observabilidad", "text": "¿Su organización ha establecido mecanismos automatizados para la observabilidad y respuesta a incidentes en las soluciones de IA?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Inicial", "title": "Falta de mecanismos de monitoreo automatizado.", "desc": "No hay una forma sistemática de detectar incidentes, dependiendo principalmente de informes de usuarios." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Se implementan herramientas básicas", "desc": "de monitoreo con una cobertura inconsistente. Existen alertas simples para fallas obvias." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Prácticas estandarizadas automatizadas.", "desc": "Los dashboards rastrean el rendimiento del modelo y la salud del sistema con alertas preconfiguradas." },
+        { "level": 4, "points": 4, "label": "Medido", "title": "Herramientas de observabilidad automatizadas", "desc": "proporcionan información profunda. Los mecanismos de respuesta manejan incidentes comunes con escalada rápida." },
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Capacidad de detectar, diagnosticar y resolver", "desc": "problemas antes de que impacten a los usuarios. Respuesta altamente automatizada con análisis predictivo." }
+      ]
+    }
+  ]
+}

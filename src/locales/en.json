@@ -1,0 +1,151 @@
+{
+  "title": "Ready to boost your competitiveness with AI?",
+  "subtitle": "Take this brief assessment to generate your personalized action plan and define your next strategic step in Generative AI.",
+  "desc": "You are innovating at high speed to transform your business, but how do you ensure competitiveness? Find out now.",
+  "resultsInclude": "YOUR RESULTS WILL INCLUDE:",
+  "bullet1": "Detailed maturity score benchmarked against the market.",
+  "bullet2": "Personalized action plan for your transformation.",
+  "bullet3": "Strategic recommendations from experts.",
+  "formTitle": "Start your assessment",
+  "formSub": "Fill in your details to begin. It takes only 5 minutes.",
+  "fName": "Full Name *",
+  "fCompany": "Company *",
+  "fEmail": "Corporate Email *",
+  "fPhone": "Phone *",
+  "fRole": "Role / Title *",
+  "fCountry": "Country *",
+  "btnStart": "START ASSESSMENT",
+  "selectCountry": "Select your country...",
+  "btnBack": "← Back",
+  "btnNext": "Next →",
+  "btnResults": "View Results",
+  "dimLabel": "Dimension:",
+  "questionOf": "Question {{current}} / {{total}}",
+  "selectOption": "Please select one of the answers below:",
+  "dashTitle": "AI Maturity Dashboard",
+  "dashDownload": "Download Results",
+  "dashEvalOf": "Assessment for:",
+  "dashGlobalScore": "Global Score",
+  "dashOf": "of 50",
+  "dashFocus": "Strategic focus:",
+  "btnNewEval": "Take a new assessment",
+  "dashBreakdown": "Breakdown by Strategic Dimension",
+  "dashProgress": "Progress",
+  "planTitle": "Executive Action Plan",
+  "planCurrent": "Current Diagnosis",
+  "planRec": "🚀 OneData + AWS Recommendations",
+  "rec1Title": "Discovery Session:",
+  "rec1Desc": "Schedule a technical and business workshop to analyze gaps in dimensions with lower scores.",
+  "rec2Title": "Architectural Roadmap:",
+  "rec2Desc": "Design a Cloud strategy on AWS specifically adapted to your current level ({{level}}).",
+  "rec3Title": "Quick Wins Execution:",
+  "rec3Desc": "Prioritize 1 or 2 Generative AI use cases to build a Proof of Concept (PoC) demonstrating short-term value.",
+  "res": {
+    "exploring": { "class": "🔍 EXPLORING", "action": "Education and Enablement", "desc": "Your organization is in an initial exploration stage. The immediate focus should be on AI literacy, aligning business leaders, and creating a secure framework for technological experimentation." },
+    "adopting": { "class": "🚀 ADOPTING", "action": "Guided Implementation", "desc": "You have taken solid steps toward AI adoption. The goal now is to structure these isolated initiatives through a well-defined proof of concept (PoC), establishing clear KPIs and solid data governance foundations." },
+    "implementing": { "class": "⚙️ IMPLEMENTING", "action": "Optimization and Scaling", "desc": "You have a prominent maturity level with running solutions. The strategic priority is to scale these tools, integrate MLOps/LLMOps practices, and expand enablement to multiple enterprise areas." },
+    "transforming": { "class": "🌟 TRANSFORMING", "action": "Strategic Innovation", "desc": "You operate as leaders in technological innovation with AI. The focus should remain on continuous optimization, exploring complex Agentic AI, and maximizing enterprise-wide ROI." }
+  },
+  "questions": [
+    {
+      "id": "Q1", "dimension": "Business", "title": "Generative AI Use Case Identification", "text": "Does your organization have guidelines to identify and prioritize use cases that could benefit from Generative AI or Agentic AI capabilities?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "No guidelines exist.", "desc": "Generative AI use case identification occurs reactively and in an uncoordinated manner, driven by individual interests or ad-hoc requests." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic guidelines exist", "desc": "for Generative AI but are applied inconsistently across teams, without alignment to organizational objectives." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Defined guidelines", "desc": "to identify Generative AI and Agentic AI opportunities with clear roles, business value-based prioritization, and risk assessments." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Guidelines are proactively managed", "desc": "with quantitative measurements. The performance of existing implementations informs new use cases with clear metrics." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "Guidelines are continuously evaluated and refined", "desc": "with data and feedback. The organization proactively seeks new use cases and integrates emerging capabilities." }
+      ]
+    },
+    {
+      "id": "Q2", "dimension": "Business", "title": "Generative AI Integration into Processes", "text": "Does your organization have mechanisms to integrate Generative AI and Agentic AI solutions into existing business processes?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "No integration mechanisms exist.", "desc": "Generative AI solutions are implemented as isolated experiments or proofs of concept without focus on broader integration." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic integration approaches", "desc": "are defined but applied inconsistently. There is no standardized organizational approach to incorporating Generative AI." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Defined guidelines", "desc": "to integrate Generative AI and Agentic AI solutions. Training is developed to address new data, privacy, and risk requirements." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Integration mechanisms are proactively managed", "desc": "with strong coordination. Clear KPIs track process improvements and agent performance." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "The organization actively optimizes integration", "desc": "of Generative AI into processes. The approach is refined through feedback cycles with measurable impact tracking." }
+      ]
+    },
+    {
+      "id": "Q3", "dimension": "People", "title": "AI Skills Development Program", "text": "Is there an AI skills development program focused on different personas (business leaders, AI developers, data engineers, data scientists, end users) covering ML, Generative AI, and Agentic AI?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "No structured program exists", "desc": "for AI skills development. Learning occurs individually without distinction between organizational roles." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic training materials", "desc": "are available but applied inconsistently. Informal workshops for technical roles without a structured persona-based focus." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Defined AI learning paths", "desc": "for different personas with regular sessions. Roles are defined in the learning journey with curriculum and evaluation methods." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Comprehensive program", "desc": "for skills development actively managed with tracked progress. Performance metrics are established and regularly reviewed." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "Adaptive program that evolves", "desc": "with feedback and emerging technologies. Skill gaps are addressed proactively with measurable business impact." }
+      ]
+    },
+    {
+      "id": "Q4", "dimension": "Governance", "title": "Responsible AI Usage Policies", "text": "Are Responsible AI policies and guidelines integrated into development processes, operational guidelines, and risk management frameworks?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "No formal Responsible AI policies exist.", "desc": "Model documentation is absent or ad-hoc without a standardized approach. Teams make decisions without formal guidance." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic Responsible AI policies", "desc": "exist but are applied inconsistently. Basic documentation templates vary across teams with limited coverage." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Responsible AI guidelines are applied", "desc": "across the organization with documentation requirements. Templates cover development, ethical principles, privacy, and bias." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Responsible AI framework", "desc": "with implementation guidelines, mitigation plans, and risk management processes. Robust model documentation." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "Proactive development and refinement", "desc": "of Responsible AI guidelines. Documentation captures the full AI lifecycle integrated with governance systems." }
+      ]
+    },
+    {
+      "id": "Q5", "dimension": "Governance", "title": "AI Risk Assessment", "text": "Has your organization established mechanisms to pre-assess the potential business, legal, and ethical impact of non-deterministic AI solutions (unexpected outputs, hallucinations, unpredictable Agentic AI behavior) along with mitigation practices?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "No formal AI risk assessment processes exist.", "desc": "Responses to unexpected behavior are reactive and occur only after incidents." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic Risk Assessment Framework", "desc": "and Guardrails exist but are applied inconsistently. Limited consideration of risks from Agentic AI." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Standardized Risk Assessment Framework", "desc": "across the organization. Documented guidelines to identify, evaluate, and mitigate potential AI risks." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Framework includes scenario analysis", "desc": "to anticipate potential outcomes and their impact. Mitigation strategies such as Guardrails are implemented." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "Comprehensive and proactive strategy", "desc": "for AI risk assessment and mitigation that evolves with emerging capabilities. Best practices are documented and shared." }
+      ]
+    },
+    {
+      "id": "Q6", "dimension": "Platform", "title": "AI-First Design Practices", "text": "Has your organization adopted AI-First Design practices, ensuring developers understand the unique characteristics of working with ML, Generative AI, and Agentic AI?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "AI-First Design practices have not been adopted.", "desc": "Developers lack understanding of AI concepts such as probabilistic outputs or Agentic AI." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic awareness", "desc": "of how AI uncertainty affects user experience. Interfaces occasionally consider AI limitations without a consistent approach." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Applications are designed considering", "desc": "how AI uncertainty affects users. Standard architectural patterns exist to manage uncertainty and Agentic AI." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "AI-First Design practices", "desc": "with advanced skills in building robust user experiences. Metrics track user satisfaction across varying confidence levels." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "Applications integrate AI components", "desc": "with advanced uncertainty quantification and dynamic adaptation. Metrics demonstrate consistent excellence." }
+      ]
+    },
+    {
+      "id": "Q7", "dimension": "Platform", "title": "AI Lifecycle Platforms", "text": "Does your organization use AI platforms that support all aspects of the AI lifecycle — from data preparation to deployment and production management — for ML, Generative AI, and Agentic AI solutions?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "Disconnected tools and platforms", "desc": "support isolated aspects of the AI lifecycle. Teams use different tools for various stages." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Platforms support some aspects", "desc": "of the AI lifecycle. Workflows are not integrated end-to-end, with limited support for MLOps or FMOps." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Platforms support most aspects", "desc": "of the AI lifecycle with integrated capabilities. Consistent approaches with basic automation." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Platforms include advanced capabilities", "desc": "for data preparation, development, deployment automation, and management. Efficient integrated workflows." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "Platforms optimize workflows", "desc": "across all AI lifecycle stages with advanced monitoring tools. Continuous improvement processes based on usage insights." }
+      ]
+    },
+    {
+      "id": "Q8", "dimension": "Security", "title": "Environment Security Practices", "text": "Has your organization implemented best practices to maintain secure environments and data, prevent data leakage, and protect AI systems against vulnerabilities and unintended behaviors?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "No defined security practices exist", "desc": "for AI environments or data protection. Security controls for AI models are ad-hoc and reactive." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic security controls are in place", "desc": "but not comprehensive for AI-specific needs. Awareness of data leakage risks is applied inconsistently." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Guidelines exist to evaluate and prevent", "desc": "data leakage risks. Protocols guide the protection of models, data, and Agentic AI behavior." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Comprehensive security controls are monitored", "desc": "actively with quantitative metrics. Automated detection of potential data leakage." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "The organization proactively adapts and improves", "desc": "AI security practices. Measures are continuously optimized based on emerging threats and best practices." }
+      ]
+    },
+    {
+      "id": "Q9", "dimension": "Security", "title": "AI Security Policies", "text": "Has your organization established clear AI Security Policies, standards, and guidelines along with defined roles and responsibilities?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "No AI Security Policies or standards exist.", "desc": "Security roles and responsibilities for AI systems are undefined or unclear." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic AI Security Policies are documented", "desc": "but applied inconsistently. Initial roles are defined but lack full AI coverage." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Governance framework is established", "desc": "with clear policies, standards, and guidelines. Roles are well defined across all aspects." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Comprehensive Governance framework is actively managed", "desc": "with quantitative metrics. Regular audits assess policy effectiveness." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "AI security governance proactively adapts", "desc": "to emerging challenges. AI Security Policies are continuously updated based on measured outcomes and threats." }
+      ]
+    },
+    {
+      "id": "Q10", "dimension": "Operations", "title": "Observability Mechanisms", "text": "Has your organization established automated mechanisms for observability and incident response in AI solutions?",
+      "options": [
+        { "level": 1, "points": 1, "label": "Initial", "title": "Lack of automated monitoring mechanisms.", "desc": "There is no systematic way to detect or respond to incidents, relying primarily on user reports." },
+        { "level": 2, "points": 2, "label": "Foundational", "title": "Basic monitoring tools are implemented", "desc": "for some AI solutions with inconsistent coverage. Simple alerts exist for obvious failures." },
+        { "level": 3, "points": 3, "label": "Defined", "title": "Standardized monitoring and observability practices are automated.", "desc": "Dashboards track model performance and system health with configured alerts." },
+        { "level": 4, "points": 4, "label": "Measured", "title": "Automated observability tools provide deep insights.", "desc": "Automated response mechanisms handle common incidents with rapid escalation." },
+        { "level": 5, "points": 5, "label": "Optimized", "title": "Capability to detect, diagnose, and resolve issues", "desc": "before impacting users. Highly automated response with human oversight and predictive analytics." }
+      ]
+    }
+  ]
+}
