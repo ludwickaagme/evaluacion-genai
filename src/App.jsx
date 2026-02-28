@@ -9,6 +9,7 @@ import './App.css';
 
 export default function App() {
   const { t, i18n } = useTranslation(); 
+  const currentLanguage = i18n.language;
   
   // EXTRAEMOS LAS PREGUNTAS DEL ARCHIVO JSON DEL IDIOMA SELECCIONADO
   const questions = t('questions', { returnObjects: true });
@@ -61,6 +62,24 @@ export default function App() {
     alignItems: 'center', 
     zIndex: 10,
     pointerEvents: 'none' 
+  };
+
+  // --- FUNCIÓN PARA REINICIAR LA APP DESDE CUALQUIER PUNTO ---
+  const handleResetApp = () => {
+    // Si están a mitad del quiz, les pedimos confirmación
+    if (hasStarted && !isFinished) {
+      const confirmMsg = currentLanguage === 'es' 
+        ? '¿Seguro que deseas volver al inicio? Perderás tu progreso actual.' 
+        : 'Are you sure you want to return home? Your current progress will be lost.';
+      if (!window.confirm(confirmMsg)) return;
+    }
+    
+    // Reseteamos todos los estados a 0
+    setAnswers({});
+    setUserInfo({ nombre: '', organizacion: '', correo: '', telefono: '', rol: '', pais: '', fecha: new Date().toISOString().split('T')[0] });
+    setIsFinished(false);
+    setHasStarted(false);
+    setCurrentQuestionIndex(0);
   };
 
   const handleSelect = (questionId, points) => {
@@ -116,7 +135,6 @@ export default function App() {
     let action = "";
     let description = "";
 
-    // SE LLAMAN DESDE EL JSON DEPENDIENDO DEL IDIOMA
     if (totalPercentage <= 40) { 
       classification = t('res.exploring.class');
       action = t('res.exploring.action');
@@ -140,9 +158,86 @@ export default function App() {
   };
 
   // ==========================================
-  // 1. PORTADA
+  // COMPONENTE FLOTANTE GLOBAL (IDIOMA + HOME)
   // ==========================================
+  const floatingControls = (
+    <div className="no-print" style={{ 
+      position: 'fixed', 
+      bottom: '4vh', 
+      right: '4vw', 
+      zIndex: 9999, 
+      display: 'flex', 
+      gap: '12px', 
+      alignItems: 'center',
+      background: '#ffffff',
+      padding: '8px 12px',
+      borderRadius: '50px',
+      boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
+      border: '1px solid #e2e8f0'
+    }}>
+      
+      {/* Botón Home (solo aparece si ya empezaron) */}
+      {hasStarted && (
+        <button 
+          onClick={handleResetApp}
+          title={currentLanguage === 'es' ? 'Volver al inicio' : 'Return to Home'}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '8px 16px',
+            background: '#edf2f7',
+            color: '#4a5568',
+            border: 'none',
+            borderRadius: '50px',
+            cursor: 'pointer',
+            fontWeight: '800',
+            fontSize: '0.95rem',
+            transition: 'all 0.2s ease'
+          }}
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          {currentLanguage === 'es' ? 'Inicio' : 'Home'}
+        </button>
+      )}
 
+      {/* Selector de Idiomas */}
+      <div style={{ display: 'flex', gap: '4px', borderLeft: hasStarted ? '2px solid #e2e8f0' : 'none', paddingLeft: hasStarted ? '8px' : '0' }}>
+        <button 
+          onClick={() => changeLanguage('es')} 
+          style={{ 
+            padding: '8px 14px', 
+            background: currentLanguage === 'es' ? awsOrange : 'transparent', 
+            color: currentLanguage === 'es' ? '#ffffff' : '#a0aec0', 
+            border: 'none', 
+            borderRadius: '50px', 
+            cursor: 'pointer', 
+            fontWeight: '900', 
+            fontSize: '0.95rem',
+            transition: 'all 0.2s ease' 
+          }}>
+          ES
+        </button>
+        <button 
+          onClick={() => changeLanguage('en')} 
+          style={{ 
+            padding: '8px 14px', 
+            background: currentLanguage === 'en' ? awsOrange : 'transparent', 
+            color: currentLanguage === 'en' ? '#ffffff' : '#a0aec0', 
+            border: 'none', 
+            borderRadius: '50px', 
+            cursor: 'pointer', 
+            fontWeight: '900', 
+            fontSize: '0.95rem',
+            transition: 'all 0.2s ease' 
+          }}>
+          EN
+        </button>
+      </div>
+    </div>
+  );
+
+  // 1. PORTADA // 
   if (!hasStarted) {
     const isFormValid = userInfo.nombre.trim() !== '' && 
                         userInfo.organizacion.trim() !== '' && 
@@ -151,62 +246,18 @@ export default function App() {
                         userInfo.rol.trim() !== '' &&
                         userInfo.pais.trim() !== ''; 
 
-    const currentLanguage = i18n.language;
-
     return (
       <div style={{ minHeight: '100vh', display: 'flex', flexWrap: 'wrap', position: 'relative' }}>
         
-        {/* BOTÓN DE IDIOMA */}
-        <div className="no-print" style={{ 
-          position: 'absolute', 
-          top: '4vh', 
-          right: '4vw', 
-          zIndex: 20, 
-          display: 'flex', 
-          gap: '8px', 
-          background: '#ffffff', 
-          padding: '6px', 
-          borderRadius: '12px', 
-          boxShadow: '0 4px 15px rgba(0,0,0,0.1)',
-          border: '1px solid #e2e8f0'
-        }}>
-          <button 
-            onClick={() => changeLanguage('es')} 
-            style={{ 
-              padding: '8px 16px', 
-              background: currentLanguage === 'es' ? awsOrange : 'transparent', 
-              color: currentLanguage === 'es' ? '#ffffff' : '#4a5568', 
-              border: 'none', 
-              borderRadius: '8px', 
-              cursor: 'pointer', 
-              fontWeight: '900', 
-              fontSize: '1.05rem',
-              transition: 'all 0.2s ease' 
-            }}>
-            ES
-          </button>
-          <button 
-            onClick={() => changeLanguage('en')} 
-            style={{ 
-              padding: '8px 16px', 
-              background: currentLanguage === 'en' ? awsOrange : 'transparent', 
-              color: currentLanguage === 'en' ? '#ffffff' : '#4a5568', 
-              border: 'none', 
-              borderRadius: '8px', 
-              cursor: 'pointer', 
-              fontWeight: '900', 
-              fontSize: '1.05rem',
-              transition: 'all 0.2s ease' 
-            }}>
-            EN
-          </button>
-        </div>
+        {/* Inyectamos nuestros controles flotantes */}
+        {floatingControls}
 
         <div style={{ flex: '1 1 500px', ...darkFuturisticBackgroundStyle, padding: 'clamp(3rem, 6vh, 6rem)', display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative' }}>
           <div style={topBarContainerStyle}>
             <img src={logo} alt="OneData" style={{ height: 'clamp(35px, 5.5vh, 60px)', objectFit: 'contain' }} />
             <img src={clusterLogo} alt="Cluster" style={{ height: 'clamp(40px, 6vh, 65px)', objectFit: 'contain', transform: 'scale(1.8)' }} />
-            <img src={awsWhite} alt="AWS" style={{ height: 'clamp(35px, 5.5vh, 60px)', objectFit: 'contain', opacity: 0.95, marginRight: '10vw' }} /> 
+            {}
+            <img src={awsWhite} alt="AWS" style={{ height: 'clamp(35px, 5.5vh, 60px)', objectFit: 'contain', opacity: 0.95 }} /> 
           </div>
 
           <div style={{ marginTop: 'clamp(3rem, 6vh, 5rem)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}> 
@@ -326,9 +377,7 @@ export default function App() {
     );
   }
 
-  // ==========================================
-  // 2. RESULTADOS 
-  // ==========================================
+  // 2. RESULTADOS // 
   if (isFinished) {
     const results = calculateResults();
     const circleDashArray = `${(results.totalPercentage * 113) / 100}, 113`;
@@ -338,12 +387,13 @@ export default function App() {
       <div style={{ 
         minHeight: '100vh', width: '100vw', 
         ...lightFuturisticBackgroundStyle, 
-        display: 'flex', alignItems: 'center', justifyContent: 'center', 
-        // 🛠️ AQUÍ ESTÁ EL ARREGLO: 14vh de padding superior para bajar la tarjeta blanca
-        padding: '14vh 3vw 5vh 3vw', 
-        boxSizing: 'border-box', position: 'relative'
+        display: 'flex', alignItems: 'flex-start', justifyContent: 'center', 
+        padding: '14vh 3vw 5vh 3vw', boxSizing: 'border-box', position: 'relative'
       }}>
         
+        {/* Controles flotantes */}
+        {floatingControls}
+
         <div style={topBarContainerStyle} className="no-print">
           <img src={onedataWhite} alt="OneData" style={{ height: 'clamp(35px, 5.5vh, 60px)', objectFit: 'contain' }} />
           <img src={clusterLogo} alt="Cluster" style={{ height: 'clamp(40px, 6vh, 65px)', objectFit: 'contain', transform: 'scale(1.8)' }} />
@@ -397,13 +447,7 @@ export default function App() {
 
                 <button 
                   className="no-print"
-                  onClick={() => {
-                    setAnswers({}); 
-                    setUserInfo({ nombre: '', organizacion: '', correo: '', telefono: '', rol: '', pais: '', fecha: new Date().toISOString().split('T')[0] });
-                    setIsFinished(false); 
-                    setHasStarted(false);
-                    setCurrentQuestionIndex(0);
-                  }}
+                  onClick={handleResetApp}
                   style={{ width: '100%', padding: '14px', backgroundColor: oneDataDarkBlue, color: '#ffffff', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold', flexShrink: 0 }}
                 >
                   {t('btnNewEval')}
@@ -502,9 +546,7 @@ export default function App() {
     );
   }
 
-  // ==========================================
-  // 3. CUESTIONARIO
-  // ==========================================
+  // 3. CUESTIONARIO // 
   const currentQuestion = questions[currentQuestionIndex];
   const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
   const isCurrentQuestionAnswered = answers[currentQuestion.id] !== undefined;
@@ -513,11 +555,12 @@ export default function App() {
     <div style={{ 
       minHeight: '100vh', width: '100vw', 
       ...lightFuturisticBackgroundStyle, 
-      display: 'flex', alignItems: 'center', justifyContent: 'center', 
-      // 🛠️ AQUÍ ESTÁ EL ARREGLO: 14vh de padding superior para bajar la tarjeta blanca
-      padding: '14vh 2vw 5vh 2vw', 
-      boxSizing: 'border-box', position: 'relative'
+      display: 'flex', alignItems: 'flex-start', justifyContent: 'center', 
+      padding: '14vh 2vw 5vh 2vw', boxSizing: 'border-box', position: 'relative'
     }}>
+
+      {/* Controles flotantes */}
+      {floatingControls}
 
       <div style={topBarContainerStyle}>
         <img src={onedataWhite} alt="OneData" style={{ height: 'clamp(35px, 5.5vh, 60px)', objectFit: 'contain' }} />
