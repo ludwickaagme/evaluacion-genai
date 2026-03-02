@@ -20,6 +20,14 @@
   "btnNext": "Next →",
   "btnResults": "View Results",
   "dimLabel": "Dimension:",
+  "dimNames": {
+    "Business": "Business",
+    "People": "People",
+    "Governance": "Governance",
+    "Platform": "Platform",
+    "Security": "Security",
+    "Operations": "Operations"
+  },
   "questionOf": "Question {{current}} / {{total}}",
   "selectOption": "Please select one of the answers below:",
   "dashTitle": "AI Maturity Dashboard",
@@ -34,17 +42,46 @@
   "planTitle": "Executive Action Plan",
   "planCurrent": "Current Diagnosis",
   "planRec": "🚀 OneData + AWS Recommendations",
-  "rec1Title": "Discovery Session:",
-  "rec1Desc": "Schedule a technical and business workshop to analyze gaps in dimensions with lower scores.",
-  "rec2Title": "Architectural Roadmap:",
-  "rec2Desc": "Design a Cloud strategy on AWS specifically adapted to your current level ({{level}}).",
-  "rec3Title": "Quick Wins Execution:",
-  "rec3Desc": "Prioritize 1 or 2 Generative AI use cases to build a Proof of Concept (PoC) demonstrating short-term value.",
+  "pdfCtaTitle": "Empower your future with Artificial Intelligence",
+  "pdfCta": "Learn how we can help you scale these initiatives. Contact us:",
+  "btnContact": "contact@onedatasoftware.com",
   "res": {
-    "exploring": { "class": "🔍 EXPLORING", "action": "Education and Enablement", "desc": "Your organization is in an initial exploration stage. The immediate focus should be on AI literacy, aligning business leaders, and creating a secure framework for technological experimentation." },
-    "adopting": { "class": "🚀 ADOPTING", "action": "Guided Implementation", "desc": "You have taken solid steps toward AI adoption. The goal now is to structure these isolated initiatives through a well-defined proof of concept (PoC), establishing clear KPIs and solid data governance foundations." },
-    "implementing": { "class": "⚙️ IMPLEMENTING", "action": "Optimization and Scaling", "desc": "You have a prominent maturity level with running solutions. The strategic priority is to scale these tools, integrate MLOps/LLMOps practices, and expand enablement to multiple enterprise areas." },
-    "transforming": { "class": "🌟 TRANSFORMING", "action": "Strategic Innovation", "desc": "You operate as leaders in technological innovation with AI. The focus should remain on continuous optimization, exploring complex Agentic AI, and maximizing enterprise-wide ROI." }
+    "exploring": { 
+      "id": "exploring",
+      "class": "🔍 EXPLORING", 
+      "action": "Education and Enablement", 
+      "desc": "Your organization is in an initial exploration stage. The immediate focus should be on AI literacy, aligning business leaders, and creating a secure framework for technological experimentation.",
+      "rec1Title": "AWS Well Architected Framework:", "rec1Desc": "We evaluate your current infrastructure to ensure it is built on solid, scalable, and cost-effective foundations.", "rec1Link": "https://offerings.onedatasoftware.com/aws-well-architected-framework/",
+      "rec2Title": "Migration strategy:", "rec2Desc": "We design a secure cloud migration plan to modernize your legacy applications.", "rec2Link": "https://offerings.onedatasoftware.com/aws-data-migration/",
+      "rec3Title": "Cloud security:", "rec3Desc": "We implement the necessary controls so that your cloud environment is completely secure from day one.", "rec3Link": "https://offerings.onedatasoftware.com/aws-security/"
+    },
+    "adopting": { 
+      "id": "adopting",
+      "class": "🚀 ADOPTING", 
+      "action": "Guided Implementation", 
+      "desc": "You have taken solid steps toward AI adoption. The goal now is to structure these isolated initiatives through a well-defined proof of concept (POC), establishing clear KPIs and solid data governance foundations.",
+      "rec1Title": "Data Analytics:", "rec1Desc": "We structure your data ecosystems so they are ready to be consumed by Artificial Intelligence models.", "rec1Link": "https://offerings.onedatasoftware.com/aws-data-analytics/",
+      "rec2Title": "Gen AI Small Business:", "rec2Desc": "We build an agile Proof of Concept (POC) focused on a specific use case to demonstrate short-term value.", "rec2Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec3Title": "Compliances and Regulatory:", "rec3Desc": "We ensure your initial AI initiatives comply with all industry regulations and security policies.", "rec3Link": "https://offerings.onedatasoftware.com/aws-hipaa/"
+    },
+    "implementing": { 
+      "id": "implementing",
+      "class": "⚙️ IMPLEMENTING", 
+      "action": "Optimization and Scaling", 
+      "desc": "You have a prominent maturity level with running solutions. The strategic priority is to scale these tools, integrate MLOps/LLMOps practices, and expand enablement to multiple enterprise areas.",
+      "rec1Title": "AWS Generative AI:", "rec1Desc": "We scale and deeply integrate Generative AI into your key applications and workflows.", "rec1Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec2Title": "Machine Learning:", "rec2Desc": "We develop and deploy custom predictive models to optimize decision-making.", "rec2Link": "https://offerings.onedatasoftware.com/aws-machine-learning-solutions/",
+      "rec3Title": "Cloudops:", "rec3Desc": "We automate and optimize your cloud operations to ensure high performance and cost control.", "rec3Link": "https://offerings.onedatasoftware.com/aws-cloud-ops-governance/"
+    },
+    "transforming": { 
+      "id": "transforming",
+      "class": "🌟 TRANSFORMANDO", 
+      "action": "Strategic Innovation", 
+      "desc": "You operate as leaders in technological innovation with AI. The focus should remain on continuous optimization, exploring complex Agentic AI, and maximizing enterprise-wide ROI.",
+      "rec1Title": "AI Agent:", "rec1Desc": "We develop autonomous agents capable of executing complex workflows and interacting with your enterprise systems.", "rec1Link": "https://offerings.onedatasoftware.com/aws-ai-agent/",
+      "rec2Title": "Internet of Things (IoT):", "rec2Desc": "We connect your IoT devices with your AI systems for advanced real-time predictive analysis.", "rec2Link": "https://offerings.onedatasoftware.com/aws-iot-solutions/",
+      "rec3Title": "Managed Service Partner:", "rec3Desc": "Continuous architectural support and strategic evolution by fully delegating administration to our experts.", "rec3Link": "mailto:contact@onedatasoftware.com"
+    }
   },
   "questions": [
     {

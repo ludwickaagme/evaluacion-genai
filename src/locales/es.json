@@ -1,6 +1,6 @@
 {
   "title": "¿Listo para potenciar su competitividad con IA?",
-  "subtitle": "Realice este breve diagnóstico para generar su plan de acción personalizado y definir su siguiente paso estratégico en Generative AI.",
+  "subtitle": "Realice este breve diagnóstico para generar su plan de acción personalizado y definir su siguiente paso estratégico en IA Generativa.",
   "desc": "Está innovando a gran velocidad para transformar su negocio, pero ¿cómo asegurar su competitividad? Descúbralo ahora.",
   "resultsInclude": "SUS RESULTADOS INCLUIRÁN:",
   "bullet1": "Puntuación detallada de madurez frente al mercado.",
@@ -20,6 +20,14 @@
   "btnNext": "Siguiente →",
   "btnResults": "Ver Resultados",
   "dimLabel": "Dimensión:",
+  "dimNames": {
+    "Business": "Negocio",
+    "People": "Personas",
+    "Governance": "Gobernanza",
+    "Platform": "Plataforma",
+    "Security": "Seguridad",
+    "Operations": "Operaciones"
+  },
   "questionOf": "Pregunta {{current}} / {{total}}",
   "selectOption": "Por favor, seleccione una de las respuestas a continuación:",
   "dashTitle": "Dashboard de Madurez IA",
@@ -34,41 +42,70 @@
   "planTitle": "Plan de Acción Ejecutivo",
   "planCurrent": "Diagnóstico Actual",
   "planRec": "🚀 Recomendaciones OneData + AWS",
-  "rec1Title": "Sesión de Descubrimiento:",
-  "rec1Desc": "Agendar un workshop técnico y de negocio para analizar las brechas en las dimensiones con menor puntaje.",
-  "rec2Title": "Roadmap Arquitectónico:",
-  "rec2Desc": "Diseñar una estrategia Cloud en AWS adaptada específicamente a su nivel actual ({{level}}).",
-  "rec3Title": "Ejecución de Quick Wins:",
-  "rec3Desc": "Priorizar 1 o 2 casos de uso de Generative AI para construir una Prueba de Concepto (PoC) que demuestre valor a corto plazo.",
+  "pdfCtaTitle": "Potencie su futuro con Inteligencia Artificial",
+  "pdfCta": "Conozca cómo podemos ayudarle a escalar estas iniciativas. Contáctenos:",
+  "btnContact": "contact@onedatasoftware.com",
   "res": {
-    "exploring": { "class": "🔍 EXPLORANDO", "action": "Educación y Enablement", "desc": "Su organización se encuentra en una etapa inicial de exploración. El enfoque inmediato debe centrarse en la alfabetización en IA, la alineación de líderes de negocio y la creación de un marco seguro para la experimentación tecnológica." },
-    "adopting": { "class": "🚀 ADOPTANDO", "action": "Implementación Guiada", "desc": "Han dado pasos sólidos hacia la adopción de IA. El objetivo ahora es estructurar estas iniciativas aisladas mediante una prueba de concepto (PoC) bien definida, estableciendo KPIs claros y bases sólidas de gobernanza de datos." },
-    "implementing": { "class": "⚙️ IMPLEMENTANDO", "action": "Optimización y Escalado", "desc": "Cuentan con un nivel de madurez destacado con soluciones en marcha. La prioridad estratégica es escalar estas herramientas, integrar prácticas de MLOps/LLMOps y expandir el enablement a múltiples áreas de la empresa." },
-    "transforming": { "class": "🌟 TRANSFORMANDO", "action": "Innovación Estratégica", "desc": "Operan como líderes en innovación tecnológica con IA. El enfoque debe mantenerse en la optimización continua, la exploración de Agentic AI complejo y la maximización del ROI a nivel empresarial." }
+    "exploring": { 
+      "id": "exploring",
+      "class": "🔍 EXPLORANDO", 
+      "action": "Educación y Enablement", 
+      "desc": "Su organización se encuentra en una etapa inicial de exploración. El enfoque inmediato debe centrarse en la alfabetización en IA, la alineación de líderes de negocio y la creación de un marco seguro para la experimentación tecnológica.",
+      "rec1Title": "AWS Well Architected Framework:", "rec1Desc": "Evaluamos su infraestructura actual para asegurar que esté construida sobre bases sólidas, escalables y rentables.", "rec1Link": "https://offerings.onedatasoftware.com/aws-well-architected-framework/",
+      "rec2Title": "Migration strategy:", "rec2Desc": "Diseñamos un plan de migración seguro hacia la nube para modernizar sus aplicaciones tradicionales.", "rec2Link": "https://offerings.onedatasoftware.com/aws-data-migration/",
+      "rec3Title": "Cloud security:", "rec3Desc": "Implementamos los controles necesarios para que su entorno en la nube sea completamente seguro desde el día uno.", "rec3Link": "https://offerings.onedatasoftware.com/aws-security/"
+    },
+    "adopting": { 
+      "id": "adopting",
+      "class": "🚀 ADOPTANDO", 
+      "action": "Implementación Guiada", 
+      "desc": "Han dado pasos sólidos hacia la adopción de IA. El objetivo ahora es estructurar estas iniciativas aisladas mediante una prueba de concepto (POC) bien definida, estableciendo KPIs claros y bases sólidas de gobernanza de datos.",
+      "rec1Title": "Data Analytics:", "rec1Desc": "Estructuramos sus ecosistemas de datos para que estén listos para ser consumidos por modelos de Inteligencia Artificial.", "rec1Link": "https://offerings.onedatasoftware.com/aws-data-analytics/",
+      "rec2Title": "Gen AI Small Business:", "rec2Desc": "Construimos una Prueba de Concepto (POC) enfocada en un caso de uso ágil para demostrar valor a corto plazo.", "rec2Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec3Title": "Compliances and Regulatory:", "rec3Desc": "Aseguramos que sus primeras iniciativas de IA cumplan con todas las normativas y políticas de la industria.", "rec3Link": "https://offerings.onedatasoftware.com/aws-hipaa/"
+    },
+    "implementing": { 
+      "id": "implementing",
+      "class": "⚙️ IMPLEMENTANDO", 
+      "action": "Optimización y Escalado", 
+      "desc": "Cuentan con un nivel de madurez destacado con soluciones en marcha. La prioridad estratégica es escalar estas herramientas, integrar prácticas de MLOps/LLMOps y expandir el enablement a múltiples áreas de la empresa.",
+      "rec1Title": "AWS Generative AI:", "rec1Desc": "Escalamos e integramos IA Generativa profundamente en sus aplicaciones y flujos de trabajo clave.", "rec1Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec2Title": "Machine Learning:", "rec2Desc": "Desarrollamos e implementamos modelos predictivos personalizados para optimizar la toma de decisiones.", "rec2Link": "https://offerings.onedatasoftware.com/aws-machine-learning-solutions/",
+      "rec3Title": "Cloudops:", "rec3Desc": "Automatizamos y optimizamos sus operaciones en la nube para garantizar alto rendimiento y control de costos.", "rec3Link": "https://offerings.onedatasoftware.com/aws-cloud-ops-governance/"
+    },
+    "transforming": { 
+      "id": "transforming",
+      "class": "🌟 TRANSFORMANDO", 
+      "action": "Innovación Estratégica", 
+      "desc": "Operan como líderes en innovación tecnológica con IA. El enfoque debe mantenerse en la optimización continua, la exploración de Agentic AI complejo y la maximización del ROI a nivel empresarial.",
+      "rec1Title": "AI Agent:", "rec1Desc": "Desarrollamos agentes autónomos capaces de ejecutar flujos de trabajo complejos e interactuar con sus sistemas empresariales.", "rec1Link": "https://offerings.onedatasoftware.com/aws-ai-agent/",
+      "rec2Title": "Internet of Things (IoT):", "rec2Desc": "Conectamos sus dispositivos IoT con sus sistemas de IA para un análisis predictivo avanzado en tiempo real.", "rec2Link": "https://offerings.onedatasoftware.com/aws-iot-solutions/",
+      "rec3Title": "Managed Service Partner:", "rec3Desc": "Soporte arquitectónico continuo y evolución estratégica delegando la administración total a nuestros expertos.", "rec3Link": "mailto:contact@onedatasoftware.com"
+    }
   },
   "questions": [
     {
-      "id": "Q1", "dimension": "Business", "title": "Identificación de casos de uso de Generative AI", "text": "¿Su organización tiene directrices para identificar y priorizar casos de uso que podrían beneficiarse de capacidades de Generative AI o Agentic AI?",
+      "id": "Q1", "dimension": "Business", "title": "Identificación de casos de uso de IA Generativa", "text": "¿Su organización tiene directrices para identificar y priorizar casos de uso que podrían beneficiarse de capacidades de IA Generativa o Agentic AI?",
       "options": [
-        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen directrices.", "desc": "La identificación de casos de uso de Generative AI ocurre de manera reactiva y no coordinada, impulsada por intereses individuales." },
-        { "level": 2, "points": 2, "label": "Fundacional", "title": "Existen directrices básicas", "desc": "para Generative AI pero se aplican de manera inconsistente entre los equipos, sin alineación a objetivos organizacionales." },
-        { "level": 3, "points": 3, "label": "Definido", "title": "Directrices definidas", "desc": "para identificar oportunidades de Generative AI y Agentic AI con roles claros, priorización basada en valor comercial y evaluaciones de riesgo." },
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen directrices.", "desc": "La identificación de casos de uso de IA Generativa ocurre de manera reactiva y no coordinada, impulsada por intereses individuales." },
+        { "level": 2, "points": 2, "label": "Fundacional", "title": "Existen directrices básicas", "desc": "para IA Generativa pero se aplican de manera inconsistente entre los equipos, sin alineación a objetivos organizacionales." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Directrices definidas", "desc": "para identificar oportunidades de IA Generativa y Agentic AI con roles claros, priorización basada en valor comercial y evaluaciones de riesgo." },
         { "level": 4, "points": 4, "label": "Medido", "title": "Las directrices se gestionan proactivamente", "desc": "con métricas cuantitativas. El rendimiento de las implementaciones existentes informa nuevos casos de uso." },
         { "level": 5, "points": 5, "label": "Optimizado", "title": "Las directrices se evalúan continuamente", "desc": "y se refinan con datos. La organización busca proactivamente nuevos casos de uso e integra capacidades emergentes." }
       ]
     },
     {
-      "id": "Q2", "dimension": "Business", "title": "Integración de Generative AI en Procesos", "text": "¿Su organización tiene mecanismos para integrar soluciones de Generative AI y Agentic AI en procesos de negocio existentes?",
+      "id": "Q2", "dimension": "Business", "title": "Integración de IA Generativa en Procesos", "text": "¿Su organización tiene mecanismos para integrar soluciones de IA Generativa y Agentic AI en procesos de negocio existentes?",
       "options": [
-        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen mecanismos.", "desc": "Las soluciones de Generative AI se implementan como experimentos aislados sin un enfoque en la integración más amplia." },
+        { "level": 1, "points": 1, "label": "Inicial", "title": "No existen mecanismos.", "desc": "Las soluciones de IA Generativa se implementan como experimentos aislados sin un enfoque en la integración más amplia." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Enfoques de integración básicos", "desc": "están definidos pero se aplican de forma inconsistente. No existe un enfoque organizacional estandarizado." },
-        { "level": 3, "points": 3, "label": "Definido", "title": "Directrices definidas", "desc": "para integrar soluciones de Generative AI y Agentic AI. Se desarrolla capacitación para abordar nuevos requisitos de datos, privacidad y riesgo." },
+        { "level": 3, "points": 3, "label": "Definido", "title": "Directrices definidas", "desc": "para integrar soluciones de IA Generativa y Agentic AI. Se desarrolla capacitación para abordar nuevos requisitos de datos, privacidad y riesgo." },
         { "level": 4, "points": 4, "label": "Medido", "title": "Mecanismos gestionados proactivamente", "desc": "con coordinación sólida. Los KPIs claros rastrean las mejoras de los procesos y el rendimiento de los agentes." },
-        { "level": 5, "points": 5, "label": "Optimizado", "title": "Optimización activa", "desc": "de la integración de Generative AI en los procesos. El enfoque se refina a través de ciclos de retroalimentación con métricas de impacto." }
+        { "level": 5, "points": 5, "label": "Optimizado", "title": "Optimización activa", "desc": "de la integración de IA Generativa en los procesos. El enfoque se refina a través de ciclos de retroalimentación con métricas de impacto." }
       ]
     },
     {
-      "id": "Q3", "dimension": "People", "title": "Programa de Desarrollo de Habilidades IA", "text": "¿Existe un programa de desarrollo de habilidades enfocado en diferentes roles (líderes de negocio, desarrolladores, ingenieros de datos, usuarios finales) cubriendo ML, Generative AI y Agentic AI?",
+      "id": "Q3", "dimension": "People", "title": "Programa de Desarrollo de Habilidades IA", "text": "¿Existe un programa de desarrollo de habilidades enfocado en diferentes roles (líderes de negocio, desarrolladores, ingenieros de datos, usuarios finales) cubriendo ML, IA Generativa y Agentic AI?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No existe un programa estructurado.", "desc": "El aprendizaje ocurre individualmente sin distinción entre roles organizacionales." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Materiales de capacitación básicos", "desc": "están disponibles pero aplicados de manera inconsistente. Talleres informales para roles técnicos sin un enfoque estructurado." },
@@ -98,7 +135,7 @@
       ]
     },
     {
-      "id": "Q6", "dimension": "Platform", "title": "Prácticas de AI-First Design", "text": "¿Ha adoptado su organización prácticas de AI-First Design, asegurando que los desarrolladores entiendan las características únicas de trabajar con ML, Generative AI y Agentic AI?",
+      "id": "Q6", "dimension": "Platform", "title": "Prácticas de AI-First Design", "text": "¿Ha adoptado su organización prácticas de AI-First Design, asegurando que los desarrolladores entiendan las características únicas de trabajar con ML, IA Generativa y Agentic AI?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "Las prácticas de AI-First Design no se han adoptado.", "desc": "Los desarrolladores carecen de comprensión sobre conceptos de IA como resultados probabilísticos o Agentic AI." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Conciencia básica", "desc": "de cómo la incertidumbre de la IA afecta la experiencia del usuario. Las interfaces consideran limitaciones ocasionalmente." },
@@ -108,7 +145,7 @@
       ]
     },
     {
-      "id": "Q7", "dimension": "Platform", "title": "Plataformas de AI Lifecycle", "text": "¿Su organización utiliza plataformas de IA que soporten todos los aspectos del AI lifecycle —desde la preparación de datos hasta el despliegue— para soluciones de ML, Generative AI y Agentic AI?",
+      "id": "Q7", "dimension": "Platform", "title": "Plataformas de AI Lifecycle", "text": "¿Su organización utiliza plataformas de IA que soporten todos los aspectos del AI lifecycle —desde la preparación de datos hasta el despliegue— para soluciones de ML, IA Generativa y Agentic AI?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "Herramientas y plataformas desconectadas", "desc": "soportan aspectos aislados del AI lifecycle. Los equipos usan diferentes herramientas para cada etapa." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Las plataformas soportan algunos aspectos", "desc": "del AI lifecycle. Los flujos de trabajo no están integrados de extremo a extremo, con soporte limitado para MLOps." },
