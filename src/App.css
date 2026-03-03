@@ -1,168 +1,374 @@
-/* App.css - TARJETAS CON COLOR ORIGINAL Y PDF ESTABLE */
-
+/* =========================================
+   VARIABLES GLOBALES
+========================================= */
 :root {
   --onedata-bright-blue: #3533cd;
   --onedata-dark-blue: #000;
   --aws-orange: #ff9900;
   --aws-gray: #808080;
+
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light dark;
   color: #000;
   background-color: #ffffff;
 }
 
-body { margin: 0; min-width: 320px; min-height: 100vh; }
-h1, h2, h3, h4 { margin: 0; }
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
 
-/* Control de Visibilidad Global */
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
+/* =========================================
+   VISIBILIDAD GLOBAL
+========================================= */
 .no-print { display: block; }
-.print-only-flex { display: none !important; }
+.print-only-flex,
 .print-only-block { display: none !important; }
 
 /* =========================================
-   CUESTIONARIO (TARJETAS)
-   ========================================= */
-.question-text { animation: fadeIn 0.4s ease-out; }
+   CUESTIONARIO
+========================================= */
+
+.question-text {
+  animation: fadeIn 0.4s ease-out;
+}
 
 .options-container {
-  display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch;
-  gap: 1.5rem; max-width: 1600px; width: 100%; padding: 0 1rem; box-sizing: border-box;
-  animation: fadeIn 0.5s ease-out;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .option-card {
-  flex: 1 1 220px; max-width: 280px; background-color: var(--card-bg); border: 3px solid var(--card-border);
-  border-radius: 20px; padding: 2.2rem 2.2rem; cursor: pointer; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.02); min-height: 220px;
+  background-color: var(--card-bg);
+  border: 3px solid var(--card-border);
+  border-radius: 20px;
+  padding: clamp(1.5rem, 2vh, 2rem);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
 }
 
-.option-card:hover { transform: translateY(-5px); border-color: var(--card-highlight); box-shadow: 0 20px 25px -5px var(--card-glow); }
-.option-card.selected { background-color: #fff; border-color: var(--card-highlight); box-shadow: 0 20px 25px -5px var(--card-glow); }
+.option-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--card-highlight);
+  box-shadow: 0 20px 25px -5px var(--card-glow);
+}
+
+.option-card.selected {
+  background-color: #fff;
+  border-color: var(--card-highlight);
+  box-shadow: 0 20px 25px -5px var(--card-glow);
+}
 
 .option-label {
-  position: absolute; bottom: 1.8rem; right: 1.8rem; font-size: 0.8rem; font-weight: 800; color: #fff;
-  background-color: var(--card-highlight); padding: 5px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #fff;
+  background-color: var(--card-highlight);
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.option-desc { max-width: 90%; }
+
+.option-desc {
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Responsive cuestionario */
+@media (max-width: 900px) {
+  .options-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .options-container {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* =========================================
-   DASHBOARD WEB (VISTA EN PANTALLA PERFECTA)
-   ========================================= */
-.results-columns { display: flex; flex-direction: column; gap: 2rem; width: 100%; }
-.results-main { flex: 1 1 100% !important; }
+   DASHBOARD WEB
+========================================= */
 
-/* Header Web con el Círculo SVG */
 .evaluation-header {
-  display: flex; flex-wrap: wrap; gap: 1.5rem; padding: 2rem; background: #f8fafc;
-  border-radius: 16px; margin-bottom: 2rem; align-items: center; border: 1px solid #e5e7eb;
+  display: flex;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #f8fafc;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  border: 1px solid #e5e7eb;
 }
-.evaluation-info { flex: 1; min-width: 180px; }
-.evaluation-score { flex: 0 0 160px; text-align: center; border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; padding: 0 1rem; }
-.evaluation-focus { flex: 1; min-width: 180px; padding-left: 0.5rem; }
 
-.score-gauge-container { position: relative; width: 150px; height: 150px; margin: 0 auto; }
-.circular-chart { display: block; margin: 10px auto; max-width: 100%; }
+.evaluation-info { flex: 1; }
+.evaluation-score {
+  flex: 0 0 160px;
+  text-align: center;
+  border-left: 1px solid #e2e8f0;
+  border-right: 1px solid #e2e8f0;
+  padding: 0 1rem;
+}
+.evaluation-focus { flex: 1; }
+
+.score-gauge-container {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto;
+}
+
+.circular-chart { max-width: 100%; }
 .circle-bg { fill: none; stroke: #edf2f7; stroke-width: 3; }
-.circle { fill: none; stroke-width: 3; stroke-linecap: round; transition: stroke-dasharray 1.2s ease-in-out; }
-.score-text-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; }
-
-.classification-card {
-  background: linear-gradient(135deg, rgba(255, 153, 0, 0.07) 0%, rgba(255, 153, 0, 0.02) 100%);
-  border: 2px solid rgba(255, 153, 0, 0.1); padding: 1.5rem; border-radius: 16px; text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center;
+.circle {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 1.2s ease-in-out;
 }
 
-/* Barras Animadas de la Web */
-.dimensions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; }
-.dimension-card { background: #ffffff; border: 1px solid #edf2f7; padding: 1.2rem; border-radius: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
-.dimension-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.progress-bar-modern { height: 100%; background: linear-gradient(90deg, #3533cd 0%, #00d4ff 100%); border-radius: 4px; transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+.score-text-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-/* Enlaces Web */
-a.print-link { color: var(--onedata-bright-blue); text-decoration: none; font-weight: bold; }
-a.print-link:hover { text-decoration: underline; }
+/* Dimensiones */
+.dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 1024px) {
+  .dimensions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .dimensions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dimension-card {
+  background: #fff;
+  border: 1px solid #edf2f7;
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+}
+
+.dimension-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.progress-bar-modern {
+  height: 100%;
+  background: linear-gradient(90deg, #3533cd 0%, #00d4ff 100%);
+  border-radius: 4px;
+  transition: width 1.2s ease;
+}
 
 /* =========================================
-   🖨️ EL PDF (EL DESTRUCTOR DE BUGS DE GOOGLE)
-   ========================================= */
-@media print {
-  @page { size: auto; margin: 12mm 15mm; }
+   FOOTER WEB
+========================================= */
 
-  /* 1. MATA LAS ANIMACIONES Y ASEGURA QUE TODO SEA ESTÁTICO (VITAL PARA LINKS) */
-  * { 
-    transition: none !important; 
-    animation: none !important; 
-    transform: none !important; 
+.main-footer {
+  width: 100%;
+  background: #0f172a;
+  color: white;
+  padding: 60px 4vw 30px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.footer-column p {
+  margin: 5px 0;
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+
+.footer-contact {
+  margin-top: 60px;
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  text-align: center;
+  flex-wrap: wrap;
+}
+
+.footer-bottom {
+  margin-top: 50px;
+  text-align: center;
+  opacity: 0.6;
+  font-size: 0.85rem;
+}
+
+/* =========================================
+   PDF (BLOQUE ÚNICO Y LIMPIO)
+========================================= */
+
+@media print {
+
+  @page { margin: 12mm 15mm; }
+
+  * {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
     box-sizing: border-box !important;
   }
-  
-  html, body { 
-    background: #ffffff !important; 
-    -webkit-print-color-adjust: exact !important; 
-    print-color-adjust: exact !important; 
-    position: static !important; 
+
+  html, body {
+    background: #fff !important;
+    print-color-adjust: exact !important;
   }
 
-  /* 2. REVIENTA EL CONTENEDOR PADRE QUE CAUSABA EL BUG DE LOS ENLACES */
-  .results-page-wrapper {
-    background: none !important; padding: 0 !important; margin: 0 !important; display: block !important; position: static !important;
+  /* 1. Quitar elementos de la web y matar su posición absoluta */
+  .no-print { 
+    display: none !important; 
+    position: static !important;
   }
-  .results-main-card {
-    box-shadow: none !important; border: none !important; border-radius: 0 !important; margin: 0 !important; padding: 0 !important; display: block !important; position: static !important;
-  }
-
-  /* Controles de visibilidad para imprimir PDF */
-  .no-print { display: none !important; }
-  .print-only-flex { display: flex !important; }
+  .print-only-flex,
   .print-only-block { display: block !important; }
 
-  /* 3. LOGOS PERFECTOS PARA HUMBERTO */
-  .print-logos-header {
-    display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: center !important;
-    border-bottom: 2px solid #edf2f7 !important; padding-bottom: 15px !important; margin-bottom: 20px !important; width: 100% !important;
+  /* 2. Forzar display block para romper el flexbox que causa saltos */
+  .results-page-wrapper,
+  .results-main-card {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    min-height: auto !important;
+    background: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
   }
-  .print-cluster-logo { height: 48px !important; object-fit: contain; }
-  .print-onedata-logo { height: 27px !important; object-fit: contain; }
-  .print-aws-logo { height: 27px !important; object-fit: contain; }
 
-  /* 4. CABECERA TIPO TABLA (ADIÓS CÍRCULO) */
-  .pdf-header-grid {
-    display: grid !important; grid-template-columns: 1fr 1.2fr !important; gap: 20px !important; align-items: center !important; width: 100% !important; margin-bottom: 20px !important;
+  /* 3. Matar cualquier position absolute o relative dentro del wrapper */
+  .results-page-wrapper * {
+    position: static !important;
   }
-  .pdf-user-col { padding-right: 10px !important; border-right: 2px solid #edf2f7 !important; word-wrap: break-word !important; }
-  .pdf-label { margin: 0 0 5px 0 !important; font-size: 10px !important; color: #64748b !important; text-transform: uppercase !important; font-weight: bold !important; letter-spacing: 1px !important; }
-  .pdf-name { margin: 0 0 5px 0 !important; font-size: 18px !important; color: #000 !important; line-height: 1.1 !important; }
-  .pdf-role { font-weight: normal !important; color: #808080 !important; font-size: 14px !important; }
-  .pdf-org { margin: 0 !important; font-size: 12px !important; color: #4a5568 !important; }
+
+  /* 4. Ajustes de layout interno para print */
+  .print-content-padding {
+    padding: 20px 0 !important;
+  }
+
+  .dimensions-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 15px !important;
+  }
+
+  .dimension-card {
+    padding: 12px !important;
+    border-radius: 12px !important;
+    page-break-inside: avoid !important;
+    box-shadow: none !important;
+  }
+
+  .print-avoid-break,
+  .print-document-header,
+  .print-title-container {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* 5. Estilos de los Logos del PDF */
+  .print-logos-header {
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-bottom: 12px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+
+  .print-logos-header img:first-child { justify-self: start; }
+  .print-logos-header img:nth-child(2) { justify-self: center; }
+  .print-logos-header img:last-child { justify-self: end; }
+
+  .print-cluster-logo { height: 50px !important; object-fit: contain !important; }
+  .print-onedata-logo { height: 28px !important; object-fit: contain !important; }
+  .print-aws-logo { height: 28px !important; object-fit: contain !important; }
+
+  /* 6. Textos y Headers PDF */
+  .print-title-container {
+    padding: 10px 0 !important;
+  }
+
+  .print-title-container h2 {
+    font-size: 1.4rem !important;
+    margin: 5px 0 !important;
+  }
+
+  .pdf-header-grid {
+    margin-bottom: 15px !important;
+  }
+
+  .pdf-user-col {
+    padding-right: 15px !important;
+  }
 
   .pdf-score-banner {
-    display: flex !important; flex-direction: row !important; justify-content: space-between !important; align-items: center !important;
-    background: #f8fafc !important; padding: 15px !important; border: 1px solid #e2e8f0 !important;
-    border-left-width: 6px !important; border-left-style: solid !important; border-radius: 8px !important; width: 100% !important;
+    padding: 12px !important;
   }
-  .pdf-sb-left { flex: 0 0 auto !important; padding-right: 15px !important; }
-  .pdf-score-wrapper { display: flex !important; align-items: baseline !important; gap: 4px !important; margin-top: 4px !important; }
-  .pdf-big-score { font-size: 28px !important; font-weight: 900 !important; line-height: 1 !important; }
-  .pdf-small-score { font-size: 14px !important; color: #a0aec0 !important; font-weight: bold !important; }
-  .pdf-sb-right { flex: 1 !important; text-align: right !important; word-wrap: break-word !important; }
-  .pdf-level { margin: 0 0 4px 0 !important; font-size: 15px !important; text-transform: uppercase !important; line-height: 1.1 !important; }
-  .pdf-focus { margin: 0 !important; font-size: 11px !important; color: #2d3748 !important; line-height: 1.3 !important; }
 
-  /* 5. 2 COLUMNAS ESTRICTAS PARA DIMENSIONES EN PDF */
-  .dimensions-grid { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 15px !important; width: 100% !important; }
-  .dimension-card { border: 1.5px solid #eee !important; padding: 12px !important; border-radius: 12px !important; page-break-inside: avoid !important; box-shadow: none !important; }
-  .dimension-header h3 { font-size: 14px !important; }
-  .dimension-header span { font-size: 12px !important; }
+  .pdf-footer {
+    margin-top: 3rem !important;
+    padding-top: 1.5rem !important;
+    border-top: 1px solid #e2e8f0 !important;
+    text-align: center !important;
+    font-size: 0.85rem !important;
+    color: #64748b !important;
+  }
+}
 
-  /* 6. PLAN DE ACCIÓN Y EVITAR CORTES */
-  .action-plan-section { margin-top: 30px !important; page-break-before: auto !important; }
-  .print-avoid-break { page-break-inside: avoid !important; break-inside: avoid !important; display: block !important; }
-  .print-cta-block { page-break-inside: avoid !important; break-inside: avoid !important; display: inline-block !important; width: 100% !important; margin-top: 15px !important; }
+/* =========================================
+   ANIMACIONES
+========================================= */
 
-  /* 7. LINKS VIVOS, GARANTIZADOS */
-  a.print-link { color: #3533cd !important; text-decoration: underline !important; font-weight: bold !important; cursor: pointer !important; position: static !important; }
-  .print-cta-btn { display: inline-block !important; padding: 10px 24px !important; background-color: #ff9900 !important; color: #ffffff !important; text-decoration: none !important; border-radius: 8px !important; font-weight: bold !important; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
