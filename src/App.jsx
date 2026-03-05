@@ -1,3 +1,6 @@
+//import { brandConfig } from "./config/configCluster"
+import { brandConfig } from "./config/configAWS"
+
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts";
@@ -14,6 +17,23 @@ import logoColor from './assets/logocolor.png';
 // Importación correcta de la imagen para producción
 import fondo from './assets/fondo.jpg'; 
 import './App.css'; 
+
+// VARIABLE GLOBAL DE BRANDING
+const BRAND_VARIANT = "cluster"; // Cambiar a "aws" cuando se requiera
+
+// NUEVO COMPONENTE REUTILIZABLE
+const HeroLogos = ({ variant = "cluster", theme = "dark" }) => {
+  return (
+    <div className="hero-logos no-print">
+      {variant === "cluster" && (
+        <img src={clusterLogo} alt="Cluster" />
+      )}
+      {/* Condicionamos el logo de OneData para que contraste bien según el fondo */}
+      <img src={theme === "light" ? logo : onedataWhite} alt="OneData" />
+      <img src={awsWhite} alt="AWS" />
+    </div>
+  );
+};
 
 export default function App() {
   const { t, i18n } = useTranslation(); 
@@ -204,11 +224,8 @@ export default function App() {
       <div className="app-layout-wrapper" style={{ ...darkFuturisticBackgroundStyle }}>
         {floatingControls}
         
-        <div className="hero-logos no-print">
-          <img src={clusterLogo} alt="Cluster" />
-          <img src={onedataWhite} alt="OneData" />
-          <img src={awsWhite} alt="AWS" /> 
-        </div>
+        {/* REEMPLAZO 1: LANDING PAGE */}
+        <HeroLogos variant={BRAND_VARIANT} theme="dark" />
 
         <div className="main-content-flex hero-section">
           <div className="landing-container">
@@ -287,11 +304,8 @@ export default function App() {
       <div className="app-layout-wrapper" style={{ ...lightFuturisticBackgroundStyle }}>
         {floatingControls}
 
-        <div className="hero-logos no-print">
-          <img src={clusterLogo} alt="Cluster" />
-          <img src={logo} alt="OneData" />
-          <img src={awsWhite} alt="AWS" />
-        </div>
+        {/* REEMPLAZO 2: PÁGINA DE RESULTADOS (Theme light para asegurar contraste) */}
+        <HeroLogos variant={BRAND_VARIANT} theme="light" />
 
         <div className="main-content-flex">
           <div className="results-page-wrapper">
@@ -691,11 +705,8 @@ export default function App() {
       {floatingControls}
       <div className="main-content-flex hero-section" style={{ ...lightFuturisticBackgroundStyle }}>
         
-        <div className="hero-logos no-print">
-          <img src={clusterLogo} alt="Cluster" />
-          <img src={onedataWhite} alt="OneData" />
-          <img src={awsWhite} alt="AWS" style={{ opacity: 0.95 }} />
-        </div>
+        {/* REEMPLAZO 3: CUESTIONARIO (Theme dark para fondo oscuro) */}
+        <HeroLogos variant={BRAND_VARIANT} theme="dark" />
 
         <div ref={questionRef} className="question-container">
           <div key={`prog-${currentQuestionIndex}`} style={{ flexShrink: 0, width: '100%', maxWidth: '1000px', alignSelf: 'center' }}>
