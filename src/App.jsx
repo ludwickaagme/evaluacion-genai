@@ -19,7 +19,7 @@ import fondo from './assets/fondo.jpg';
 import './App.css'; 
 
 // VARIABLE GLOBAL DE BRANDING
-const BRAND_VARIANT = "cluster"; // Cambiar a "aws" cuando se requiera
+const BRAND_VARIANT = brandConfig.showCluster ? "cluster" : "aws";
 
 // NUEVO COMPONENTE REUTILIZABLE
 const HeroLogos = ({ variant = "cluster", theme = "dark" }) => {
