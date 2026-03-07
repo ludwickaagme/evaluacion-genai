@@ -16,9 +16,15 @@
   "fCountry": "País *",
   "btnStart": "EMPEZAR DIAGNÓSTICO",
   "selectCountry": "Seleccione su país...",
+  "phName": "Ej. Juan Pérez",
+  "phCompany": "Ej. OneData",
+  "phEmail": "juan@empresa.com",
+  "phPhone": "Ej. +52 555...",
+  "phRole": "Ej. Director de TI",
   "btnBack": "← Atrás",
-  "btnNext": "Siguiente →",
-  "btnResults": "Ver Resultados",
+  "btnNext": "Continuar →",
+  "btnResults": "Ver resultados →",
+  "maturity": "Madurez",
   "dimLabel": "Dimensión:",
   "dimNames": {
     "Business": "Negocio",
@@ -45,67 +51,147 @@
   "pdfCtaTitle": "Potencie su futuro con Inteligencia Artificial",
   "pdfCta": "Conozca cómo podemos ayudarle a escalar estas iniciativas. Contáctenos:",
   "btnContact": "contact@onedatasoftware.com",
+  
+  "reportTitle": "Diagnóstico de Madurez en IA Generativa",
+  "reportSubtitle": "Evaluación de Preparación para IA",
+  "dimensionBreakdown": "Desglose de Dimensiones",
+  "dimension": "Dimensión",
+  "score": "Puntuación",
+  "progress": "Progreso",
+  "maturityDiagnosis": "Diagnóstico de Madurez",
+  "currentDiagnosis": "Diagnóstico Actual",
+  "recommendations": "Recomendaciones OneData + AWS",
+  "strategicBenefits": "Beneficios Estratégicos Incluidos",
+  "strategicBenefitsDesc": "Como parte de esta evaluación estratégica, su organización puede acceder a los siguientes beneficios exclusivos:",
+  "benefit1Title": "Prueba de Concepto (POC) en AWS",
+  "benefit1Desc": "Migración o implementación de IA en la nube con horas de acompañamiento estratégico por parte de nuestro equipo certificado.",
+  "benefit2Title": "Créditos y Programas de Financiamiento AWS",
+  "benefit2Desc": "Nominación para acceder hasta $2,000 USD en créditos y programas de apoyo de AWS. *Aplican restricciones.*",
+  "benefit3Title": "Capacitación Masiva en IA sobre AWS",
+  "benefit3Desc": "Formación estructurada para garantizar adopción, entendimiento y ejecución sólida de la IA dentro de su organización.",
+  "implementationTitle": "Del diagnóstico a la implementación",
+  "nextSteps": "Próximos pasos recomendados",
+  "implementationDesc1": "Este diagnóstico ofrece una visión inicial del nivel de preparación de la organización para adoptar iniciativas de inteligencia artificial.",
+  "implementationDesc2": "El siguiente paso consiste en transformar estos hallazgos en una hoja de ruta clara que permita avanzar de forma estructurada hacia la implementación de soluciones basadas en IA.",
+  "implementationDesc3": "Nuestro equipo acompaña a organizaciones en la definición, diseño e implementación de estas iniciativas dentro de entornos cloud empresariales.",
+  "contactText": "Para conocer cómo implementar estas iniciativas en su organización, contacte a nuestro equipo en:",
+  
+  "btnContactTeam": "Contactar al equipo",
+  "riskHigh": "Alto Desbalance",
+  "riskModerate": "Riesgo Moderado",
+  "riskBalanced": "Madurez Equilibrada",
+  "cloudOpsAutomationDesc": "Automatización y monitoreo continuo para escalar operaciones.",
+  "aiAgentSolutionsDesc": "Automatización inteligente de flujos operativos.",
+  "awsMlSolutionsDesc": "Implementación de primeros modelos predictivos y analítica avanzada.",
+  "cloudOpsGovernanceDesc": "Estructuración operativa para escalar iniciativas tecnológicas.",
+  "awsAgentEnablementDesc": "Capacitación y adopción de IA para equipos internos.",
+  "awsMlAdvisoryDesc": "Acompañamiento estratégico en implementación de analítica avanzada.",
+  "awsMlSolutionsBusinessDesc": "Implementación de modelos predictivos y analítica avanzada para convertir datos en decisiones estratégicas.",
+  "aiAgentBusinessDesc": "Automatización inteligente de procesos mediante agentes de IA.",
+  "awsDataMigrationDesc": "Migración segura y confiable de datos hacia infraestructura escalable en AWS.",
+  "cloudOpsOneDataDesc": "Optimización y gobierno de infraestructura en la nube para soportar iniciativas de IA.",
+  "awsSecuritySolutionsDesc": "Protección integral de datos, identidades y cargas de trabajo en la nube.",
+  "cloudOpsSecurityDesc": "Implementación de controles y marcos de seguridad operativa.",
+  "awsSecurityComplianceDesc": "Implementación de marcos regulatorios y cumplimiento en entornos de IA.",
+  "cloudOpsGovCostDesc": "Gestión centralizada de infraestructura y control de costos.",
+  "awsDataMigrationExploreDesc": "Modernización de infraestructura base para habilitar capacidades de IA.",
+  "awsSecurityExploreDesc": "Establecimiento de una postura de seguridad sólida desde el inicio.",
+  "aiAutomationDesc": "Automatización inteligente de procesos empresariales.",
+  "cloudOpsOptimizationDesc": "Optimización continua y control de costos en la nube.",
+  "aiAgentTransformDesc": "Orquestación de sistemas autónomos impulsados por IA.",
+  "awsIotTransformDesc": "Integración del mundo físico con ecosistemas digitales avanzados.",
+  "awsConsultingTransformDesc": "Acompañamiento arquitectónico especializado para monetizar activos de datos e IA.",
+
+  "dashboard": {
+    "mapTitle": "Mapa de Madurez en IA Generativa",
+    "orgBalanceTitle": "Nivel de equilibrio organizacional",
+    "orgBalanceDesc": "La diferencia entre las dimensiones evaluadas indica que existen áreas con niveles de madurez desiguales. Atender estas brechas permitirá una adopción más estable y estratégica de iniciativas de IA.",
+    "execSummary": "Resumen Ejecutivo",
+    "execStrongest": "La organización muestra un nivel sólido en {{dimension}}, lo que refleja una base operativa bien establecida.",
+    "execWeakest": "La principal oportunidad de mejora se encuentra en {{dimension}}. Esta dimensión puede influir directamente en la capacidad de adoptar IA de manera efectiva.",
+    "execRecommendation": "Antes de ampliar las iniciativas de inteligencia artificial, se recomienda fortalecer esta área para reducir riesgos y asegurar una implementación sostenible.",
+    "strategicActivationTitle": "Activación Estratégica Recomendada",
+    "strategicActivationDesc1": "Con base en los resultados obtenidos, se sugiere priorizar acciones en {{dimension}}.",
+    "strategicActivationDesc2": "Fortalecer esta dimensión permitirá consolidar la base necesaria para ampliar el uso de inteligencia artificial de manera estructurada y sostenible.",
+    "levels": {
+      "exploring": "Explorando",
+      "adopting": "Adoptando",
+      "implementing": "Implementando",
+      "transforming": "Transformando"
+    },
+    "generating": "Generando diagnóstico..."
+  },
   "res": {
-  "exploring": {
-    "class": "🔍 EXPLORANDO",
-    "action": "Descubrimiento y Fundamentos",
-    "desc": "Se encuentran en las etapas iniciales de madurez digital. Antes de implementar Inteligencia Artificial, es fundamental modernizar su infraestructura base, asegurar sus entornos y construir una cultura sólida en la nube.",
-    "rec1Title": "AWS Well-Architected Framework",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-well-architected-framework/",
-    "rec1Desc": "Necesitas evaluar y optimizar tus arquitecturas actuales. Este marco de trabajo garantiza que tus cargas operen de forma segura, eficiente y rentable antes de intentar escalar con nuevas tecnologías.",
-    "rec2Title": "AWS Data Migration",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-data-migration/",
-    "rec2Desc": "Es vital salir de infraestructuras locales rígidas. Migrar a la nube te dará la flexibilidad, almacenamiento y capacidad de cómputo necesarias para soportar futuras iniciativas de IA.",
-    "rec3Title": "AWS Security",
-    "rec3Link": "https://offerings.onedatasoftware.com/aws-security/",
-    "rec3Desc": "La nube requiere nuevos paradigmas de protección. Implementar una postura de seguridad robusta es el primer paso obligatorio para proteger los datos de tu empresa y la confianza de tus clientes."
+    "exploring": {
+      "class": "🔍 EXPLORANDO",
+      "action": "Descubrimiento y Fundamentos",
+      "desc": "Se encuentran en las etapas iniciales de madurez digital. Antes de implementar Inteligencia Artificial, es fundamental modernizar su infraestructura base, asegurar sus entornos y construir una cultura sólida en la nube.",
+      "rec1Title": "AWS Well-Architected Framework",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-well-architected-framework/",
+      "rec1Desc": "Necesitas evaluar y optimizar tus arquitecturas actuales. Este marco de trabajo garantiza que tus cargas operen de forma segura, eficiente y rentable antes de intentar escalar con nuevas tecnologías.",
+      "rec2Title": "AWS Data Migration",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-data-migration/",
+      "rec2Desc": "Es vital salir de infraestructuras locales rígidas. Migrar a la nube te dará la flexibilidad, almacenamiento y capacidad de cómputo necesarias para soportar futuras iniciativas de IA.",
+      "rec3Title": "AWS Security",
+      "rec3Link": "https://offerings.onedatasoftware.com/aws-security/",
+      "rec3Desc": "La nube requiere nuevos paradigmas de protección. Implementar una postura de seguridad robusta es el primer paso obligatorio para proteger los datos de tu empresa y la confianza de tus clientes."
+    },
+    "adopting": {
+      "class": "🚀 ADOPTANDO",
+      "action": "Implementación Guiada",
+      "desc": "Han dado pasos sólidos hacia la adopción tecnológica. El objetivo ahora es estructurar estas iniciativas, construir repositorios de datos confiables y lanzar Pruebas de Concepto (POC) seguras.",
+      "rec1Title": "AWS Data Analytics",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-data-analytics/",
+      "rec1Desc": "La IA no funciona sin datos limpios. Necesitas centralizar y estructurar tu información para que los futuros modelos consuman datos confiables, accesibles y libres de silos organizacionales.",
+      "rec2Title": "AWS Generative AI Services",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec2Desc": "Te recomendamos iniciar con un caso de uso ágil. Implementar una Prueba de Concepto (POC) de IA Generativa te permitirá demostrar valor y retorno de inversión a tus directivos a corto plazo sin riesgo.",
+      "rec3Title": "AWS HIPAA & Compliances",
+      "rec3Link": "https://offerings.onedatasoftware.com/aws-hipaa/",
+      "rec3Desc": "Es indispensable establecer reglas de uso y privacidad desde ahora. Necesitas un marco de cumplimiento estricto que asegure que tus iniciativas de IA respeten todas las regulaciones de tu industria."
+    },
+    "implementing": {
+      "class": "⚙️ IMPLEMENTANDO",
+      "action": "Optimización y Escalado",
+      "desc": "Cuentan con un nivel de madurez destacado y POCs exitosas. La prioridad estratégica es llevar estas soluciones a producción masiva, automatizar operaciones y desarrollar modelos predictivos propios.",
+      "rec1Title": "AWS Generative AI a Escala",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec1Desc": "Tus equipos necesitan herramientas a nivel empresarial. Integrar IA Generativa en tus flujos de trabajo diarios transformará la productividad, la creación de contenido y la eficiencia en la atención al cliente.",
+      "rec2Title": "AWS Machine Learning Solutions",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-machine-learning-solutions/",
+      "rec2Desc": "Para dejar de ser reactivos, necesitas modelos entrenados con tu propio contexto. Esto te permitirá anticipar la demanda, detectar anomalías operativas y tomar decisiones verdaderamente predictivas.",
+      "rec3Title": "AWS CloudOps & Governance",
+      "rec3Link": "https://offerings.onedatasoftware.com/aws-cloud-ops-governance/",
+      "rec3Desc": "Escalar soluciones de IA trae retos de infraestructura complejos. Es vital implementar automatización operativa (CloudOps) para mantener el alto rendimiento y controlar los costos en la nube de forma centralizada."
+    },
+    "transforming": {
+      "class": "🌟 TRANSFORMANDO",
+      "action": "Innovación Continua y Liderazgo",
+      "desc": "Su organización es líder en adopción tecnológica. El enfoque ahora debe ser la innovación disruptiva, orquestando sistemas autónomos y conectando el mundo físico con el ecosistema digital avanzado.",
+      "rec1Title": "AWS AI Agents",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-ai-agent/",
+      "rec1Desc": "Para mantener tu ventaja competitiva, debes ir más allá de los asistentes básicos. Necesitas implementar agentes de IA capaces de razonar, interactuar con tus APIs y ejecutar flujos de trabajo complejos de forma autónoma.",
+      "rec2Title": "AWS IoT Solutions",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-iot-solutions/",
+      "rec2Desc": "La verdadera transformación ocurre al conectar el mundo físico. Integrar IoT te permitirá capturar datos en tiempo real de tus operaciones de campo para alimentar y re-entrenar modelos de IA aún más sofisticados.",
+      "rec3Title": "Consultoría Estratégica Avanzada",
+      "rec3Link": "mailto:contact@onedatasoftware.com",
+      "rec3Desc": "Al llegar a este nivel de madurez, los retos de negocio son únicos. Necesitas acompañamiento arquitectónico especializado de OneData para monetizar tus activos de datos e IA, creando nuevas líneas de ingresos."
+    }
   },
-  "adopting": {
-    "class": "🚀 ADOPTANDO",
-    "action": "Implementación Guiada",
-    "desc": "Han dado pasos sólidos hacia la adopción tecnológica. El objetivo ahora es estructurar estas iniciativas, construir repositorios de datos confiables y lanzar Pruebas de Concepto (POC) seguras.",
-    "rec1Title": "AWS Data Analytics",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-data-analytics/",
-    "rec1Desc": "La IA no funciona sin datos limpios. Necesitas centralizar y estructurar tu información para que los futuros modelos consuman datos confiables, accesibles y libres de silos organizacionales.",
-    "rec2Title": "AWS Generative AI Services",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
-    "rec2Desc": "Te recomendamos iniciar con un caso de uso ágil. Implementar una Prueba de Concepto (POC) de IA Generativa te permitirá demostrar valor y retorno de inversión a tus directivos a corto plazo sin riesgo.",
-    "rec3Title": "AWS HIPAA & Compliances",
-    "rec3Link": "https://offerings.onedatasoftware.com/aws-hipaa/",
-    "rec3Desc": "Es indispensable establecer reglas de uso y privacidad desde ahora. Necesitas un marco de cumplimiento estricto que asegure que tus iniciativas de IA respeten todas las regulaciones de tu industria."
-  },
-  "implementing": {
-    "class": "⚙️ IMPLEMENTANDO",
-    "action": "Optimización y Escalado",
-    "desc": "Cuentan con un nivel de madurez destacado y POCs exitosas. La prioridad estratégica es llevar estas soluciones a producción masiva, automatizar operaciones y desarrollar modelos predictivos propios.",
-    "rec1Title": "AWS Generative AI a Escala",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
-    "rec1Desc": "Tus equipos necesitan herramientas a nivel empresarial. Integrar IA Generativa en tus flujos de trabajo diarios transformará la productividad, la creación de contenido y la eficiencia en la atención al cliente.",
-    "rec2Title": "AWS Machine Learning Solutions",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-machine-learning-solutions/",
-    "rec2Desc": "Para dejar de ser reactivos, necesitas modelos entrenados con tu propio contexto. Esto te permitirá anticipar la demanda, detectar anomalías operativas y tomar decisiones verdaderamente predictivas.",
-    "rec3Title": "AWS CloudOps & Governance",
-    "rec3Link": "https://offerings.onedatasoftware.com/aws-cloud-ops-governance/",
-    "rec3Desc": "Escalar soluciones de IA trae retos de infraestructura complejos. Es vital implementar automatización operativa (CloudOps) para mantener el alto rendimiento y controlar los costos en la nube de forma centralizada."
-  },
-  "transforming": {
-    "class": "🌟 TRANSFORMANDO",
-    "action": "Innovación Continua y Liderazgo",
-    "desc": "Su organización es líder en adopción tecnológica. El enfoque ahora debe ser la innovación disruptiva, orquestando sistemas autónomos y conectando el mundo físico con el ecosistema digital avanzado.",
-    "rec1Title": "AWS AI Agents",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-ai-agent/",
-    "rec1Desc": "Para mantener tu ventaja competitiva, debes ir más allá de los asistentes básicos. Necesitas implementar agentes de IA capaces de razonar, interactuar con tus APIs y ejecutar flujos de trabajo complejos de forma autónoma.",
-    "rec2Title": "AWS IoT Solutions",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-iot-solutions/",
-    "rec2Desc": "La verdadera transformación ocurre al conectar el mundo físico. Integrar IoT te permitirá capturar datos en tiempo real de tus operaciones de campo para alimentar y re-entrenar modelos de IA aún más sofisticados.",
-    "rec3Title": "Consultoría Estratégica Avanzada",
-    "rec3Link": "mailto:contact@onedatasoftware.com",
-    "rec3Desc": "Al llegar a este nivel de madurez, los retos de negocio son únicos. Necesitas acompañamiento arquitectónico especializado de OneData para monetizar tus activos de datos e IA, creando nuevas líneas de ingresos."
-  }
+"footer": {
+  "presence": "Presencia Internacional",
+  "office": "Oficina México",
+  "contact": "Contacto Comercial",
+  "rights": "Todos los derechos reservados."
 },
+
   "questions": [
     {
-      "id": "Q1", "dimension": "Business", "title": "Identificación de casos de uso de IA Generativa", "text": "¿Su organización tiene directrices para identificar y priorizar casos de uso que podrían beneficiarse de capacidades de IA Generativa o Agentes de IA?",
+      "id": "Q1",
+      "dimension": "Business",
+      "title": "Identificación de casos de uso de IA Generativa",
+      "text": "¿Su organización tiene directrices para identificar y priorizar casos de uso que podrían beneficiarse de capacidades de IA Generativa o Agentes de IA?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No existen directrices.", "desc": "La identificación de casos de uso de IA Generativa ocurre de manera reactiva y no coordinada, impulsada por intereses individuales." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Existen directrices básicas", "desc": "para IA Generativa pero se aplican de manera inconsistente entre los equipos, sin alineación a objetivos organizacionales." },
@@ -115,7 +201,10 @@
       ]
     },
     {
-      "id": "Q2", "dimension": "Business", "title": "Integración de IA Generativa en Procesos", "text": "¿Su organización tiene mecanismos para integrar soluciones de IA Generativa y Agentes de IA en procesos de negocio existentes?",
+      "id": "Q2",
+      "dimension": "Business",
+      "title": "Integración de IA Generativa en Procesos",
+      "text": "¿Su organización tiene mecanismos para integrar soluciones de IA Generativa y Agentes de IA en procesos de negocio existentes?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No existen mecanismos.", "desc": "Las soluciones de IA Generativa se implementan como experimentos aislados sin un enfoque en la integración más amplia." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Enfoques de integración básicos", "desc": "están definidos pero se aplican de forma inconsistente. No existe un enfoque organizacional estandarizado." },
@@ -125,7 +214,10 @@
       ]
     },
     {
-      "id": "Q3", "dimension": "People", "title": "Programa de Desarrollo de Habilidades IA", "text": "¿Existe un programa de desarrollo de habilidades enfocado en diferentes roles (líderes de negocio, desarrolladores, ingenieros de datos, usuarios finales) cubriendo IA Generativa y Agentes de IA?",
+      "id": "Q3",
+      "dimension": "People",
+      "title": "Programa de Desarrollo de Habilidades IA",
+      "text": "¿Existe un programa de desarrollo de habilidades enfocado en diferentes roles (líderes de negocio, desarrolladores, ingenieros de datos, usuarios finales) cubriendo IA Generativa y Agentes de IA?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No existe un programa estructurado.", "desc": "El aprendizaje ocurre individualmente sin distinción entre roles organizacionales." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Materiales de capacitación básicos", "desc": "están disponibles pero aplicados de manera inconsistente. Talleres informales para roles técnicos sin un enfoque estructurado." },
@@ -135,7 +227,10 @@
       ]
     },
     {
-      "id": "Q4", "dimension": "Governance", "title": "Políticas de Uso de IA Responsable", "text": "¿Están integradas las políticas y directrices de IA Responsable en los procesos de desarrollo, pautas operativas y marcos de gestión de riesgos?",
+      "id": "Q4",
+      "dimension": "Governance",
+      "title": "Políticas de Uso de IA Responsable",
+      "text": "¿Están integradas las políticas y directrices de IA Responsable en los procesos de desarrollo, pautas operativas y marcos de gestión de riesgos?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No hay políticas formales de IA Responsable.", "desc": "La documentación de modelos es ad-hoc sin un enfoque estandarizado. Los equipos deciden sin orientación formal." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Políticas básicas de IA Responsable", "desc": "existen pero se aplican de forma inconsistente. Las plantillas varían entre equipos con cobertura limitada." },
@@ -145,7 +240,10 @@
       ]
     },
     {
-      "id": "Q5", "dimension": "Governance", "title": "Evaluación de Riesgos de IA", "text": "¿Se han establecido mecanismos para evaluar el impacto comercial, legal y ético de soluciones de IA no deterministas (resultados inesperados, alucinaciones, comportamiento impredecible de Agentes de IA) junto con prácticas de mitigación?",
+      "id": "Q5",
+      "dimension": "Governance",
+      "title": "Evaluación de Riesgos de IA",
+      "text": "¿Se han establecido mecanismos para evaluar el impacto comercial, legal y ético de soluciones de IA no deterministas (resultados inesperados, alucinaciones, comportamiento impredecible de Agentes de IA) junto con prácticas de mitigación?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No hay procesos formales de evaluación de riesgos.", "desc": "Las respuestas al comportamiento inesperado son reactivas y ocurren solo después de incidentes." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Mecanismos básicos y salvaguardas", "desc": "existen pero se aplican inconsistentemente. Consideración limitada a los riesgos de Agentes de IA." },
@@ -155,7 +253,10 @@
       ]
     },
     {
-      "id": "Q6", "dimension": "Platform", "title": "Prácticas de Diseño con enfoque en IA", "text": "¿Ha adoptado su organización prácticas de Diseño con enfoque en IA, asegurando que los desarrolladores entiendan las características únicas de trabajar con IA Generativa y Agentes de IA?",
+      "id": "Q6",
+      "dimension": "Platform",
+      "title": "Prácticas de Diseño con enfoque en IA",
+      "text": "¿Ha adoptado su organización prácticas de Diseño con enfoque en IA, asegurando que los desarrolladores entiendan las características únicas de trabajar con IA Generativa y Agentes de IA?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "Las prácticas de Diseño con enfoque en IA no se han adoptado.", "desc": "Los desarrolladores carecen de comprensión sobre conceptos de IA como resultados probabilísticos o Agentes de IA." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Conciencia básica", "desc": "de cómo la incertidumbre de la IA afecta la experiencia del usuario. Las interfaces consideran limitaciones ocasionalmente." },
@@ -165,7 +266,10 @@
       ]
     },
     {
-      "id": "Q7", "dimension": "Platform", "title": "Plataformas para el Ciclo de Vida de la IA", "text": "¿Su organización utiliza plataformas de IA que soporten todos los aspectos del Ciclo de Vida de la IA —desde la preparación de datos hasta el despliegue— para soluciones de IA Generativa y Agentes de IA?",
+      "id": "Q7",
+      "dimension": "Platform",
+      "title": "Plataformas para el Ciclo de Vida de la IA",
+      "text": "¿Su organización utiliza plataformas de IA que soporten todos los aspectos del Ciclo de Vida de la IA —desde la preparación de datos hasta el despliegue— para soluciones de IA Generativa y Agentes de IA?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "Herramientas y plataformas desconectadas", "desc": "soportan aspectos aislados del Ciclo de Vida de la IA. Los equipos usan diferentes herramientas para cada etapa." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Las plataformas soportan algunos aspectos", "desc": "del Ciclo de Vida de la IA. Los flujos de trabajo no están integrados de extremo a extremo, con soporte limitado para operaciones de IA." },
@@ -175,7 +279,10 @@
       ]
     },
     {
-      "id": "Q8", "dimension": "Security", "title": "Prácticas de Seguridad del Entorno", "text": "¿Se han implementado las mejores prácticas para mantener entornos y datos seguros, prevenir la fuga de información y proteger los sistemas de IA contra vulnerabilidades y comportamientos no deseados?",
+      "id": "Q8",
+      "dimension": "Security",
+      "title": "Prácticas de Seguridad del Entorno",
+      "text": "¿Se han implementado las mejores prácticas para mantener entornos y datos seguros, prevenir la fuga de información y proteger los sistemas de IA contra vulnerabilidades y comportamientos no deseados?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No existen prácticas de seguridad definidas", "desc": "para entornos de IA. Los controles de seguridad para modelos son ad-hoc y reactivos." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Existen controles de seguridad básicos", "desc": "pero no son exhaustivos para las necesidades específicas de la IA. La conciencia sobre la fuga de datos es inconsistente." },
@@ -185,7 +292,10 @@
       ]
     },
     {
-      "id": "Q9", "dimension": "Security", "title": "Políticas de Seguridad de IA", "text": "¿Su organización ha establecido políticas de seguridad de IA claras, estándares y directrices junto con roles y responsabilidades bien definidos?",
+      "id": "Q9",
+      "dimension": "Security",
+      "title": "Políticas de Seguridad de IA",
+      "text": "¿Su organización ha establecido políticas de seguridad de IA claras, estándares y directrices junto con roles y responsabilidades bien definidos?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "No existen políticas de seguridad de IA o estándares.", "desc": "Los roles de seguridad y responsabilidades para los sistemas de IA no están definidos o son poco claros." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Políticas de Seguridad de IA básicas documentadas", "desc": "pero aplicadas de forma inconsistente. Los roles iniciales están definidos pero carecen de cobertura total de IA." },
@@ -195,7 +305,10 @@
       ]
     },
     {
-      "id": "Q10", "dimension": "Operations", "title": "Mecanismos de Observabilidad", "text": "¿Su organización ha establecido mecanismos automatizados para la observabilidad y respuesta a incidentes en las soluciones de IA?",
+      "id": "Q10",
+      "dimension": "Operations",
+      "title": "Mecanismos de Observabilidad",
+      "text": "¿Su organización ha establecido mecanismos automatizados para la observabilidad y respuesta a incidentes en las soluciones de IA?",
       "options": [
         { "level": 1, "points": 1, "label": "Inicial", "title": "Falta de mecanismos de monitoreo automatizado.", "desc": "No hay una forma sistemática de detectar incidentes, dependiendo principalmente de informes de usuarios." },
         { "level": 2, "points": 2, "label": "Fundacional", "title": "Se implementan herramientas básicas", "desc": "de monitoreo con una cobertura inconsistente. Existen alertas simples para fallas obvias." },

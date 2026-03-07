@@ -17,8 +17,8 @@
   "btnStart": "START ASSESSMENT",
   "selectCountry": "Select your country...",
   "btnBack": "← Back",
-  "btnNext": "Next →",
-  "btnResults": "View Results",
+  "btnNext": "Continue →",
+  "btnResults": "View results →",
   "dimLabel": "Dimension:",
   "dimNames": {
     "Business": "Business",
@@ -35,7 +35,7 @@
   "dashEvalOf": "Assessment for:",
   "dashGlobalScore": "Global Score",
   "dashOf": "of 50",
-  "dashFocus": "Strategic focus:",
+  "dashFocus": "Strategic focus",
   "btnNewEval": "Take a new assessment",
   "dashBreakdown": "Breakdown by Strategic Dimension",
   "dashProgress": "Progress",
@@ -45,67 +45,146 @@
   "pdfCtaTitle": "Empower your future with Artificial Intelligence",
   "pdfCta": "Learn how we can help you scale these initiatives. Contact us:",
   "btnContact": "contact@onedatasoftware.com",
-"res": {
-  "exploring": {
-    "class": "🔍 EXPLORING",
-    "action": "Discovery & Foundations",
-    "desc": "You are in the initial stages of digital maturity. Before implementing Artificial Intelligence, it is fundamental to modernize your core infrastructure, secure your environments, and build a strong cloud culture.",
-    "rec1Title": "AWS Well-Architected Framework",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-well-architected-framework/",
-    "rec1Desc": "You need to evaluate and optimize your current architectures. This framework ensures your workloads operate securely, efficiently, and cost-effectively before attempting to scale with new technologies.",
-    "rec2Title": "AWS Data Migration",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-data-migration/",
-    "rec2Desc": "It is vital to move away from rigid on-premises infrastructure. Migrating to the cloud will give you the flexibility, storage, and compute capacity needed to support future AI initiatives.",
-    "rec3Title": "AWS Security",
-    "rec3Link": "https://offerings.onedatasoftware.com/aws-security/",
-    "rec3Desc": "The cloud requires new security paradigms. Implementing a robust security posture is the mandatory first step to protect your company's data and earn your customers' trust."
+  "maturity": "Maturity",
+  "reportTitle": "Generative AI Maturity Assessment",
+  "reportSubtitle": "AI Readiness Evaluation",
+  "dimensionBreakdown": "Dimension Breakdown",
+  "dimension": "Dimension",
+  "score": "Score",
+  "progress": "Progress",
+  "maturityDiagnosis": "Maturity Diagnosis",
+  "currentDiagnosis": "Current Diagnosis",
+  "recommendations": "OneData + AWS Recommendations",
+  "strategicBenefits": "Strategic Benefits Included",
+  "strategicBenefitsDesc": "As part of this strategic assessment, your organization can access the following exclusive benefits:",
+  "benefit1Title": "Proof of Concept (POC) on AWS",
+  "benefit1Desc": "Migration or AI implementation in the cloud with strategic advisory hours from our certified team.",
+  "benefit2Title": "AWS Funding Programs and Credits",
+  "benefit2Desc": "Nomination to access up to $2,000 USD in AWS support programs and credits. *Restrictions apply.*",
+  "benefit3Title": "Enterprise AI Training on AWS",
+  "benefit3Desc": "Structured training to ensure strong adoption, understanding, and execution of AI within your organization.",
+  "implementationTitle": "From Diagnosis to Implementation",
+  "nextSteps": "Recommended Next Steps",
+  "implementationDesc1": "This assessment provides an initial view of your organization's readiness level to adopt artificial intelligence initiatives.",
+  "implementationDesc2": "The next step is to transform these insights into a clear roadmap that enables structured progress toward implementing AI-driven solutions.",
+  "implementationDesc3": "Our team supports organizations in defining, designing, and implementing these initiatives within enterprise cloud environments.",
+  "contactText": "To learn how to implement these initiatives in your organization, contact our team at:",
+  
+  "btnContactTeam": "Contact the team",
+  "riskHigh": "High Imbalance",
+  "riskModerate": "Moderate Risk",
+  "riskBalanced": "Balanced Maturity",
+  "cloudOpsAutomationDesc": "Continuous automation and monitoring to scale operations.",
+  "aiAgentSolutionsDesc": "Intelligent automation of operational workflows.",
+  "awsMlSolutionsDesc": "Implementation of predictive models and advanced analytics solutions.",
+  "cloudOpsGovernanceDesc": "Operational structuring to scale technology initiatives.",
+  "awsAgentEnablementDesc": "AI training and adoption programs for internal teams.",
+  "awsMlAdvisoryDesc": "Strategic advisory for advanced analytics and machine learning implementation.",
+  "awsMlSolutionsBusinessDesc": "Implementation of predictive models and advanced analytics to turn data into strategic decisions.",
+  "aiAgentBusinessDesc": "Intelligent automation of processes using AI agents.",
+  "awsDataMigrationDesc": "Secure and reliable migration of data to scalable AWS infrastructure.",
+  "cloudOpsOneDataDesc": "Optimization and governance of cloud infrastructure to support AI initiatives.",
+  "awsSecuritySolutionsDesc": "Comprehensive protection for data, identities, and cloud workloads.",
+  "cloudOpsSecurityDesc": "Implementation of operational security controls and frameworks.",
+  "awsSecurityComplianceDesc": "Implementation of regulatory frameworks and compliance for AI environments.",
+  "cloudOpsGovCostDesc": "Centralized infrastructure management and cost control.",
+  "awsDataMigrationExploreDesc": "Modernization of core infrastructure to enable AI capabilities.",
+  "awsSecurityExploreDesc": "Establishment of a strong security posture from the start.",
+  "aiAutomationDesc": "Intelligent automation of business processes.",
+  "cloudOpsOptimizationDesc": "Continuous optimization and cost control in the cloud.",
+  "aiAgentTransformDesc": "Orchestration of autonomous systems driven by AI.",
+  "awsIotTransformDesc": "Integration of the physical world with advanced digital ecosystems.",
+  "advancedConsultingDesc": "Specialized strategic guidance for monetizing Data and AI assets.",
+
+  "dashboard": {
+    "mapTitle": "Generative AI Maturity Map",
+    "orgBalanceTitle": "Organizational Balance Level",
+    "orgBalanceDesc": "The difference between evaluated dimensions indicates uneven maturity levels. Addressing these gaps will enable a more stable and strategic adoption of AI initiatives.",
+    "execSummary": "Executive Summary",
+    "execStrongest": "The organization shows a strong level in {{dimension}}, reflecting a well-established operational foundation.",
+    "execWeakest": "The main opportunity for improvement lies in {{dimension}}. This dimension can directly influence the ability to adopt AI effectively.",
+    "execRecommendation": "Before expanding artificial intelligence initiatives, strengthening this area is recommended to reduce risks and ensure sustainable implementation.",
+    "strategicActivationTitle": "Recommended Strategic Activation",
+    "strategicActivationDesc1": "Based on the results obtained, it is recommended to prioritize actions in {{dimension}}.",
+    "strategicActivationDesc2": "Strengthening this dimension will help establish the necessary foundation to scale AI initiatives in a structured and sustainable way.",
+    "levels": {
+      "exploring": "Exploring",
+      "adopting": "Adopting",
+      "implementing": "Implementing",
+      "transforming": "Transforming"
+    },
+    "generating": "Generating diagnosis..."
   },
-  "adopting": {
-    "class": "🚀 ADOPTING",
-    "action": "Guided Implementation",
-    "desc": "You have taken solid steps towards technological adoption. The goal now is to structure these initiatives, build reliable data repositories, and launch secure Proofs of Concept (POC).",
-    "rec1Title": "AWS Data Analytics",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-data-analytics/",
-    "rec1Desc": "AI does not work without clean data. You need to centralize and structure your information so that future models consume reliable, accessible data free of organizational silos.",
-    "rec2Title": "AWS Generative AI Services",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
-    "rec2Desc": "We recommend starting with an agile use case. Implementing a Generative AI POC will allow you to demonstrate short-term value and ROI to your stakeholders without operational risk.",
-    "rec3Title": "AWS HIPAA & Compliances",
-    "rec3Link": "https://offerings.onedatasoftware.com/aws-hipaa/",
-    "rec3Desc": "Establishing privacy rules is indispensable. You need a strict compliance framework right now to ensure that your early AI initiatives meet all the regulations of your specific industry."
+  "res": {
+    "exploring": {
+      "class": "🔍 EXPLORING",
+      "action": "Discovery & Foundations",
+      "desc": "You are in the initial stages of digital maturity. Before implementing Artificial Intelligence, it is fundamental to modernize your core infrastructure, secure your environments, and build a strong cloud culture.",
+      "rec1Title": "AWS Well-Architected Framework",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-well-architected-framework/",
+      "rec1Desc": "You need to evaluate and optimize your current architectures. This framework ensures your workloads operate securely, efficiently, and cost-effectively before attempting to scale with new technologies.",
+      "rec2Title": "AWS Data Migration",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-data-migration/",
+      "rec2Desc": "It is vital to move away from rigid on-premises infrastructure. Migrating to the cloud will give you the flexibility, storage, and compute capacity needed to support future AI initiatives.",
+      "rec3Title": "AWS Security",
+      "rec3Link": "https://offerings.onedatasoftware.com/aws-security/",
+      "rec3Desc": "The cloud requires new security paradigms. Implementing a robust security posture is the mandatory first step to protect your company's data and earn your customers' trust."
+    },
+    "adopting": {
+      "class": "🚀 ADOPTING",
+      "action": "Guided Implementation",
+      "desc": "You have taken solid steps towards technological adoption. The goal now is to structure these initiatives, build reliable data repositories, and launch secure Proofs of Concept (POC).",
+      "rec1Title": "AWS Data Analytics",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-data-analytics/",
+      "rec1Desc": "AI does not work without clean data. You need to centralize and structure your information so that future models consume reliable, accessible data free of organizational silos.",
+      "rec2Title": "AWS Generative AI Services",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec2Desc": "We recommend starting with an agile use case. Implementing a Generative AI POC will allow you to demonstrate short-term value and ROI to your stakeholders without operational risk.",
+      "rec3Title": "AWS HIPAA & Compliances",
+      "rec3Link": "https://offerings.onedatasoftware.com/aws-hipaa/",
+      "rec3Desc": "Establishing privacy rules is indispensable. You need a strict compliance framework right now to ensure that your early AI initiatives meet all the regulations of your specific industry."
+    },
+    "implementing": {
+      "class": "⚙️ IMPLEMENTING",
+      "action": "Optimization & Scaling",
+      "desc": "You have a prominent level of maturity with successful POCs. The strategic priority is to take these solutions to massive production, automate operations, and develop proprietary predictive models.",
+      "rec1Title": "Generative AI at Scale",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
+      "rec1Desc": "Your teams need enterprise-grade tools. Integrating Generative AI into your daily workflows will transform productivity, content creation, and customer service efficiency.",
+      "rec2Title": "AWS Machine Learning Solutions",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-machine-learning-solutions/",
+      "rec2Desc": "To stop being reactive, you need models trained on your own business context. This will allow you to anticipate demand, detect operational anomalies, and make truly predictive decisions.",
+      "rec3Title": "AWS CloudOps & Governance",
+      "rec3Link": "https://offerings.onedatasoftware.com/aws-cloud-ops-governance/",
+      "rec3Desc": "Scaling AI solutions brings complex infrastructure challenges. It is vital to implement operational automation (CloudOps) to maintain high performance and centrally control cloud costs."
+    },
+    "transforming": {
+      "class": "🌟 TRANSFORMING",
+      "action": "Continuous Innovation & Leadership",
+      "desc": "Your organization is a leader in technological adoption. The focus must now be on disruptive innovation, orchestrating autonomous systems, and connecting the physical world with the advanced digital ecosystem.",
+      "rec1Title": "AWS AI Agents",
+      "rec1Link": "https://offerings.onedatasoftware.com/aws-ai-agent/",
+      "rec1Desc": "To maintain your competitive edge, you must go beyond basic virtual assistants. You need to implement AI agents capable of reasoning, interacting with your APIs, and executing complex workflows autonomously.",
+      "rec2Title": "AWS IoT Solutions",
+      "rec2Link": "https://offerings.onedatasoftware.com/aws-iot-solutions/",
+      "rec2Desc": "True transformation happens when connecting the physical world. Integrating IoT will allow you to capture real-time data from your field operations to feed and retrain even more sophisticated AI models.",
+      "rec3Title": "Advanced Strategic Consulting",
+      "rec3Link": "mailto:contact@onedatasoftware.com",
+      "rec3Desc": "Upon reaching this level of maturity, business challenges become unique. You need specialized architectural guidance from OneData to monetize your Data and AI assets, creating brand new revenue streams."
+    }
   },
-  "implementing": {
-    "class": "⚙️ IMPLEMENTING",
-    "action": "Optimization & Scaling",
-    "desc": "You have a prominent level of maturity with successful POCs. The strategic priority is to take these solutions to massive production, automate operations, and develop proprietary predictive models.",
-    "rec1Title": "Generative AI at Scale",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-generative-ai-services/",
-    "rec1Desc": "Your teams need enterprise-grade tools. Integrating Generative AI into your daily workflows will transform productivity, content creation, and customer service efficiency.",
-    "rec2Title": "AWS Machine Learning Solutions",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-machine-learning-solutions/",
-    "rec2Desc": "To stop being reactive, you need models trained on your own business context. This will allow you to anticipate demand, detect operational anomalies, and make truly predictive decisions.",
-    "rec3Title": "AWS CloudOps & Governance",
-    "rec3Link": "https://offerings.onedatasoftware.com/aws-cloud-ops-governance/",
-    "rec3Desc": "Scaling AI solutions brings complex infrastructure challenges. It is vital to implement operational automation (CloudOps) to maintain high performance and centrally control cloud costs."
-  },
-  "transforming": {
-    "class": "🌟 TRANSFORMING",
-    "action": "Continuous Innovation & Leadership",
-    "desc": "Your organization is a leader in technological adoption. The focus must now be on disruptive innovation, orchestrating autonomous systems, and connecting the physical world with the advanced digital ecosystem.",
-    "rec1Title": "AWS AI Agents",
-    "rec1Link": "https://offerings.onedatasoftware.com/aws-ai-agent/",
-    "rec1Desc": "To maintain your competitive edge, you must go beyond basic virtual assistants. You need to implement AI agents capable of reasoning, interacting with your APIs, and executing complex workflows autonomously.",
-    "rec2Title": "AWS IoT Solutions",
-    "rec2Link": "https://offerings.onedatasoftware.com/aws-iot-solutions/",
-    "rec2Desc": "True transformation happens when connecting the physical world. Integrating IoT will allow you to capture real-time data from your field operations to feed and retrain even more sophisticated AI models.",
-    "rec3Title": "Advanced Strategic Consulting",
-    "rec3Link": "mailto:contact@onedatasoftware.com",
-    "rec3Desc": "Upon reaching this level of maturity, business challenges become unique. You need specialized architectural guidance from OneData to monetize your Data and AI assets, creating brand new revenue streams."
-  }
+"footer": {
+  "presence": "International Presence",
+  "office": "Mexico Office",
+  "contact": "Business Contact",
+  "rights": "All Rights Reserved."
 },
   "questions": [
     {
-      "id": "Q1", "dimension": "Business", "title": "Generative AI Use Case Identification", "text": "Does your organization have guidelines to identify and prioritize use cases that could benefit from Generative AI or Agentic AI capabilities?",
+      "id": "Q1",
+      "dimension": "Business",
+      "title": "Generative AI Use Case Identification",
+      "text": "Does your organization have guidelines to identify and prioritize use cases that could benefit from Generative AI or Agentic AI capabilities?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "No guidelines exist.", "desc": "Generative AI use case identification occurs reactively and in an uncoordinated manner, driven by individual interests or ad-hoc requests." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic guidelines exist", "desc": "for Generative AI but are applied inconsistently across teams, without alignment to organizational objectives." },
@@ -115,7 +194,10 @@
       ]
     },
     {
-      "id": "Q2", "dimension": "Business", "title": "Generative AI Integration into Processes", "text": "Does your organization have mechanisms to integrate Generative AI and Agentic AI solutions into existing business processes?",
+      "id": "Q2",
+      "dimension": "Business",
+      "title": "Generative AI Integration into Processes",
+      "text": "Does your organization have mechanisms to integrate Generative AI and Agentic AI solutions into existing business processes?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "No integration mechanisms exist.", "desc": "Generative AI solutions are implemented as isolated experiments or proofs of concept without focus on broader integration." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic integration approaches", "desc": "are defined but applied inconsistently. There is no standardized organizational approach to incorporating Generative AI." },
@@ -125,7 +207,10 @@
       ]
     },
     {
-      "id": "Q3", "dimension": "People", "title": "AI Skills Development Program", "text": "Is there an AI skills development program focused on different personas (business leaders, AI developers, data engineers, data scientists, end users) covering ML, Generative AI, and Agentic AI?",
+      "id": "Q3",
+      "dimension": "People",
+      "title": "AI Skills Development Program",
+      "text": "Is there an AI skills development program focused on different personas (business leaders, AI developers, data engineers, data scientists, end users) covering ML, Generative AI, and Agentic AI?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "No structured program exists", "desc": "for AI skills development. Learning occurs individually without distinction between organizational roles." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic training materials", "desc": "are available but applied inconsistently. Informal workshops for technical roles without a structured persona-based focus." },
@@ -135,7 +220,10 @@
       ]
     },
     {
-      "id": "Q4", "dimension": "Governance", "title": "Responsible AI Usage Policies", "text": "Are Responsible AI policies and guidelines integrated into development processes, operational guidelines, and risk management frameworks?",
+      "id": "Q4",
+      "dimension": "Governance",
+      "title": "Responsible AI Usage Policies",
+      "text": "Are Responsible AI policies and guidelines integrated into development processes, operational guidelines, and risk management frameworks?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "No formal Responsible AI policies exist.", "desc": "Model documentation is absent or ad-hoc without a standardized approach. Teams make decisions without formal guidance." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic Responsible AI policies", "desc": "exist but are applied inconsistently. Basic documentation templates vary across teams with limited coverage." },
@@ -145,7 +233,10 @@
       ]
     },
     {
-      "id": "Q5", "dimension": "Governance", "title": "AI Risk Assessment", "text": "Has your organization established mechanisms to pre-assess the potential business, legal, and ethical impact of non-deterministic AI solutions (unexpected outputs, hallucinations, unpredictable Agentic AI behavior) along with mitigation practices?",
+      "id": "Q5",
+      "dimension": "Governance",
+      "title": "AI Risk Assessment",
+      "text": "Has your organization established mechanisms to pre-assess the potential business, legal, and ethical impact of non-deterministic AI solutions (unexpected outputs, hallucinations, unpredictable Agentic AI behavior) along with mitigation practices?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "No formal AI risk assessment processes exist.", "desc": "Responses to unexpected behavior are reactive and occur only after incidents." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic Risk Assessment Framework", "desc": "and Guardrails exist but are applied inconsistently. Limited consideration of risks from Agentic AI." },
@@ -155,7 +246,10 @@
       ]
     },
     {
-      "id": "Q6", "dimension": "Platform", "title": "AI-First Design Practices", "text": "Has your organization adopted AI-First Design practices, ensuring developers understand the unique characteristics of working with ML, Generative AI, and Agentic AI?",
+      "id": "Q6",
+      "dimension": "Platform",
+      "title": "AI-First Design Practices",
+      "text": "Has your organization adopted AI-First Design practices, ensuring developers understand the unique characteristics of working with ML, Generative AI, and Agentic AI?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "AI-First Design practices have not been adopted.", "desc": "Developers lack understanding of AI concepts such as probabilistic outputs or Agentic AI." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic awareness", "desc": "of how AI uncertainty affects user experience. Interfaces occasionally consider AI limitations without a consistent approach." },
@@ -165,7 +259,10 @@
       ]
     },
     {
-      "id": "Q7", "dimension": "Platform", "title": "AI Lifecycle Platforms", "text": "Does your organization use AI platforms that support all aspects of the AI lifecycle — from data preparation to deployment and production management — for ML, Generative AI, and Agentic AI solutions?",
+      "id": "Q7",
+      "dimension": "Platform",
+      "title": "AI Lifecycle Platforms",
+      "text": "Does your organization use AI platforms that support all aspects of the AI lifecycle — from data preparation to deployment and production management — for ML, Generative AI, and Agentic AI solutions?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "Disconnected tools and platforms", "desc": "support isolated aspects of the AI lifecycle. Teams use different tools for various stages." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Platforms support some aspects", "desc": "of the AI lifecycle. Workflows are not integrated end-to-end, with limited support for MLOps or FMOps." },
@@ -175,7 +272,10 @@
       ]
     },
     {
-      "id": "Q8", "dimension": "Security", "title": "Environment Security Practices", "text": "Has your organization implemented best practices to maintain secure environments and data, prevent data leakage, and protect AI systems against vulnerabilities and unintended behaviors?",
+      "id": "Q8",
+      "dimension": "Security",
+      "title": "Environment Security Practices",
+      "text": "Has your organization implemented best practices to maintain secure environments and data, prevent data leakage, and protect AI systems against vulnerabilities and unintended behaviors?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "No defined security practices exist", "desc": "for AI environments or data protection. Security controls for AI models are ad-hoc and reactive." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic security controls are in place", "desc": "but not comprehensive for AI-specific needs. Awareness of data leakage risks is applied inconsistently." },
@@ -185,7 +285,10 @@
       ]
     },
     {
-      "id": "Q9", "dimension": "Security", "title": "AI Security Policies", "text": "Has your organization established clear AI Security Policies, standards, and guidelines along with defined roles and responsibilities?",
+      "id": "Q9",
+      "dimension": "Security",
+      "title": "AI Security Policies",
+      "text": "Has your organization established clear AI Security Policies, standards, and guidelines along with defined roles and responsibilities?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "No AI Security Policies or standards exist.", "desc": "Security roles and responsibilities for AI systems are undefined or unclear." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic AI Security Policies are documented", "desc": "but applied inconsistently. Initial roles are defined but lack full AI coverage." },
@@ -195,7 +298,10 @@
       ]
     },
     {
-      "id": "Q10", "dimension": "Operations", "title": "Observability Mechanisms", "text": "Has your organization established automated mechanisms for observability and incident response in AI solutions?",
+      "id": "Q10",
+      "dimension": "Operations",
+      "title": "Observability Mechanisms",
+      "text": "Has your organization established automated mechanisms for observability and incident response in AI solutions?",
       "options": [
         { "level": 1, "points": 1, "label": "Initial", "title": "Lack of automated monitoring mechanisms.", "desc": "There is no systematic way to detect or respond to incidents, relying primarily on user reports." },
         { "level": 2, "points": 2, "label": "Foundational", "title": "Basic monitoring tools are implemented", "desc": "for some AI solutions with inconsistent coverage. Simple alerts exist for obvious failures." },
