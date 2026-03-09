@@ -1,4 +1,3 @@
-//import { brandConfig } from "./config/configAWS";
 import { brandConfig } from "./config/configCluster";
 
 import { useState, useEffect, useRef } from 'react';
@@ -17,7 +16,6 @@ import lbCluster from './assets/clusterblanco.png';
 import fondo from './assets/fondo.jpg'; 
 import './App.css'; 
 
-// 💡 TIP PRO APLICADO: Agrupación de logos para evitar variables rotas
 const assets = {
   cluster: clusterLogo,
   onedata: logoColor,
@@ -118,8 +116,6 @@ const HeroLogos = ({ variant = "cluster", theme = "dark" }) => {
 export default function App() {
   const { t, i18n } = useTranslation(); 
   const currentLanguage = i18n.language;
-  
-  // 🛡️ BLINDAJE 1: Asegurar que questions SIEMPRE sea un Array (evita crasheos de length si t() devuelve un string)
   const rawQuestions = t('questions', { returnObjects: true });
   const questions = Array.isArray(rawQuestions) ? rawQuestions : [];
 
@@ -152,8 +148,6 @@ const isValidText = (text, max) => {
   const textRegex = /^[a-zA-ZÀ-ÿ\s]+$/;
   return textRegex.test(text) && text.length <= max;
 };
-
-
 
   useEffect(() => {
     if (questionRef.current && hasStarted && !isFinished) {
@@ -317,7 +311,6 @@ const goToNextQuestion = () => {
       : totalPercentage <= 80 ? "implementing"
       : "transforming";
 
-    // 🛡️ BLINDAJE 2: Asegurar que levelData siempre sea un objeto válido, incluso si t() falla
     const rawLevelData = t(`res.${levelKey}`, { returnObjects: true });
     const safeLevelData = (typeof rawLevelData === 'object' && rawLevelData !== null) ? rawLevelData : {};
 
@@ -530,7 +523,6 @@ const isFormValid =
     </div>
 
   </div>
-
               
               <button onClick={() => setHasStarted(true)} disabled={!isFormValid} style={{ marginTop: '2.5rem', width: '100%', padding: '16px', backgroundColor: isFormValid ? awsOrange : '#cbd5e0', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: isFormValid ? 'pointer' : 'not-allowed', fontSize: '1.1rem', fontWeight: '800', boxShadow: isFormValid ? `0 10px 20px -5px ${awsOrange}66` : 'none' }}>
                 {t('btnStart')}
@@ -602,7 +594,6 @@ const isFormValid =
                   </div>
                   <div className="evaluation-focus">
                     <div className="classification-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '1.5rem' }}>
-                      {/* 🛡️ BLINDAJE 3: Optional chaining (?.class) por si la traducción de la clase falla */}
                       <h2 style={{ color: scoreColor, fontSize: '1.4rem', fontWeight: '900', margin: '0 0 0.5rem 0' }}>{results.levelData?.class}</h2>
                       <p style={{ fontSize: '0.9rem', color: '#2d3748', lineHeight: '1.5', margin: 0 }}><strong>{t('dashFocus')}:</strong> {results.levelData?.action}</p>
                     </div>
@@ -724,7 +715,6 @@ const isFormValid =
                         <h4 style={{ color: oneDataDarkBlue, marginTop: 0, marginBottom: '1rem', fontSize: '1.1rem', fontWeight: '800', textAlign: 'left' }}>{t('recommendations')}</h4>
                         <ul style={{ margin: 0, paddingLeft: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left' }}>
                           {[1, 2, 3].map(num => {
-                            // 🛡️ BLINDAJE 4: Optional chaining en las propiedades dinámicas
                             const recLink = results.levelData?.[`rec${num}Link`];
                             const recTitle = results.levelData?.[`rec${num}Title`];
                             const recDesc = results.levelData?.[`rec${num}Desc`];
@@ -1102,7 +1092,6 @@ const isFormValid =
     );
   }
 
-  // 🛡️ BLINDAJE 5: Proteger lectura de currentQuestion y evitar fallos si el array questions está vacío.
   const currentQuestion = questions?.[currentQuestionIndex] || {};
   const progressPercentage = questions.length
     ? Math.round(((currentQuestionIndex + 1) / questions.length) * 100)
@@ -1149,7 +1138,6 @@ const isFormValid =
           
           <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center', width: '100%', minHeight: '380px' }}>
             <div className="options-container" key={`opts-${currentQuestionIndex}`}>
-                {/* 🛡️ BLINDAJE 6: Optional chaining en las opciones de respuesta */}
                 {currentQuestion?.options?.map((opt) => {
                   const isSelected = answers[currentQuestion.id] === opt.points;
                   return (
