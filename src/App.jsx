@@ -1,3 +1,4 @@
+//import { brandConfig } from "./config/configAWS";
 import { brandConfig } from "./config/configCluster";
 
 import { useState, useEffect, useRef } from 'react';
