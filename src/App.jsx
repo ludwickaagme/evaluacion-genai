@@ -27,60 +27,92 @@ const assets = {
 const BRAND_VARIANT = brandConfig.showCluster ? "cluster" : "aws";
 
 const HeroLogos = ({ variant = "cluster", theme = "dark" }) => {
-  return (
-    <div
-      className="hero-logos no-print"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr auto 1fr",
-        alignItems: "center",
-        width: "100%",
-        maxWidth: "1200px",
-        margin: "0 auto",
-        padding: "20px 24px"
-      }}
-    >
-      
-      {/* IZQUIERDA */}
-      <div style={{ justifySelf: "start" }}>
-        {variant === "cluster" && (
+  return (<div
+    className="hero-logos no-print"
+    style={{
+      display: "grid",
+      gridTemplateColumns: "1fr auto 1fr",
+      alignItems: "center",
+      width: "100%",
+      maxWidth: "1200px",
+      margin: "0 auto",
+      padding: "20px 24px"
+    }}
+  >
+
+    {variant === "cluster" ? (
+      <>
+        {/* IZQUIERDA AWS */}
+        <div style={{ justifySelf: "start" }}>
+          <img
+            src={awsWhite}
+            alt="AWS"
+            style={{
+              height: "clamp(34px, 4.5vw, 52px)",
+              maxWidth: "90px",
+              objectFit: "contain"
+            }}
+          />
+        </div>
+
+        {/* CENTRO CLUSTER */}
+        <div style={{ justifySelf: "center" }}>
           <img
             src={lbCluster}
             alt="Cluster"
             style={{ height: "clamp(40px, 5vw, 65px)", width: "auto" }}
           />
-        )}
-      </div>
+        </div>
 
-      {/* CENTRO */}
-      <div style={{ justifySelf: "center" }}>
-        <img
-          src={theme === "light" ? logo : onedataWhite}
-          alt="OneData"
-          style={{
-            height: "clamp(32px, 4vw, 50px)",
-            maxWidth: "260px",
-            width: "100%",
-            objectFit: "contain"
-          }}
-        />
-      </div>
+        {/* DERECHA ONEDATA */}
+        <div style={{ justifySelf: "end" }}>
+          <img
+            src={theme === "light" ? logo : onedataWhite}
+            alt="OneData"
+            style={{
+              height: "clamp(32px, 4vw, 50px)",
+              maxWidth: "260px",
+              width: "100%",
+              objectFit: "contain"
+            }}
+          />
+        </div>
+      </>
+    ) : (
+      <>
+        {/* IZQUIERDA ONEDATA */}
+        <div style={{ justifySelf: "start" }}>
+          <img
+            src={theme === "light" ? logo : onedataWhite}
+            alt="OneData"
+            style={{
+              height: "clamp(32px, 4vw, 50px)",
+              maxWidth: "260px",
+              width: "100%",
+              objectFit: "contain"
+            }}
+          />
+        </div>
 
-      {/* DERECHA */}
-      <div style={{ justifySelf: "end" }}>
-        <img
-          src={awsWhite}
-          alt="AWS"
-          style={{
-            height: "clamp(34px, 4.5vw, 52px)",
-            maxWidth: "90px",
-            objectFit: "contain"
-          }}
-        />
-      </div>
+        {/* CENTRO vacío */}
+        <div />
 
-    </div>
-  );
+        {/* DERECHA AWS */}
+        <div style={{ justifySelf: "end" }}>
+          <img
+            src={awsWhite}
+            alt="AWS"
+            style={{
+              height: "clamp(34px, 4.5vw, 52px)",
+              maxWidth: "90px",
+              objectFit: "contain"
+            }}
+          />
+        </div>
+      </>
+    )}
+
+  </div>);
 };
 
 export default function App() {
@@ -316,6 +348,7 @@ const isFormValid =
   isValidEmail(userInfo.correo) &&
   isValidPhone(userInfo.telefono) &&
   isValidText(userInfo.rol, 15) &&
+  (!brandConfig.showCluster || userInfo.clusterMember !== '');
   userInfo.pais.trim() !== '';
       return (
       <div className="app-layout-wrapper" style={{ ...darkFuturisticBackgroundStyle }}>
@@ -435,6 +468,38 @@ const isFormValid =
           style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
         />
       </div>
+
+{brandConfig.showCluster && (
+  <div>
+    <label style={{
+      display: 'block',
+      marginBottom: '0.4rem',
+      fontWeight: '700',
+      fontSize: '0.9rem'
+    }}>
+      ¿Eres miembro del Cluster?
+    </label>
+
+    <select
+      name="clusterMember"
+      value={userInfo.clusterMember}
+      onChange={handleUserInputChange}
+      style={{
+        width: '100%',
+        padding: '12px 14px',
+        borderRadius: '10px',
+        border: '2px solid #e2e8f0',
+        backgroundColor: '#fff',
+        cursor: 'pointer'
+      }}
+    >
+      <option value="">Selecciona una opción...</option>
+      <option value="true">Sí</option>
+      <option value="false">No</option>
+    </select>
+  </div>
+)}
+
 
       <div>
         <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
