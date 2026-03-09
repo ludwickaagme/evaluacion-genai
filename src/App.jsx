@@ -1,5 +1,5 @@
-import { brandConfig } from "./config/configAWS";
-//import { brandConfig } from "./config/configCluster";
+//import { brandConfig } from "./config/configAWS";
+import { brandConfig } from "./config/configCluster";
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'; 
@@ -103,6 +103,26 @@ export default function App() {
   
   const questionRef = useRef(null);
 
+// ===============================
+// VALIDACIONES DE FORMULARIO
+// ===============================
+
+const isValidEmail = (email) => {
+  return email.includes("@") && email.length <= 50;
+};
+
+const isValidPhone = (phone) => {
+  const phoneRegex = /^[0-9]{1,15}$/;
+  return phoneRegex.test(phone);
+};
+
+const isValidText = (text, max) => {
+  const textRegex = /^[a-zA-ZÀ-ÿ\s]+$/;
+  return textRegex.test(text) && text.length <= max;
+};
+
+
+
   useEffect(() => {
     if (questionRef.current && hasStarted && !isFinished) {
       questionRef.current.scrollIntoView({
@@ -191,8 +211,19 @@ export default function App() {
     setAnswers(prev => ({ ...prev, [questionId]: points })); 
   };
 
-  const handleUserInputChange = (e) => { setUserInfo({ ...userInfo, [e.target.name]: e.target.value }); };
-  const goToNextQuestion = () => {
+const handleUserInputChange = (e) => {
+  const { name, value } = e.target;
+
+  if (name === "telefono") {
+    const onlyNumbers = value.replace(/\D/g, "");
+    setUserInfo({ ...userInfo, [name]: onlyNumbers });
+    return;
+  }
+
+  setUserInfo({ ...userInfo, [name]: value });
+};
+
+const goToNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) { setCurrentQuestionIndex(currentQuestionIndex + 1); } else { setIsFinished(true); }
   };
   const goToPreviousQuestion = () => { if (currentQuestionIndex > 0) setCurrentQuestionIndex(currentQuestionIndex - 1); };
@@ -279,8 +310,14 @@ export default function App() {
   );
 
   if (!hasStarted) {
-    const isFormValid = userInfo.nombre.trim() !== '' && userInfo.organizacion.trim() !== '' && userInfo.correo.trim() !== '' && userInfo.telefono.trim() !== '' && userInfo.rol.trim() !== '' && userInfo.pais.trim() !== ''; 
-    return (
+const isFormValid =
+  isValidText(userInfo.nombre, 18) &&
+  isValidText(userInfo.organizacion, 25) &&
+  isValidEmail(userInfo.correo) &&
+  isValidPhone(userInfo.telefono) &&
+  isValidText(userInfo.rol, 15) &&
+  userInfo.pais.trim() !== '';
+      return (
       <div className="app-layout-wrapper" style={{ ...darkFuturisticBackgroundStyle }}>
         {floatingControls}
         
@@ -301,29 +338,135 @@ export default function App() {
                 <li style={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}><div style={{ width: '8px', height: '8px', backgroundColor: oneDataBrightBlue, marginTop: '0.5rem', flexShrink: 0, borderRadius: '50%' }}></div><span style={{ fontSize: '1.05rem', lineHeight: '1.5', fontWeight: '500' }}>{t('bullet3')}</span></li>
               </ul>
             </div>
+<div className="main-card-container">
 
-            <div className="main-card-container">
-              <h2 style={{ color: oneDataDarkBlue, fontSize: 'clamp(1.6rem, 2.5vh, 2rem)', marginBottom: '0.5rem', fontWeight: '900' }}>{t('formTitle')}</h2>
-              <p style={{ color: '#1a202c', fontSize: '0.95rem', marginBottom: '2rem' }}>{t('formSub')}</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                <div className="form-grid">
-                  <div><label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>{t('fName')}</label><input type="text" name="nombre" value={userInfo.nombre} onChange={handleUserInputChange} placeholder={t('phName')} style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }} /></div>
-                  <div><label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>{t('fCompany')}</label><input type="text" name="organizacion" value={userInfo.organizacion} onChange={handleUserInputChange} placeholder={t('phCompany')} style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }} /></div>
-                </div>
-                <div className="form-grid">
-                  <div><label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>{t('fEmail')}</label><input type="email" name="correo" value={userInfo.correo} onChange={handleUserInputChange} placeholder={t('phEmail')} style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }} /></div>
-                  <div><label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>{t('fPhone')}</label><input type="tel" name="telefono" value={userInfo.telefono} onChange={handleUserInputChange} placeholder={t('phPhone')} style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }} /></div>
-                </div>
-                <div className="form-grid">
-                  <div><label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>{t('fRole')}</label><input type="text" name="rol" value={userInfo.rol} onChange={handleUserInputChange} placeholder={t('phRole')} style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }} /></div>
-                  <div>
-                    <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>{t('fCountry')}</label>
-                    <select name="pais" value={userInfo.pais} onChange={handleUserInputChange} style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', backgroundColor: '#fff', cursor: 'pointer' }}>
-                      <option value="">{t('selectCountry')}</option><option value="Alemania">Alemania</option><option value="Argentina">Argentina</option><option value="Brasil">Brasil</option><option value="Canadá">Canadá</option><option value="Chile">Chile</option><option value="Colombia">Colombia</option><option value="España">España</option><option value="USA">Estados Unidos</option><option value="México">México</option><option value="Perú">Perú</option><option value="Reino Unido">Reino Unido</option><option value="Otro">Otro / Other</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
+  <h2 style={{ color: oneDataDarkBlue, fontSize: 'clamp(1.6rem, 2.5vh, 2rem)', marginBottom: '0.5rem', fontWeight: '900' }}>
+    {t('formTitle')}
+  </h2>
+
+  <p style={{ color: '#1a202c', fontSize: '0.95rem', marginBottom: '2rem' }}>
+    {t('formSub')}
+  </p>
+
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+
+    <div className="form-grid">
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fName')}
+        </label>
+
+        <input
+          type="text"
+          name="nombre"
+          maxLength={18}
+          pattern="[A-Za-zÀ-ÿ\s]+"
+          value={userInfo.nombre}
+          onChange={handleUserInputChange}
+          placeholder={t('phName')}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+        />
+      </div>
+
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fCompany')}
+        </label>
+
+        <input
+          type="text"
+          name="organizacion"
+          maxLength={25}
+          value={userInfo.organizacion}
+          onChange={handleUserInputChange}
+          placeholder={t('phCompany')}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+        />
+      </div>
+    </div>
+
+    <div className="form-grid">
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fEmail')}
+        </label>
+
+        <input
+          type="email"
+          name="correo"
+          maxLength={50}
+          value={userInfo.correo}
+          onChange={handleUserInputChange}
+          placeholder={t('phEmail')}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+        />
+      </div>
+
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fPhone')}
+        </label>
+
+        <input
+          type="tel"
+          name="telefono"
+          maxLength={15}
+          value={userInfo.telefono}
+          onChange={handleUserInputChange}
+          placeholder={t('phPhone')}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+        />
+      </div>
+    </div>
+
+    <div className="form-grid">
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fRole')}
+        </label>
+
+        <input
+          type="text"
+          name="rol"
+          maxLength={15}
+          value={userInfo.rol}
+          onChange={handleUserInputChange}
+          placeholder={t('phRole')}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+        />
+      </div>
+
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fCountry')}
+        </label>
+
+        <select
+          name="pais"
+          value={userInfo.pais}
+          onChange={handleUserInputChange}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', backgroundColor: '#fff', cursor: 'pointer' }}
+        >
+          <option value="">{t('selectCountry')}</option>
+          <option value="Alemania">Alemania</option>
+          <option value="Argentina">Argentina</option>
+          <option value="Brasil">Brasil</option>
+          <option value="Canadá">Canadá</option>
+          <option value="Chile">Chile</option>
+          <option value="Colombia">Colombia</option>
+          <option value="España">España</option>
+          <option value="USA">Estados Unidos</option>
+          <option value="México">México</option>
+          <option value="Perú">Perú</option>
+          <option value="Reino Unido">Reino Unido</option>
+          <option value="Otro">Otro / Other</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+
+              
               <button onClick={() => setHasStarted(true)} disabled={!isFormValid} style={{ marginTop: '2.5rem', width: '100%', padding: '16px', backgroundColor: isFormValid ? awsOrange : '#cbd5e0', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: isFormValid ? 'pointer' : 'not-allowed', fontSize: '1.1rem', fontWeight: '800', boxShadow: isFormValid ? `0 10px 20px -5px ${awsOrange}66` : 'none' }}>
                 {t('btnStart')}
               </button>
@@ -753,6 +896,7 @@ export default function App() {
                   </div>
                 </div>
 
+                {!brandConfig.showCluster && (
                 <div className="print-benefits-section print-avoid-break">
                   <div className="print-section-divider"></div>
                   <h3 style={{ fontSize: '1.1rem', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase', color: '#0f172a', marginBottom: '0.8rem' }}>{t('strategicBenefits')}</h3>
@@ -774,6 +918,7 @@ export default function App() {
                     </div>
                   </div>
                 </div>
+                )}
                 
                 <div className="print-avoid-break print-cta-block" style={{ marginBottom: '1.6rem' }}>
                   <div className="print-section-divider"></div>
