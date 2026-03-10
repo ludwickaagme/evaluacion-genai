@@ -1,5 +1,5 @@
-//import { brandConfig } from "./config/configAWS";
-import { brandConfig } from "./config/configCluster";
+import { brandConfig } from "./config/configAWS";
+//import { brandConfig } from "./config/configCluster"; // Deprecated
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'; 
