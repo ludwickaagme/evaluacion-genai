@@ -102,6 +102,8 @@
   "awsIotTransformDesc": "Integración del mundo físico con ecosistemas digitales avanzados.",
   "awsConsultingTransformDesc": "Acompañamiento arquitectónico especializado para monetizar activos de datos e IA.",
 
+  "aiDiagnosisResult": "El resultado de su diagnóstico de IA es:",
+
   "dashboard": {
     "mapTitle": "Mapa de Madurez en IA Generativa",
     "orgBalanceTitle": "Nivel de equilibrio organizacional",
@@ -179,6 +181,9 @@
       "rec3Desc": "Al llegar a este nivel de madurez, los retos de negocio son únicos. Necesitas acompañamiento arquitectónico especializado de OneData para monetizar tus activos de datos e IA, creando nuevas líneas de ingresos."
     }
   },
+
+  "internationalPresence": "México · EE.UU. · Canadá · India · Sri Lanka",
+
 "footer": {
   "presence": "Presencia Internacional",
   "office": "Oficina México",

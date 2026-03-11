@@ -3,7 +3,7 @@
 ========================================= */
 
 * {
-  box-sizing: border-box; /* Fundamental para que nada se salga en celular */
+  box-sizing: border-box; 
 }
 
 :root {
@@ -126,7 +126,6 @@ h1, h2, h3, h4, p {
    COMPONENTES
 ========================================= */
 
-/* Logos */
 .hero-logos {
   position: absolute;
   top: 40px;
@@ -144,14 +143,12 @@ h1, h2, h3, h4, p {
   object-fit: contain;
 }
 
-/* Formulario */
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
-/* Barra de Progreso */
 .question-progress-header {
   display: flex;
   align-items: center;
@@ -166,7 +163,6 @@ h1, h2, h3, h4, p {
 .progress-percentage { font-size: 13px; font-weight: 600; color: #64748b; min-width: 40px; text-align: right; }
 .generating { font-size: 13px; color: #ff9900; margin-top: 8px; font-weight: bold; text-align: center; animation: fadeIn 0.5s ease-in-out infinite alternate; }
 
-/* Tarjetas Cuestionario */
 .question-text { animation: fadeIn 0.4s ease-out; }
 .options-container {
   display: grid;
@@ -181,7 +177,7 @@ h1, h2, h3, h4, p {
   border: 3px solid var(--card-border);
   border-radius: 20px;
   padding: 20px;
-  padding-bottom: 45px; /* Espacio para que no tape el badge */
+  padding-bottom: 45px; 
   cursor: pointer;
   transition: all 0.25s ease;
   display: flex;
@@ -199,7 +195,6 @@ h1, h2, h3, h4, p {
 .option-desc { line-height: 1.45; }
 .mobile-swipe-hint { display: none; }
 
-/* Dashboard & Radar */
 .radar-container {
   margin: 2rem auto;
   padding: 30px 15px;

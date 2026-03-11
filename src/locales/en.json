@@ -96,6 +96,9 @@
   "awsIotTransformDesc": "Integration of the physical world with advanced digital ecosystems.",
   "advancedConsultingDesc": "Specialized strategic guidance for monetizing Data and AI assets.",
 
+  "aiDiagnosisResult": "Your AI maturity result is:",
+
+
   "dashboard": {
     "mapTitle": "Generative AI Maturity Map",
     "orgBalanceTitle": "Organizational Balance Level",
@@ -173,6 +176,8 @@
       "rec3Desc": "Upon reaching this level of maturity, business challenges become unique. You need specialized architectural guidance from OneData to monetize your Data and AI assets, creating brand new revenue streams."
     }
   },
+  "internationalPresence": "Mexico · USA · Canada · India · Sri Lanka",
+
 "footer": {
   "presence": "International Presence",
   "office": "Mexico Office",

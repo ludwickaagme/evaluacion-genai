@@ -1,5 +1,4 @@
-//import { brandConfig } from "./config/configAWS";
-import { brandConfig } from "./config/configCluster";
+import { brandConfig } from "./config/configAWS";
 
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'; 
@@ -17,7 +16,6 @@ import lbCluster from './assets/clusterblanco.png';
 import fondo from './assets/fondo.jpg'; 
 import './App.css'; 
 
-// 💡 TIP PRO APLICADO: Agrupación de logos para evitar variables rotas
 const assets = {
   cluster: clusterLogo,
   onedata: logoColor,
@@ -118,8 +116,6 @@ const HeroLogos = ({ variant = "cluster", theme = "dark" }) => {
 export default function App() {
   const { t, i18n } = useTranslation(); 
   const currentLanguage = i18n.language;
-  
-  // 🛡️ BLINDAJE 1: Asegurar que questions SIEMPRE sea un Array (evita crasheos de length si t() devuelve un string)
   const rawQuestions = t('questions', { returnObjects: true });
   const questions = Array.isArray(rawQuestions) ? rawQuestions : [];
 
@@ -152,8 +148,6 @@ const isValidText = (text, max) => {
   const textRegex = /^[a-zA-ZÀ-ÿ\s]+$/;
   return textRegex.test(text) && text.length <= max;
 };
-
-
 
   useEffect(() => {
     if (questionRef.current && hasStarted && !isFinished) {
@@ -311,13 +305,15 @@ const goToNextQuestion = () => {
       ? { text: t('riskModerate'), color: "#ea580c" } 
       : { text: t('riskBalanced'), color: "#16a34a" };
 
-    let levelKey =
-      totalPercentage <= 40 ? "exploring"
-      : totalPercentage <= 60 ? "adopting"
-      : totalPercentage <= 80 ? "implementing"
-      : "transforming";
+    const maturityLevels = [
+  { key: "exploring", max: 25 },
+  { key: "adopting", max: 50 },
+  { key: "implementing", max: 75 },
+  { key: "transforming", max: 100 }
+];
 
-    // 🛡️ BLINDAJE 2: Asegurar que levelData siempre sea un objeto válido, incluso si t() falla
+const levelKey = maturityLevels.find(l => totalPercentage <= l.max).key;
+
     const rawLevelData = t(`res.${levelKey}`, { returnObjects: true });
     const safeLevelData = (typeof rawLevelData === 'object' && rawLevelData !== null) ? rawLevelData : {};
 
@@ -343,11 +339,11 @@ const goToNextQuestion = () => {
 
   if (!hasStarted) {
 const isFormValid =
-  isValidText(userInfo.nombre, 18) &&
-  isValidText(userInfo.organizacion, 25) &&
+  isValidText(userInfo.nombre, 30) &&
+  isValidText(userInfo.organizacion, 35) &&
   isValidEmail(userInfo.correo) &&
   isValidPhone(userInfo.telefono) &&
-  isValidText(userInfo.rol, 15) &&
+  isValidText(userInfo.rol, 30) &&
   (!brandConfig.showCluster || userInfo.clusterMember !== '');
   userInfo.pais.trim() !== '';
       return (
@@ -392,7 +388,7 @@ const isFormValid =
         <input
           type="text"
           name="nombre"
-          maxLength={18}
+          maxLength={30}
           pattern="[A-Za-zÀ-ÿ\s]+"
           value={userInfo.nombre}
           onChange={handleUserInputChange}
@@ -409,7 +405,7 @@ const isFormValid =
         <input
           type="text"
           name="organizacion"
-          maxLength={25}
+          maxLength={35}
           value={userInfo.organizacion}
           onChange={handleUserInputChange}
           placeholder={t('phCompany')}
@@ -461,7 +457,7 @@ const isFormValid =
         <input
           type="text"
           name="rol"
-          maxLength={15}
+          maxLength={30}
           value={userInfo.rol}
           onChange={handleUserInputChange}
           placeholder={t('phRole')}
@@ -530,7 +526,6 @@ const isFormValid =
     </div>
 
   </div>
-
               
               <button onClick={() => setHasStarted(true)} disabled={!isFormValid} style={{ marginTop: '2.5rem', width: '100%', padding: '16px', backgroundColor: isFormValid ? awsOrange : '#cbd5e0', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: isFormValid ? 'pointer' : 'not-allowed', fontSize: '1.1rem', fontWeight: '800', boxShadow: isFormValid ? `0 10px 20px -5px ${awsOrange}66` : 'none' }}>
                 {t('btnStart')}
@@ -602,7 +597,6 @@ const isFormValid =
                   </div>
                   <div className="evaluation-focus">
                     <div className="classification-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '1.5rem' }}>
-                      {/* 🛡️ BLINDAJE 3: Optional chaining (?.class) por si la traducción de la clase falla */}
                       <h2 style={{ color: scoreColor, fontSize: '1.4rem', fontWeight: '900', margin: '0 0 0.5rem 0' }}>{results.levelData?.class}</h2>
                       <p style={{ fontSize: '0.9rem', color: '#2d3748', lineHeight: '1.5', margin: 0 }}><strong>{t('dashFocus')}:</strong> {results.levelData?.action}</p>
                     </div>
@@ -621,8 +615,15 @@ const isFormValid =
                   </div>
 
                   <div style={{ marginTop: "20px", maxWidth: "420px", marginLeft: "auto", marginRight: "auto" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", fontWeight: "600", color: "#475569" }}>
-                      <span>{t("dashboard.levels.exploring")}</span>
+<div style={{
+  display: "grid",
+  gridTemplateColumns: "repeat(4,1fr)",
+  textAlign: "center",
+  fontSize: "12px",
+  fontWeight: "600",
+  color: "#475569",
+  marginBottom: "4px"
+}}>                       <span>{t("dashboard.levels.exploring")}</span>
                       <span>{t("dashboard.levels.adopting")}</span>
                       <span>{t("dashboard.levels.implementing")}</span>
                       <span>{t("dashboard.levels.transforming")}</span>
@@ -630,6 +631,16 @@ const isFormValid =
                     <div style={{ position: "relative", height: "8px", background: "#e2e8f0", borderRadius: "4px", marginTop: "8px" }}>
                       <div style={{ position: "absolute", height: "8px", background: "#3533cd", width: `${results.totalPercentage}%`, borderRadius: "4px" }}></div>
                     </div>
+                    <p style={{
+  marginTop:"14px",
+  textAlign:"center",
+  fontWeight:"700",
+  color:"#1e293b",
+  fontSize:"14px"
+}}>
+  {t("aiDiagnosisResult")} 
+<span>{results.levelData?.class}</span>
+</p>
                   </div>
                 </div>
 
@@ -724,7 +735,6 @@ const isFormValid =
                         <h4 style={{ color: oneDataDarkBlue, marginTop: 0, marginBottom: '1rem', fontSize: '1.1rem', fontWeight: '800', textAlign: 'left' }}>{t('recommendations')}</h4>
                         <ul style={{ margin: 0, paddingLeft: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left' }}>
                           {[1, 2, 3].map(num => {
-                            // 🛡️ BLINDAJE 4: Optional chaining en las propiedades dinámicas
                             const recLink = results.levelData?.[`rec${num}Link`];
                             const recTitle = results.levelData?.[`rec${num}Title`];
                             const recDesc = results.levelData?.[`rec${num}Desc`];
@@ -775,21 +785,16 @@ const isFormValid =
         ======================================================== */}
         <div className="print-only-block" style={{ padding: '0 20px' }}>
           
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr auto 1fr",
-          alignItems: "center",
-          width: "100%",
-          marginBottom: "20px"
-        }}>
+<div style={{
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  marginBottom: "20px"
+}}>
+
           <div style={{ justifySelf: "start" }}>
-            {brandConfig.showCluster && (
-              <img src={assets.cluster} alt="Cluster" style={{ height: "45px" }} />
-            )}
-          </div>
-          <div style={{ justifySelf: "center" }}>
-            <img src={assets.onedata} alt="OneData" style={{ height: "55px" }} />
-          </div>
+<img src={assets.onedata} alt="OneData" style={{ height: "46px", objectFit: "contain" }} />          </div>
           <div style={{ justifySelf: "end" }}>
             <img src={assets.aws} alt="AWS" style={{ height: "45px" }} />
           </div>
@@ -797,7 +802,7 @@ const isFormValid =
 
         <div style={{
           width: "100%",
-          height: "4px",
+          height: "3px",
           background: "#3533cd",
           marginBottom: "18px"
         }}/>
@@ -829,15 +834,26 @@ const isFormValid =
             Fecha: {userInfo.fecha}
           </div>
 
-                <div className="radar-container print-avoid-break" style={{ padding:"20px", marginTop:"10px", marginBottom:"25px", border:"1px solid #e2e8f0", borderRadius:"10px" }}>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: "800", letterSpacing: "0.5px", textTransform: "uppercase", marginTop: "10px", marginBottom: "20px", color:"#0f172a", textAlign: "center" }}>
+<div className="radar-container print-avoid-break" style={{
+  padding:"25px",
+  marginTop:"12px",
+  marginBottom:"28px",
+  border:"1px solid #e2e8f0",
+  borderRadius:"10px"
+}}>                  <h3 style={{ fontSize: "1.2rem", fontWeight: "800", letterSpacing: "0.5px", textTransform: "uppercase", marginTop: "10px", marginBottom: "20px", color:"#0f172a", textAlign: "center" }}>
                     {t("dashboard.mapTitle")}
                   </h3>
                   <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                    <RadarChart width={500} height={300} cx="50%" cy="50%" outerRadius="80%" data={radarData}>
-                      <PolarGrid />
-                      <PolarAngleAxis dataKey="dimension" tick={{fill: '#475569', fontSize: 10, fontWeight: 600}} />
-                      <PolarRadiusAxis angle={30} domain={[0, 100]} tick={{fill: '#94a3b8', fontSize: 8}} />
+<RadarChart width={520} height={330} cx="50%" cy="50%" outerRadius="90%" data={radarData}>                      <PolarGrid />
+<PolarAngleAxis
+  dataKey="dimension"
+  tick={{ fill: '#334155', fontSize: 11, fontWeight: 600 }}
+/>                      
+<PolarRadiusAxis
+  angle={30}
+  domain={[0, 100]}
+  tick={{ fill: '#94a3b8', fontSize: 9 }}
+/>
                       <Radar name="Madurez" dataKey="value" stroke={scoreColor} fill={scoreColor} fillOpacity={0.4} isAnimationActive={false} />
                     </RadarChart>
                   </div>
@@ -852,6 +868,18 @@ const isFormValid =
                     <div style={{ position: "relative", height: "8px", background: "#e2e8f0", borderRadius: "4px", marginTop: "8px" }}>
                       <div style={{ position: "absolute", height: "8px", background: "#3533cd", width: `${results.totalPercentage}%`, borderRadius: "4px" }}></div>
                     </div>
+                    <p style={{
+  marginTop: "14px",
+  textAlign: "center",
+  fontWeight: "700",
+  color: "#1e293b",
+  fontSize: "13px"
+}}>
+  {t("aiDiagnosisResult")}{" "}
+  <span style={{ color: scoreColor }}>
+    {results.levelData?.class}
+  </span>
+</p>
                   </div>
                 </div>
 
@@ -1043,21 +1071,17 @@ const isFormValid =
                       </div>
                     </div>
 
-                    <div style={{
-                      display: "flex",
-                      justifyContent: "space-evenly",
-                      alignItems: "center",
-                      width: "100%",
-                      paddingTop: "20px",
-                      borderTop: "1px solid #cbd5e1"
-                    }}>
+          <div style={{
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+  paddingTop: "20px",
+  borderTop: "1px solid #cbd5e1"
+}}>
                       
-                      {brandConfig?.showCluster && (
-                        <img src={assets.cluster} alt="Cluster" style={{ height: "45px", objectFit: "contain" }}/>
-                      )}
-                      <img src={assets.onedata} alt="OneData" style={{ height: "55px", objectFit: "contain" }}/>
-                      <img src={assets.aws} alt="AWS" style={{ height: "45px", objectFit: "contain" }}/>
-                      
+                      <img src={assets.onedata} alt="OneData" style={{ height: "50px", objectFit: "contain" }} />
+                      <img src={assets.aws} alt="AWS" style={{ height: "45px", objectFit: "contain" }} />
                     </div>
                   </div>
                 </div> 
@@ -1074,7 +1098,7 @@ const isFormValid =
 
     <div className="footer-column">
       <h4>🌎 {t("footer.presence")}</h4>
-      <p>México · USA · Canadá · India · Sri Lanka</p>
+      <p>{t('internationalPresence')}</p>
     </div>
 
     <div className="footer-column">
@@ -1102,7 +1126,6 @@ const isFormValid =
     );
   }
 
-  // 🛡️ BLINDAJE 5: Proteger lectura de currentQuestion y evitar fallos si el array questions está vacío.
   const currentQuestion = questions?.[currentQuestionIndex] || {};
   const progressPercentage = questions.length
     ? Math.round(((currentQuestionIndex + 1) / questions.length) * 100)
@@ -1149,7 +1172,6 @@ const isFormValid =
           
           <div style={{ display: 'flex', alignItems: 'stretch', justifyContent: 'center', width: '100%', minHeight: '380px' }}>
             <div className="options-container" key={`opts-${currentQuestionIndex}`}>
-                {/* 🛡️ BLINDAJE 6: Optional chaining en las opciones de respuesta */}
                 {currentQuestion?.options?.map((opt) => {
                   const isSelected = answers[currentQuestion.id] === opt.points;
                   return (
