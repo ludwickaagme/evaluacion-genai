@@ -166,13 +166,25 @@ h1, h2, h3, h4, p {
 .question-text { animation: fadeIn 0.4s ease-out; }
 .options-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 1.5rem;
   width: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
 }
+
+
+.options-container .option-card:nth-child(4){
+  grid-column: 2 / span 2;
+}
+
+.options-container .option-card:nth-child(5){
+  grid-column: 4 / span 2;
+}
+
+
 .option-card {
+  grid-column: span 2;
   background-color: var(--card-bg);
   border: 3px solid var(--card-border);
   border-radius: 20px;
