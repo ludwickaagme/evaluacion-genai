@@ -4,113 +4,41 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
 
-import logo from './assets/logo.png'; 
-import onedataWhite from './assets/onedata-white.png';
 import awsWhite from './assets/AWS-white.png';
-import clusterLogo from './assets/cluster2.png'; 
-
 import awsColor from './assets/awscolor.png';
-import logoColor from './assets/logocolor.png';
-
-import lbCluster from './assets/clusterblanco.png';
 import fondo from './assets/fondo.jpg'; 
+
 import './App.css'; 
 
 const assets = {
-  cluster: clusterLogo,
-  onedata: logoColor,
   aws: awsColor
 };
+
+const API_BASE = 'https://showcase.elcilantro.site/api';
 
 const BRAND_VARIANT = brandConfig.showCluster ? "cluster" : "aws";
 
 const HeroLogos = ({ variant = "cluster", theme = "dark" }) => {
-  return (<div
-    className="hero-logos no-print"
-    style={{
-      display: "grid",
-      gridTemplateColumns: "1fr auto 1fr",
-      alignItems: "center",
-      width: "100%",
-      maxWidth: "1200px",
-      margin: "0 auto",
-      padding: "20px 24px"
-    }}
-  >
-
-    {variant === "cluster" ? (
-      <>
-        {/* IZQUIERDA AWS */}
-        <div style={{ justifySelf: "start" }}>
-          <img
-            src={awsWhite}
-            alt="AWS"
-            style={{
-              height: "clamp(34px, 4.5vw, 52px)",
-              maxWidth: "90px",
-              objectFit: "contain"
-            }}
-          />
-        </div>
-
-        {/* CENTRO CLUSTER */}
-        <div style={{ justifySelf: "center" }}>
-          <img
-            src={lbCluster}
-            alt="Cluster"
-            style={{ height: "clamp(40px, 5vw, 65px)", width: "auto" }}
-          />
-        </div>
-
-        {/* DERECHA ONEDATA */}
-        <div style={{ justifySelf: "end" }}>
-          <img
-            src={theme === "light" ? logo : onedataWhite}
-            alt="OneData"
-            style={{
-              height: "clamp(32px, 4vw, 50px)",
-              maxWidth: "260px",
-              width: "100%",
-              objectFit: "contain"
-            }}
-          />
-        </div>
-      </>
-    ) : (
-      <>
-        {/* IZQUIERDA ONEDATA */}
-        <div style={{ justifySelf: "start" }}>
-          <img
-            src={theme === "light" ? logo : onedataWhite}
-            alt="OneData"
-            style={{
-              height: "clamp(32px, 4vw, 50px)",
-              maxWidth: "260px",
-              width: "100%",
-              objectFit: "contain"
-            }}
-          />
-        </div>
-
-        {/* CENTRO vacío */}
-        <div />
-
-        {/* DERECHA AWS */}
-        <div style={{ justifySelf: "end" }}>
-          <img
-            src={awsWhite}
-            alt="AWS"
-            style={{
-              height: "clamp(34px, 4.5vw, 52px)",
-              maxWidth: "90px",
-              objectFit: "contain"
-            }}
-          />
-        </div>
-      </>
-    )}
-
-  </div>);
+  return (
+    <div
+      className="hero-logos no-print"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        maxWidth: "1200px",
+        margin: "0 auto",
+        padding: "0px 24px"
+      }}
+    >
+      <img
+        src={awsWhite}
+        alt="AWS"
+        style={{ height: "clamp(48px, 6.5vw, 120px)", maxWidth: "240px", objectFit: "contain" }}
+      />
+    </div>
+  );
 };
 
 export default function App() {
@@ -120,6 +48,10 @@ export default function App() {
   const questions = Array.isArray(rawQuestions) ? rawQuestions : [];
 
   const [hasStarted, setHasStarted] = useState(false);
+  const [toast, setToast] = useState(null);
+  const submittedRef = useRef(false);
+  const [isCheckingEmail, setIsCheckingEmail] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [userInfo, setUserInfo] = useState({
     nombre: '', organizacion: '', correo: '', telefono: '', rol: '', pais: '', fecha: new Date().toISOString().split('T')[0]
   });
@@ -161,6 +93,55 @@ const isValidText = (text, max) => {
   useEffect(() => {
     if (isFinished) {
       const timer = setTimeout(() => { setAnimateCharts(true); }, 200);
+
+      // Submit results once when finished
+      (async () => {
+        if (submittedRef.current) return;
+        submittedRef.current = true;
+        setIsSubmitting(true);
+        try {
+          const results = calculateResults();
+
+          // Transform results for API: extract levelData.class/action to root and replace riskLabel with its text
+          const transformedResultados = { ...results };
+          if (transformedResultados.levelData) {
+            transformedResultados.class = transformedResultados.levelData.class || null;
+            transformedResultados.action = transformedResultados.levelData.action || null;
+            delete transformedResultados.levelData;
+          }
+          if (transformedResultados.riskLabel && typeof transformedResultados.riskLabel === 'object') {
+            transformedResultados.riskLabel = transformedResultados.riskLabel.text || null;
+          }
+
+          const payload = {
+            email: userInfo.correo,
+            nombre: userInfo.nombre,
+            organizacion: userInfo.organizacion,
+            telefono: userInfo.telefono,
+            rol: userInfo.rol,
+            pais: userInfo.pais,
+            resultados: transformedResultados
+          };
+
+          const resp = await fetch(`${API_BASE}/submit`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (resp.ok) {
+            showToast('success', 'Results submitted', 'Resultados enviados');
+          } else {
+            const txt = await resp.text();
+            showToast('error', `Submit failed: ${resp.status} ${txt}`, `Fallo al enviar: ${resp.status} ${txt}`);
+          }
+        } catch (err) {
+          showToast('error', `Submit error: ${String(err)}`, `Error al enviar: ${String(err)}`);
+        } finally {
+          setIsSubmitting(false);
+        }
+      })();
+
       return () => clearTimeout(timer);
     }
   }, [isFinished]);
@@ -337,6 +318,30 @@ const levelKey = maturityLevels.find(l => totalPercentage <= l.max).key;
     </div>
   );
 
+  // Simple toast renderer
+  const Toast = () => {
+    if (!toast) return null;
+    const bg = toast.type === 'success' ? '#16a34a' : toast.type === 'error' ? '#dc2626' : '#f59e0b';
+    return (
+      <div style={{ position: 'fixed', top: 20, right: 20, zIndex: 99999 }}>
+        <div style={{ background: bg, color: '#fff', padding: '10px 14px', borderRadius: 8, boxShadow: '0 8px 24px rgba(0,0,0,0.12)', fontWeight: 700 }}>
+          {toast.message}
+        </div>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 4000);
+    return () => clearTimeout(t);
+  }, [toast]);
+
+  const showToast = (type, enText, esText) => {
+    const message = currentLanguage === 'es' ? esText : enText;
+    setToast({ type, message });
+  };
+
   if (!hasStarted) {
 const isFormValid =
   isValidText(userInfo.nombre, 30) &&
@@ -344,11 +349,12 @@ const isFormValid =
   isValidEmail(userInfo.correo) &&
   isValidPhone(userInfo.telefono) &&
   isValidText(userInfo.rol, 30) &&
+  userInfo.pais.trim() !== '' &&
   (!brandConfig.showCluster || userInfo.clusterMember !== '');
-  userInfo.pais.trim() !== '';
       return (
       <div className="app-layout-wrapper" style={{ ...darkFuturisticBackgroundStyle }}>
         {floatingControls}
+        <Toast />
         
         <HeroLogos variant={BRAND_VARIANT} theme="dark" />
 
@@ -527,8 +533,40 @@ const isFormValid =
 
   </div>
               
-              <button onClick={() => setHasStarted(true)} disabled={!isFormValid} style={{ marginTop: '2.5rem', width: '100%', padding: '16px', backgroundColor: isFormValid ? awsOrange : '#cbd5e0', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: isFormValid ? 'pointer' : 'not-allowed', fontSize: '1.1rem', fontWeight: '800', boxShadow: isFormValid ? `0 10px 20px -5px ${awsOrange}66` : 'none' }}>
-                {t('btnStart')}
+              <button onClick={async () => {
+                  if (!isFormValid || isCheckingEmail) return;
+                  setIsCheckingEmail(true);
+                  try {
+                    const resp = await fetch(`${API_BASE}/email-check`, {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email: userInfo.correo })
+                    });
+                    if (resp.ok) {
+                      const json = await resp.json();
+                      if (json.exists) {
+                        showToast('warning', 'Email already used', 'El correo ya fue usado');
+                        return;
+                      }
+                      setHasStarted(true);
+                    } else {
+                      showToast('error', `Email check failed (${resp.status})`, `Verificación de correo falló (${resp.status})`);
+                    }
+                  } catch (err) {
+                    showToast('error', `Email check error: ${String(err)}`, `Error al verificar correo: ${String(err)}`);
+                  } finally {
+                    setIsCheckingEmail(false);
+                  }
+                }} disabled={!isFormValid || isCheckingEmail} style={{ marginTop: '2.5rem', width: '100%', padding: '16px', backgroundColor: isFormValid ? awsOrange : '#cbd5e0', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: isFormValid ? 'pointer' : 'not-allowed', fontSize: '1.1rem', fontWeight: '800', boxShadow: isFormValid ? `0 10px 20px -5px ${awsOrange}66` : 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                {isCheckingEmail ? (
+                  <svg width="20" height="20" viewBox="0 0 50 50" aria-label={t('btnStart')}>
+                    <circle cx="25" cy="25" r="20" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeDasharray="31.4 31.4">
+                      <animateTransform attributeName="transform" type="rotate" dur="1s" from="0 25 25" to="360 25 25" repeatCount="indefinite" />
+                    </circle>
+                  </svg>
+                ) : (
+                  t('btnStart')
+                )}
               </button>
             </div>
             
@@ -565,6 +603,7 @@ const isFormValid =
     return (
       <div className="app-layout-wrapper" style={{ ...lightFuturisticBackgroundStyle }}>
         {floatingControls}
+        <Toast />
 
         <HeroLogos variant={BRAND_VARIANT} theme="light" />
 
@@ -725,57 +764,21 @@ const isFormValid =
                         ))}
                       </div>
                    </div>
-
-                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                     <div style={{ background: '#f8fafc', borderLeft: `4px solid ${oneDataBrightBlue}`, padding: '1.5rem', borderRadius: '0 8px 8px 0', borderTop: '1px solid #e2e8f0', borderRight: '1px solid #e2e8f0', borderBottom: '1px solid #e2e8f0' }}>
-                        <h4 style={{ color: oneDataBrightBlue, marginTop: 0, marginBottom: '0.6rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '800' }}>{t('currentDiagnosis')}</h4>
-                        <p style={{ margin: 0, color: '#2d3748', fontSize: '1.05rem', lineHeight: '1.5', textAlign: 'left' }}>{results.levelData?.desc}</p>
-                     </div>
-                     <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', padding: '1.5rem', borderRadius: '16px', boxShadow: '0 4px 15px rgba(0,0,0,0.02)' }}>
-                        <h4 style={{ color: oneDataDarkBlue, marginTop: 0, marginBottom: '1rem', fontSize: '1.1rem', fontWeight: '800', textAlign: 'left' }}>{t('recommendations')}</h4>
-                        <ul style={{ margin: 0, paddingLeft: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left' }}>
-                          {[1, 2, 3].map(num => {
-                            const recLink = results.levelData?.[`rec${num}Link`];
-                            const recTitle = results.levelData?.[`rec${num}Title`];
-                            const recDesc = results.levelData?.[`rec${num}Desc`];
-                            if (!recTitle) return null;
-                            return (
-                              <li key={num} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                                 <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '22px', height: '22px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 'bold', flexShrink: 0, marginTop: '2px' }}>✓</div>
-                                 <div style={{ color: '#4a5568', fontSize: '1rem', lineHeight: '1.5' }}>
-                                   {recLink ? ( <a href={recLink} target="_blank" rel="noopener noreferrer" className="print-link">{recTitle}</a> ) : ( <strong style={{ color: oneDataBrightBlue }}>{recTitle}</strong> )}
-                                   {' '}{recDesc}
-                                 </div>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                     </div>
-
-                     <div style={{ marginTop: '1.6rem', padding: '1.5rem', background: '#f8fafc', borderRadius: '8px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-                        <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '0.2rem', color: '#0f172a' }}>{t('implementationTitle')}</h3>
-                        <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '1rem' }}>{t('nextSteps')}</p>
-                        <p style={{ marginBottom: '1rem', color: '#334155', lineHeight: '1.5' }}>{t('implementationDesc1')}</p>
-                        <p style={{ marginBottom: '1rem', color: '#334155', lineHeight: '1.5' }}>{t('implementationDesc2')}</p>
-                        <p style={{ marginBottom: '1.5rem', color: '#334155', lineHeight: '1.5' }}>{t('implementationDesc3')}</p>
-                        <a href="mailto:contact@onedatasoftware.com" style={{ display: 'inline-block', padding: '10px 26px', backgroundColor: '#3533cd', color: '#ffffff', textDecoration: 'none', borderRadius: '6px', fontWeight: '600' }}>{t('btnContactTeam')}</a>
-                        
-                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "30px", marginTop: "45px", flexWrap: "wrap" }}>
-                          {brandConfig.showCluster && (
-                            <img src={assets.cluster} alt="Cluster" style={{ height: "45px", objectFit: "contain" }} />
-                          )}
-                          <img src={assets.onedata} alt="OneData" style={{ height: "50px", objectFit: "contain" }} />
-                          <img src={assets.aws} alt="AWS" style={{ height: "45px", objectFit: "contain" }} />
-                        </div>
-                     </div>
-                   </div>
                 </div>
 
-                <div style={{ marginTop: '3rem', display: 'flex', justifyContent: 'center', gap: '1.5rem', paddingBottom: '2rem' }}>
+                <div style={{ marginTop: '2rem', display: 'flex', justifyContent: 'center', gap: '1.5rem', paddingBottom: '2rem' }}>
                     <button onClick={handleResetApp} style={{ padding: '12px 30px', backgroundColor: '#f1f5f9', color: '#475569', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '1rem', fontWeight: 'bold', transition: '0.2s' }}>{t('btnNewEval')}</button>
-                    <button onClick={() => window.print()} style={{ padding: '12px 35px', backgroundColor: oneDataBrightBlue, color: 'white', border: 'none', borderRadius: '12px', cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 4px 15px rgba(53, 51, 205, 0.3)' }}>
+                    <button onClick={() => window.print()} disabled={isSubmitting} style={{ padding: '12px 35px', backgroundColor: oneDataBrightBlue, color: 'white', border: 'none', borderRadius: '12px', cursor: isSubmitting ? 'not-allowed' : 'pointer', opacity: isSubmitting ? 0.8 : 1, fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '10px', boxShadow: '0 4px 15px rgba(53, 51, 205, 0.3)' }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                      {t('dashDownload')}
+                        {isSubmitting ? (
+                          <svg width="18" height="18" viewBox="0 0 50 50" aria-label={t('dashDownload')}>
+                            <circle cx="25" cy="25" r="20" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeDasharray="31.4 31.4">
+                              <animateTransform attributeName="transform" type="rotate" dur="1s" from="0 25 25" to="360 25 25" repeatCount="indefinite" />
+                            </circle>
+                          </svg>
+                        ) : (
+                          t('dashDownload')
+                        )}
                     </button>
                 </div>
               </div>
@@ -785,19 +788,8 @@ const isFormValid =
         ======================================================== */}
         <div className="print-only-block" style={{ padding: '0 20px' }}>
           
-<div style={{
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: "100%",
-  marginBottom: "20px"
-}}>
-
-          <div style={{ justifySelf: "start" }}>
-<img src={assets.onedata} alt="OneData" style={{ height: "46px", objectFit: "contain" }} />          </div>
-          <div style={{ justifySelf: "end" }}>
-            <img src={assets.aws} alt="AWS" style={{ height: "45px" }} />
-          </div>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", marginBottom: "20px" }}>
+          <img src={assets.aws} alt="AWS" style={{ height: "60px", objectFit: "contain" }} />
         </div>
 
         <div style={{
@@ -948,7 +940,7 @@ const isFormValid =
                    <h4 style={{ color: '#0f172a', marginTop: 0, marginBottom: '0.6rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '800' }}>{t('currentDiagnosis')}</h4>
                    <p style={{ margin: '0 0 1.5rem 0', color: '#334155', fontSize: '1rem', lineHeight: '1.5', textAlign: 'left' }}>{results.levelData?.desc}</p>
 
-                   <h4 style={{ color: '#0f172a', marginTop: 0, marginBottom: '0.8rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '800' }}>{t('recommendations')}</h4>
+                   <h4 style={{ color: '#0f172a', marginTop: 0, marginBottom: '0.8rem', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: '800' }}>{t('recommendations').replace(/OneData\s*\+\s*/i, '')}</h4>
                    <ul style={{ margin: 0, paddingLeft: '0', listStyleType: 'none', display: 'flex', flexDirection: 'column', gap: '1rem', textAlign: 'left' }}>
                      {[1, 2, 3].map(num => {
                        const recLink = results.levelData?.[`rec${num}Link`];
@@ -989,102 +981,11 @@ const isFormValid =
                   </div>
                 </div>
 
-                {!brandConfig.showCluster && (
-                <div className="print-benefits-section print-avoid-break">
-                  <div className="print-section-divider"></div>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase', color: '#0f172a', marginBottom: '0.8rem' }}>{t('strategicBenefits')}</h3>
-                  <div className="print-title-accent"></div>
-                  <p style={{ fontSize: '0.95rem', color: '#475569', marginBottom: '1.6rem', marginTop: 0 }}>{t('strategicBenefitsDesc')}</p>
-                  
-                  <div className="benefits-list">
-                    <div className="benefit-item print-avoid-break">
-                      <strong>{t('benefit1Title')}</strong>
-                      <p>{t('benefit1Desc')}</p>
-                    </div>
-                    <div className="benefit-item print-avoid-break">
-                      <strong>{t('benefit2Title')}</strong>
-                      <p>{t('benefit2Desc')}</p>
-                    </div>
-                    <div className="benefit-item print-avoid-break">
-                      <strong>{t('benefit3Title')}</strong>
-                      <p>{t('benefit3Desc')}</p>
-                    </div>
-                  </div>
-                </div>
-                )}
+                {/* Strategic benefits section removed from PDF as requested */}
                 
-                <div className="print-avoid-break print-cta-block" style={{ marginBottom: '1.6rem' }}>
-                  <div className="print-section-divider"></div>
-                  <h3 style={{ fontSize: '1.1rem', fontWeight: '700', letterSpacing: '0.5px', textTransform: 'uppercase', color: '#0f172a', marginBottom: '0.8rem' }}>{t('implementationTitle')}</h3>
-                  <div className="print-title-accent"></div>
-                  <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '1rem', marginTop: '0.2rem' }}>{t('nextSteps')}</p>
-                  <p style={{ marginBottom: '1rem', color: '#334155', lineHeight: '1.5' }}>{t('implementationDesc1')}</p>
-                  <p style={{ marginBottom: '1rem', color: '#334155', lineHeight: '1.5' }}>{t('implementationDesc2')}</p>
-                  <p style={{ marginBottom: '1.6rem', color: '#334155', lineHeight: '1.5' }}>{t('implementationDesc3')}</p>
-                  
-                  <p className="pdf-contact print-only-block">
-                    {t('contactText')}<br/><br/>
-                    <strong>contact@onedatasoftware.com</strong>
-                  </p>
-                </div>
+                {/* "Del diagnóstico a la implementación" PDF section removed as requested */}
 
-                <div className="print-only-block print-avoid-break" style={{
-                  width: "100%",
-                  marginTop: "60px",
-                  paddingTop: "24px",
-                  borderTop: "2px solid #3533cd",
-                  background: "#ffffff",
-                  fontSize: "11px",
-                  color: "#475569",
-                  pageBreakInside: "avoid"
-                }}>
-
-                  <div style={{ width: "100%" }}>
-                    
-                    <div style={{
-                      textAlign: "center",
-                      fontWeight: "800",
-                      fontSize: "13px",
-                      color: "#0f172a",
-                      marginBottom: "16px",
-                      letterSpacing: "1px",
-                      textTransform: "uppercase"
-                    }}>
-                      OneData Software Solutions
-                    </div>
-
-                    <div style={{
-                      display: "table",
-                      width: "100%",
-                      marginBottom: "30px",
-                      lineHeight: "1.6"
-                    }}>
-                      <div style={{ display: "table-cell", textAlign: "left", width: "50%", verticalAlign: "top" }}>
-                        Av Armando Birlaín Shaffler No.2001<br/>
-                        Centro Sur, Piso 14<br/>
-                        Santiago de Querétaro, México
-                      </div>
-                      <div style={{ display: "table-cell", textAlign: "right", width: "50%", verticalAlign: "top" }}>
-                        contact@onedatasoftware.com<br/>
-                        +52 442 403 7629<br/>
-                        © {new Date().getFullYear()} OneData
-                      </div>
-                    </div>
-
-          <div style={{
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  width: "100%",
-  paddingTop: "20px",
-  borderTop: "1px solid #cbd5e1"
-}}>
-                      
-                      <img src={assets.onedata} alt="OneData" style={{ height: "50px", objectFit: "contain" }} />
-                      <img src={assets.aws} alt="AWS" style={{ height: "45px", objectFit: "contain" }} />
-                    </div>
-                  </div>
-                </div> 
+                {/* Company footer removed from PDF — only AWS logo appears at top as requested */}
 
               </div> 
 
@@ -1093,34 +994,7 @@ const isFormValid =
           </div> 
         </div> 
 
-      <footer className="main-footer no-print">
-  <div className="footer-container">
-
-    <div className="footer-column">
-      <h4>🌎 {t("footer.presence")}</h4>
-      <p>{t('internationalPresence')}</p>
-    </div>
-
-    <div className="footer-column">
-      <h4>📍 {t("footer.office")}</h4>
-      <p>Av Armando Birlaín Shaffler No.2001</p>
-      <p>Centro Sur, Piso 14, Corporativo 2</p>
-      <p>Santiago de Querétaro, Qro, México</p>
-    </div>
-
-    <div className="footer-column">
-      <h4>📞 {t("footer.contact")}</h4>
-      <p>☎ +52 442 403 7629</p>
-      <p>☎ +52 446 144 3375</p>
-      <p>✉ contact@onedatasoftware.com</p>
-    </div>
-
-  </div>
-
-  <div className="footer-bottom">
-    © {new Date().getFullYear()} OneData Software Solutions. {t("footer.rights")}
-  </div>
-</footer>
+      {/* Results page footer removed as requested */}
 
       </div>
     );
@@ -1137,6 +1011,7 @@ const isFormValid =
   return (
     <div className="app-layout-wrapper">
       {floatingControls}
+      <Toast />
       <div className="main-content-flex hero-section" style={{ ...lightFuturisticBackgroundStyle }}>
         
         <HeroLogos variant={BRAND_VARIANT} theme="dark" />
