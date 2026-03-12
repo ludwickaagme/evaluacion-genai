@@ -103,6 +103,8 @@
   "awsConsultingTransformDesc": "Acompañamiento arquitectónico especializado para monetizar activos de datos e IA.",
 
   "aiDiagnosisResult": "El resultado de su diagnóstico de IA es:",
+  "date": "Fecha",
+  "dimension": "DIMENSIÓN",
 
   "dashboard": {
     "mapTitle": "Mapa de Madurez en IA Generativa",
