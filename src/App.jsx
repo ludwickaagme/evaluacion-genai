@@ -762,7 +762,7 @@ const isFormValid =
                       <div className="recommendations-grid">
                         {combinedStrategic.map((offering, index) => (
                           <div key={index} className="recommendation-item">
-                            <a href={offering.link} target="_blank" rel="noopener noreferrer" style={{ fontWeight: '700', color: '#1e3a8a', textDecoration: 'none', fontSize: '1rem' }}>{offering.title}</a>
+                            <div style={{ fontWeight: '700', color: '#1e3a8a', textDecoration: 'none', fontSize: '1rem' }}>{offering.title}</div>
                             <p style={{ marginTop: '0.4rem', margin: '0.4rem 0 0 0', color: '#475569', lineHeight: '1.5' }}>{offering.description}</p>
                           </div>
                         ))}
@@ -982,7 +982,7 @@ const isFormValid =
                   <div className="recommendations-grid">
                     {combinedStrategic.map((offering, index) => (
                       <div key={index} className="recommendation-item print-avoid-break">
-                        <a href={offering.link} target="_blank" rel="noopener noreferrer" className="print-link" style={{ fontWeight: '700', color: '#1e3a8a', textDecoration: 'none', fontSize: '1rem' }}>{offering.title}</a>
+                        <div className="print-link" style={{ fontWeight: '700', color: '#1e3a8a', textDecoration: 'none', fontSize: '1rem' }}>{offering.title}</div>
                         <p style={{ marginTop: '0.4rem', marginBottom: 0, color: '#475569', lineHeight: '1.5' }}>{offering.description}</p>
                       </div>
                     ))}
