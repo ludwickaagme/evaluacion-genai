@@ -120,7 +120,7 @@ app.post('/submit', [
 			resultados
 			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 		`).run(nombre, organizacion, email, correo_hash, telefono, rol, pais, fecha, JSON.stringify(resultados));
-			console.log(query);
+		
 		if (query.changes === 1) {
 			return res.status(201).json({ message: 'Data submitted successfully' });
 		}
