@@ -1,12 +1,16 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { body, query } = require('express-validator');
+const { hashids } = require('./services/hashids');
+const auth = require('./services/auth');
 
 const logger = require('./services/logger');
 const { hashEmail, openDB } = require('./services/db');
 const { errorHandler } = require('./services/errorHandler');
 const requestValidator = require('./services/requestValidator');
-const { body } = require('express-validator');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -99,12 +103,13 @@ app.post('/submit', [
 	body('telefono').notEmpty().withMessage('Phone is required'),
 	body('rol').notEmpty().withMessage('Role is required'),
 	body('pais').notEmpty().withMessage('Country is required'),
+	body('estado').notEmpty().withMessage('State is required'),
 	body('resultados').notEmpty().withMessage('Results are required')
 ], requestValidator, async (req, res) => {
 	let db;
 	try {
 		db = openDB();
-		const { email, nombre, organizacion, telefono, rol, pais, resultados } = req.body;
+		const { email, nombre, organizacion, telefono, rol, pais, estado, resultados } = req.body;
 		const correo_hash = hashEmail(email);
 		const fecha = new Date().toISOString();
 
@@ -116,10 +121,11 @@ app.post('/submit', [
 			telefono,
 			rol,
 			pais,
+			estado,
 			fecha,
 			resultados
-			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-		`).run(nombre, organizacion, email, correo_hash, telefono, rol, pais, fecha, JSON.stringify(resultados));
+			) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		`).run(nombre, organizacion, email, correo_hash, telefono, rol, pais, estado, fecha, JSON.stringify(resultados));
 		
 		if (query.changes === 1) {
 			return res.status(201).json({ message: 'Data submitted successfully' });
@@ -132,6 +138,95 @@ app.post('/submit', [
 	}
 });
 
+app.post('/login', [
+	body('username').notEmpty().withMessage('Username is required'),
+	body('password').notEmpty().withMessage('Password is required')
+], requestValidator, async (req, res) => {
+	let db;
+	try {
+		db = openDB();
+		const { username, password } = req.body;
+		const user = db.prepare("SELECT password_hash FROM users WHERE username = ?").get(username);
+
+		if (!user) {
+			return res.status(401).json({ message: 'Invalid credentials' });
+		}
+		const passwordMatch = await bcrypt.compare(password, user.password_hash);
+
+		if (!passwordMatch) {
+			return res.status(401).json({ message: 'Invalid credentials' });
+		}
+
+		await db.prepare("UPDATE users SET logged_in = 1 WHERE username = ?").run(username);
+		logger.info(`User logged in: ${username}`);
+		const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+		return res.status(200).json({ token });
+	} catch (err) {
+		errorHandler(err, res);
+	} finally {
+		if (db) db.close();
+	}
+});
+
+app.post('/logout', auth, async (req, res) => {
+	let db;
+	try {
+		db = openDB();
+		const username = req.user.username;
+		await db.prepare("UPDATE users SET logged_in = 0 WHERE username = ?").run(username);
+		return res.status(200).json({ message: 'Logged out successfully' });
+	} catch (err) {
+		errorHandler(err, res);
+	} finally {
+		if (db) db.close();
+	}
+});
+
+app.get('/portal', [
+	query('from').isString({ min: 10, max: 10 }).withMessage('Invalid date format')
+], requestValidator, auth, async (req, res) => {
+    let db;
+    try {
+        db = openDB();
+        const { from } = req.query;
+
+		let user = db.prepare("SELECT logged_in FROM users WHERE username = ?").get(req.user.username);
+
+		if (!user || user.logged_in !== 1) {
+			return res.status(403).json({ message: 'Unauthorized' });
+		}
+
+        let rows = db.prepare(`
+			SELECT
+				id,
+				nombre,
+				organizacion,
+				correo,
+				telefono,
+				rol,
+				pais,
+				estado,
+				fecha,
+				resultados
+			FROM contacts WHERE fecha >= ?
+			ORDER BY fecha DESC
+		`).all(from);
+
+        rows = rows.map(row => {
+            if (row && row.id && typeof row.id === 'number') {
+                row.id = hashids.encode(row.id);
+            }
+            return row;
+        });
+
+        return res.status(200).json(rows);
+    } catch (err) {
+        errorHandler(err, res);
+    } finally {
+        if (db) db.close();
+    }
+});
 
 // 404 Handler
 app.use('/', (req, res) => {

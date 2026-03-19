@@ -1,0 +1,44 @@
+{
+  "portal": {
+    "title": "Information Portal Login",
+    "username": "Username",
+    "password": "Password",
+    "username_placeholder": "Enter your username",
+    "password_placeholder": "Enter your password",
+    "login": "Login",
+    "welcome": "Welcome to the Portal",
+    "logout": "Logout",
+    "home": "Home",
+    "from": "From",
+    "refresh": "Refresh",
+    "entries_since": "{{count}} Entries Since {{date}}",
+    "updated_since": "Updated {{timeAgo}} ago",
+    "table": {
+      "name": "Name",
+      "organization": "Organization",
+      "email": "Email",
+      "phone": "Phone",
+      "role": "Role",
+      "country": "Country",
+      "date": "Date",
+      "results": "Results",
+      "state": "State"
+    }
+    ,
+    "no_entries": "No entries",
+    "search": "Search",
+    "details": "Details",
+    "pretty": "Pretty",
+    "raw": "Raw",
+    "total_points": "Total",
+    "lowest_dimension": "Lowest",
+    "strongest_dimension": "Strongest",
+    "risk_label": "Risk",
+    "recommended_action": "Recommended action",
+    "weakest": "Weakest",
+    "strongest": "Strongest",
+    "view_details": "View details",
+    "close": "Close",
+    "export_csv": "Export CSV"
+  }
+}

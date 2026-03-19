@@ -1,14 +1,15 @@
-import { brandConfig } from "./config/configAWS";
 
+import { brandConfig } from "./config/configAWS";
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next'; 
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from "recharts";
-
 import awsWhite from './assets/AWS-white.png';
 import awsColor from './assets/awscolor.png';
 import fondo from './assets/fondo.jpg'; 
-
 import './App.css'; 
+import { Country, State, City } from 'country-state-city';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const assets = {
   aws: awsColor
@@ -52,9 +53,52 @@ export default function App() {
   const submittedRef = useRef(false);
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [userInfo, setUserInfo] = useState({
-    nombre: '', organizacion: '', correo: '', telefono: '', rol: '', pais: '', fecha: new Date().toISOString().split('T')[0]
+    nombre: '', organizacion: '', correo: '', telefono: '', rol: '', pais: '', estado: '', ciudad: '', fecha: new Date().toISOString().split('T')[0]
   });
+
+  const [countryList, setCountryList] = useState([]);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+
+  // Load countries on mount
+  useEffect(() => {
+    setCountryList(Country.getAllCountries());
+  }, []);
+
+  // Load states when country changes
+  useEffect(() => {
+    if (userInfo.pais) {
+      const countryObj = countryList.find(c => c.name === userInfo.pais || c.native === userInfo.pais || c.isoCode === userInfo.pais);
+      if (countryObj) {
+        setStateList(State.getStatesOfCountry(countryObj.isoCode));
+      } else {
+        setStateList([]);
+      }
+      setUserInfo(prev => ({ ...prev, estado: '', ciudad: '' }));
+    } else {
+      setStateList([]);
+      setUserInfo(prev => ({ ...prev, estado: '', ciudad: '' }));
+    }
+  }, [userInfo.pais, countryList]);
+
+  // Load cities when state changes
+  useEffect(() => {
+    if (userInfo.pais && userInfo.estado) {
+      const countryObj = countryList.find(c => c.name === userInfo.pais || c.native === userInfo.pais || c.isoCode === userInfo.pais);
+      const stateObj = stateList.find(s => s.name === userInfo.estado || s.isoCode === userInfo.estado);
+      if (countryObj && stateObj) {
+        setCityList(City.getCitiesOfState(countryObj.isoCode, stateObj.isoCode));
+      } else {
+        setCityList([]);
+      }
+      setUserInfo(prev => ({ ...prev, ciudad: '' }));
+    } else {
+      setCityList([]);
+      setUserInfo(prev => ({ ...prev, ciudad: '' }));
+    }
+  }, [userInfo.estado, userInfo.pais, stateList, countryList]);
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -99,15 +143,20 @@ const isValidText = (text, max) => {
         if (submittedRef.current) return;
         submittedRef.current = true;
         setIsSubmitting(true);
+
         try {
           const results = calculateResults();
 
-          // Transform results for API: extract levelData.class/action to root and replace riskLabel with its text
+          // Transform results for API: extract levelData.action to root, remove class, and replace riskLabel with its text
           const transformedResultados = { ...results };
           if (transformedResultados.levelData) {
-            transformedResultados.class = transformedResultados.levelData.class || null;
             transformedResultados.action = transformedResultados.levelData.action || null;
+            // Remove class if present
+            delete transformedResultados.levelData.class;
             delete transformedResultados.levelData;
+          }
+          if (transformedResultados.class) {
+            delete transformedResultados.class;
           }
           if (transformedResultados.riskLabel && typeof transformedResultados.riskLabel === 'object') {
             transformedResultados.riskLabel = transformedResultados.riskLabel.text || null;
@@ -120,6 +169,7 @@ const isValidText = (text, max) => {
             telefono: userInfo.telefono,
             rol: userInfo.rol,
             pais: userInfo.pais,
+            estado: userInfo.estado,
             resultados: transformedResultados
           };
 
@@ -350,6 +400,7 @@ const isFormValid =
   isValidPhone(userInfo.telefono) &&
   isValidText(userInfo.rol, 30) &&
   userInfo.pais.trim() !== '' &&
+  userInfo.estado.trim() !== '' &&
   (!brandConfig.showCluster || userInfo.clusterMember !== '');
       return (
       <div className="app-layout-wrapper" style={{ ...darkFuturisticBackgroundStyle }}>
@@ -383,31 +434,26 @@ const isFormValid =
     {t('formSub')}
   </p>
 
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+  <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+        {t('fName')}
+      </label>
+      <input
+        type="text"
+        name="nombre"
+        maxLength={30}
+        pattern="[A-Za-zÀ-ÿ\s]+"
+        value={userInfo.nombre}
+        onChange={handleUserInputChange}
+        placeholder={t('phName')}
+        style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none', marginBottom: '1rem' }}
+      />
 
-    <div className="form-grid">
-      <div>
-        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
-          {t('fName')}
-        </label>
-
-        <input
-          type="text"
-          name="nombre"
-          maxLength={30}
-          pattern="[A-Za-zÀ-ÿ\s]+"
-          value={userInfo.nombre}
-          onChange={handleUserInputChange}
-          placeholder={t('phName')}
-          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
-        />
-      </div>
-
+    <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }}>
       <div>
         <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
           {t('fCompany')}
         </label>
-
         <input
           type="text"
           name="organizacion"
@@ -415,17 +461,13 @@ const isFormValid =
           value={userInfo.organizacion}
           onChange={handleUserInputChange}
           placeholder={t('phCompany')}
-          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none', marginBottom: '1rem' }}
         />
       </div>
-    </div>
-
-    <div className="form-grid">
       <div>
         <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
           {t('fEmail')}
         </label>
-
         <input
           type="email"
           name="correo"
@@ -433,33 +475,16 @@ const isFormValid =
           value={userInfo.correo}
           onChange={handleUserInputChange}
           placeholder={t('phEmail')}
-          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
-        />
-      </div>
-
-      <div>
-        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
-          {t('fPhone')}
-        </label>
-
-        <input
-          type="tel"
-          name="telefono"
-          maxLength={15}
-          value={userInfo.telefono}
-          onChange={handleUserInputChange}
-          placeholder={t('phPhone')}
-          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none', marginBottom: '1rem'   }}
         />
       </div>
     </div>
 
-    <div className="form-grid">
+    <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }}>
       <div>
         <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
           {t('fRole')}
         </label>
-
         <input
           type="text"
           name="rol"
@@ -467,70 +492,83 @@ const isFormValid =
           value={userInfo.rol}
           onChange={handleUserInputChange}
           placeholder={t('phRole')}
-          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none' }}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', outline: 'none', marginBottom: '1rem' }}
         />
       </div>
-
-{brandConfig.showCluster && (
-  <div>
-    <label style={{
-      display: 'block',
-      marginBottom: '0.4rem',
-      fontWeight: '700',
-      fontSize: '0.9rem'
-    }}>
-      ¿Eres miembro del Cluster?
-    </label>
-
-    <select
-      name="clusterMember"
-      value={userInfo.clusterMember}
-      onChange={handleUserInputChange}
-      style={{
-        width: '100%',
-        padding: '12px 14px',
-        borderRadius: '10px',
-        border: '2px solid #e2e8f0',
-        backgroundColor: '#fff',
-        cursor: 'pointer'
-      }}
-    >
-      <option value="">Selecciona una opción...</option>
-      <option value="true">Sí</option>
-      <option value="false">No</option>
-    </select>
-  </div>
-)}
-
-
       <div>
         <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
           {t('fCountry')}
         </label>
-
         <select
           name="pais"
           value={userInfo.pais}
           onChange={handleUserInputChange}
-          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', backgroundColor: '#fff', cursor: 'pointer' }}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', backgroundColor: '#fff', cursor: 'pointer', marginBottom: '1rem' }}
         >
           <option value="">{t('selectCountry')}</option>
-          <option value="Alemania">Alemania</option>
-          <option value="Argentina">Argentina</option>
-          <option value="Brasil">Brasil</option>
-          <option value="Canadá">Canadá</option>
-          <option value="Chile">Chile</option>
-          <option value="Colombia">Colombia</option>
-          <option value="España">España</option>
-          <option value="USA">Estados Unidos</option>
-          <option value="México">México</option>
-          <option value="Perú">Perú</option>
-          <option value="Reino Unido">Reino Unido</option>
-          <option value="Otro">Otro / Other</option>
+          {countryList.map((c) => (
+            <option key={c.isoCode} value={c.name}>{c.name}</option>
+          ))}
         </select>
       </div>
     </div>
 
+    <div className="form-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }}>
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fPhone')}
+        </label>
+        <PhoneInput
+          country={userInfo.pais ? (countryList.find(c => c.name === userInfo.pais)?.isoCode?.toLowerCase() || 'us') : 'us'}
+          value={userInfo.telefono}
+          onChange={phone => setUserInfo(prev => ({ ...prev, telefono: phone }))}
+          inputStyle={{
+            marginLeft: '40px',
+            width: '80%',
+            padding: '12px 14px',
+            height: '44px',
+            borderRadius: '0 10px 10px 0',
+            border: '2px solid #e2e8f0',
+            borderLeft: 'none',
+            outline: 'none',
+            marginBottom: '1rem',
+            boxSizing: 'border-box'
+          }}
+          buttonStyle={{
+            border: '2px solid #e2e8f0',
+            borderRight: 'none',
+            borderRadius: '14px 0 0 14px',
+            background: '#fff',
+            marginBottom: '1rem',
+            boxSizing: 'border-box',
+            display: 'flex',
+            alignItems: 'center',
+            height: '44px',
+            padding: 0
+          }}
+          placeholder={t('phPhone')}
+          enableSearch
+          masks={{ default: '... ... ....' }}
+        />
+      </div>
+      <div>
+        <label style={{ display: 'block', marginBottom: '0.4rem', fontWeight: '700', fontSize: '0.9rem' }}>
+          {t('fState') || 'State / Province *'}
+        </label>
+        <select
+          name="estado"
+          value={userInfo.estado}
+          onChange={handleUserInputChange}
+          style={{ width: '100%', padding: '12px 14px', borderRadius: '10px', border: '2px solid #e2e8f0', backgroundColor: '#fff', cursor: 'pointer', marginBottom: '1rem' }}
+          disabled={!userInfo.pais || !stateList.length}
+        >
+          <option value="">{t('selectState') || 'Select your state...'}</option>
+          {stateList.map((s) => (
+            <option key={s.isoCode} value={s.name}>{s.name}</option>
+          ))}
+        </select>
+      </div>
+    </div>
   </div>
               
               <button onClick={async () => {
@@ -557,7 +595,7 @@ const isFormValid =
                   } finally {
                     setIsCheckingEmail(false);
                   }
-                }} disabled={!isFormValid || isCheckingEmail} style={{ marginTop: '2.5rem', width: '100%', padding: '16px', backgroundColor: isFormValid ? awsOrange : '#cbd5e0', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: isFormValid ? 'pointer' : 'not-allowed', fontSize: '1.1rem', fontWeight: '800', boxShadow: isFormValid ? `0 10px 20px -5px ${awsOrange}66` : 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                }} disabled={!isFormValid || isCheckingEmail} style={{ marginTop: '1.2rem', width: '100%', padding: '16px', backgroundColor: isFormValid ? awsOrange : '#cbd5e0', color: '#ffffff', border: 'none', borderRadius: '14px', cursor: isFormValid ? 'pointer' : 'not-allowed', fontSize: '1.1rem', fontWeight: '800', boxShadow: isFormValid ? `0 10px 20px -5px ${awsOrange}66` : 'none', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                 {isCheckingEmail ? (
                   <svg width="20" height="20" viewBox="0 0 50 50" aria-label={t('btnStart')}>
                     <circle cx="25" cy="25" r="20" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeDasharray="31.4 31.4">
@@ -959,7 +997,7 @@ const isFormValid =
                          <li key={num} className="print-avoid-break" style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                             <div style={{ color: '#ffffff', backgroundColor: awsOrange, borderRadius: '50%', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 'bold', flexShrink: 0, marginTop: '3px' }}>✓</div>
                             <div style={{ color: '#334155', fontSize: '1rem', lineHeight: '1.5' }}>
-                              {recLink ? ( <a href={recLink} target="_blank" rel="noopener noreferrer" className="print-link">{recTitle}</a> ) : ( <strong style={{ color: oneDataBrightBlue }}>{recTitle}</strong> )}
+                              {( <strong style={{ color: oneDataBrightBlue }}>{recTitle}</strong> )}
                               {' '}{recDesc}
                             </div>
                          </li>
@@ -989,20 +1027,12 @@ const isFormValid =
                   </div>
                 </div>
 
-                {/* Strategic benefits section removed from PDF as requested */}
-                
-                {/* "Del diagnóstico a la implementación" PDF section removed as requested */}
-
-                {/* Company footer removed from PDF — only AWS logo appears at top as requested */}
-
               </div> 
 
             </div> 
 
           </div> 
         </div> 
-
-      {/* Results page footer removed as requested */}
 
       </div>
     );

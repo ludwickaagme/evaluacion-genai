@@ -18,8 +18,16 @@ db.prepare(`CREATE TABLE IF NOT EXISTS contacts (
   telefono TEXT NOT NULL,
   rol TEXT NOT NULL,
   pais TEXT NOT NULL,
+  estado TEXT NOT NULL,
   fecha TEXT NOT NULL,
   resultados TEXT NOT NULL
+)`).run();
+
+db.prepare(`CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  logged_in INTEGER NOT NULL
 )`).run();
 
 function openDB() {

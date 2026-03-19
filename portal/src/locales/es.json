@@ -1,0 +1,44 @@
+{
+  "portal": {
+    "title": "Ingreso al Portal de Información",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "username_placeholder": "Ingrese su usuario",
+    "password_placeholder": "Ingrese su contraseña",
+    "login": "Iniciar sesión",
+    "welcome": "Bienvenido al Portal",
+    "logout": "Cerrar sesión",
+    "home": "Inicio",
+    "from": "Desde",
+    "refresh": "Actualizar",
+    "entries_since": "{{count}} Entradas Desde {{date}}",
+    "updated_since": "Actualizado hace {{timeAgo}}",
+    "table": {
+      "name": "Nombre",
+      "organization": "Organización",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "role": "Rol",
+      "state": "Estado",
+      "country": "País",
+      "date": "Fecha",
+      "results": "Resultados"
+    }
+    ,
+    "no_entries": "Sin entradas",
+    "search": "Buscar",
+    "details": "Detalles",
+    "pretty": "Visual",
+    "raw": "Raw",
+    "total_points": "Total",
+    "lowest_dimension": "Menor",
+    "strongest_dimension": "Más fuerte",
+    "risk_label": "Riesgo",
+    "recommended_action": "Acción recomendada",
+    "weakest": "Más débil",
+    "strongest": "Más fuerte",
+    "view_details": "Ver detalles",
+    "close": "Cerrar",
+    "export_csv": "Exportar CSV"
+  }
+}

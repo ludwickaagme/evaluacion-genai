@@ -14,8 +14,17 @@
   "fPhone": "Phone *",
   "fRole": "Role / Title *",
   "fCountry": "Country *",
+  "fState": "State / Province *",
+  "fCity": "City",
   "btnStart": "START ASSESSMENT",
+  "phName": "Enter your full name",
+  "phCompany": "Enter your company name",
+  "phEmail": "Enter your corporate email",
+  "phPhone": "Enter your phone number",
+  "phRole": "Enter your role or title",
   "selectCountry": "Select your country...",
+  "selectState": "Select your state...",
+  "selectCity": "Select your city...",
   "btnBack": "← Back",
   "btnNext": "Continue →",
   "btnResults": "View results →",
@@ -98,7 +107,6 @@
 
   "aiDiagnosisResult": "Your AI maturity result is:",
   "date": "Date",
-  "dimension": "DIMENSION",
 
 
   "dashboard": {
